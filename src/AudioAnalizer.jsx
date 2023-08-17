@@ -38,6 +38,8 @@ export class AudioAnalizer {
         this.currentVolume = 0.5;
         // Flag to prevent update time slider if the user its changing it
         this.isChangingTime = false;
+        // Initialize memory for audio textures
+        this.setupTextures();
     }
 
     setupDragDropEvents() {
@@ -54,21 +56,13 @@ export class AudioAnalizer {
         }
     }
 
-    setupAudio(fftSize = 2048) {
-        // Exit if fftSize is initialized
-        if (typeof this.fftSize !== "undefined") return;
-
-        this.fftSize         = fftSize;
+    setupTextures() {
+        this.fftSize         = 2048;
         this.square          = Math.sqrt(this.fftSize * 0.5);
+
         // Arrays for analizer data (bars and osciloscope)
-        this.analizerData    = new Uint8Array(fftSize * 0.5);
-        this.analizerDataSin = new Uint8Array(fftSize * 0.5);
-        
-        this.context                          = new AudioContext();
-        this.gainNode                         = this.context.createGain();
-        this.analizer                         = this.context.createAnalyser();
-        this.analizer.fftSize                 = fftSize;
-        this.analizer.smoothingTimeConstant   = 0.8; // 
+        this.analizerData    = new Uint8Array(this.fftSize * 0.5);
+        this.analizerDataSin = new Uint8Array(this.fftSize * 0.5);
 
         // Audio textures
         this.bufferCanvasSquare         = new BufferCanvas(this.square, this.square);
@@ -85,7 +79,18 @@ export class AudioAnalizer {
 
         this.bufferCanvasLinear.texture.generateMipMaps = false;
         this.bufferCanvasLinear.texture.minFilter = THREE.NearestFilter;
-        this.bufferCanvasLinear.texture.magFilter = THREE.NearestFilter;        
+        this.bufferCanvasLinear.texture.magFilter = THREE.NearestFilter;                
+    }
+
+    setupAudio() {
+        // Exit if context is initialized
+        if (typeof this.context !== "undefined") return;        
+        
+        this.context                          = new AudioContext();
+        this.gainNode                         = this.context.createGain();
+        this.analizer                         = this.context.createAnalyser();
+        this.analizer.fftSize                 = this.fftSize;
+        this.analizer.smoothingTimeConstant   = 0.8; // 
     }
 
     eventDragEnter(e) {
