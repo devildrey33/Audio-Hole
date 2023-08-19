@@ -1,10 +1,14 @@
-import { OrbitControls, PivotControls, TransformControls } from '@react-three/drei'
+import { OrbitControls, Float, TransformControls, MeshReflectorMaterial, Environment } from '@react-three/drei'
 import { useFrame, useThree } from "@react-three/fiber"
 import { useRef } from "react";
 import options from './Config/Options.jsx';
 import audio from './AudioAnalizer.jsx';
 import Spirals from './World/Spirals.jsx'
 import { useControls } from 'leva'
+import Roof from './World/Roof.jsx';
+import * as THREE from "three"
+import PerlinSun from './World/PerlinSun.jsx';
+import { Bloom, EffectComposer, Noise } from '@react-three/postprocessing'
 
 let currentTime = 0;
 let actualFrame = 0;
@@ -12,7 +16,7 @@ let fps = 60;
 
 export default function World ({ setFps }) {
     const camera = useThree((state) => state.camera);
-    const spiralMesh = useRef();
+    const spiralMeshRef = useRef();    
     
 //    const mesh = useRef();
 
@@ -36,17 +40,87 @@ export default function World ({ setFps }) {
         currentTime = state.clock.elapsedTime;
         calculateFps();
 
-        spiralMesh.current.rotation.y += delta;
+        spiralMeshRef.current.rotation.y += delta;
 //        spiralMesh.coneUniforms.uTime = state.clock.elapsedTime;
     });
 
+    const directionalRef = useRef();
+    const spotRef = useRef();
+
+    if (options.debug) {
+        useControls('Directional Light', {
+            visible  : { value: true,
+                         onChange: (v) => { directionalRef.current.visible = v }, },
+            position : { x: 1, y: 1, z: -5, 
+                         onChange: (v) => { directionalRef.current.position.copy(v) }, },
+            color    : { value: 'white',
+                         onChange: (v) => { directionalRef.current.color = new THREE.Color(v) }, },
+            intensity: { value : 5, min : 0, max : 10, step : 0.1, 
+                         onChange: (v) => { directionalRef.current.intensity = v } }
+        })
+
+        useControls('Spot Light', {
+            visible  : { value: true,
+                        onChange: (v) => { spotRef.current.visible = v }, },
+            position : { x: -2, y: 2, z: -5, 
+                        onChange: (v) => { spotRef.current.position.copy(v) }, },
+            color    : { value: 'white',
+                        onChange: (v) => { spotRef.current.color = new THREE.Color(v) }, },
+            intensity: { value : 5, min : 0, max : 10, step : 0.1, 
+                        onChange: (v) => { spotRef.current.intensity = v } }
+        })
+    }
+
 
     return <>
-        { /* Orbit controls */ }
-        { (options.orbitControls) ? <OrbitControls makeDefault /> : null }
-        
-        <directionalLight />
+        { /* Postprocessing */ }
+        <EffectComposer multisampling={ 4 }>
+            <Noise />
+            <Bloom 
+              luminanceThreshold={-1} 
+              luminanceSmoothing={0.9} 
+              height={100}
+            />
+        </EffectComposer>
 
-        <Spirals spiralMesh={spiralMesh}></Spirals>
+        { /* Orbit controls */ }
+        { (options.orbitControls && options.debug) ? <OrbitControls makeDefault /> : null }
+        
+        { /* Environment lightmap */ }
+        <Environment preset="city" />
+
+        { /* lights */ }
+        <directionalLight ref={directionalRef} position={[1, 1, -5]} />
+        <spotLight ref={spotRef} position={[-2, 2, -5]} />
+
+        { /* main spirals */ }
+        <Spirals meshRef={spiralMeshRef} debug={ options.debug } />
+            
+        <Roof debug={ options.debug } />
+        <Float
+            speed={3} // Animation speed, defaults to 1
+            rotationIntensity={1} // XYZ rotation intensity, defaults to 1
+            floatIntensity={0.2} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
+            floatingRange={[10, 1]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
+        >
+            <PerlinSun debug={ options.debug } />
+        </Float>
+
+        { /* reflective floor */ }
+        <mesh rotation-x= { -Math.PI * 0.5 } position-y = { - 8} position-z={ -22 } >
+            <planeGeometry args={ [ 256, 64, 32,32 ]} />
+            <MeshReflectorMaterial
+                blur={[300, 100]}
+                resolution={1024}
+                mixBlur={1}
+                mixStrength={800}
+                roughness={0.75}
+                depthScale={50}
+                minDepthThreshold={0.4}
+                maxDepthThreshold={1.4}
+                color="#050505"
+                metalness={1}          
+            />
+        </mesh>        
     </>
 }

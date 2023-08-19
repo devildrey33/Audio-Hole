@@ -1,7 +1,4 @@
-/* Singleton class to hold all the options 
-    YOu can owerwrite the default options on the first call 
- */
-let optionsInstance = null;
+
 
 
 const options = {
@@ -18,7 +15,9 @@ const options = {
     // Enable drag & drop external songs
     songsDragDrop           : true,
     // Orbit controls
-    orbitControls           : true
+    orbitControls           : true,
+    // Debug mode shows leva
+    debug                   : window.location.hash === '#debug'
 };
 
 export default options;
