@@ -3,12 +3,12 @@ import { useFrame, useThree } from "@react-three/fiber"
 import { useRef } from "react";
 import options from './Config/Options.jsx';
 import audio from './AudioAnalizer.jsx';
-import Spirals from './World/Spirals.jsx'
+import Spirals from './World/Objects/Spirals.jsx'
 import { useControls } from 'leva'
-import Roof from './World/Roof.jsx';
+import Roof from './World/Objects/Roof.jsx';
 import * as THREE from "three"
-import PerlinSun from './World/PerlinSun.jsx';
-import { Bloom, EffectComposer, Noise } from '@react-three/postprocessing'
+import PerlinSun from './World/Objects/PerlinSun.jsx';
+import { Bloom, ChromaticAberration, DepthOfField, EffectComposer, Noise } from '@react-three/postprocessing'
 
 let currentTime = 0;
 let actualFrame = 0;
@@ -74,13 +74,15 @@ export default function World ({ setFps }) {
 
     return <>
         { /* Postprocessing */ }
-        <EffectComposer multisampling={ 4 }>
-            <Noise />
-            <Bloom 
-              luminanceThreshold={-1} 
-              luminanceSmoothing={0.9} 
+        <EffectComposer multisampling={ 2 }>
+{/*            <Noise />  */}
+            <ChromaticAberration offset={[0.001, 0.002]}></ChromaticAberration>
+{/*}            <Bloom 
+              luminanceThreshold={0.0} 
+              luminanceSmoothing={0.1} 
               height={100}
-            />
+enabled={true}
+/>*/ }
         </EffectComposer>
 
         { /* Orbit controls */ }
@@ -98,9 +100,9 @@ export default function World ({ setFps }) {
             
         <Roof debug={ options.debug } />
         <Float
-            speed={3} // Animation speed, defaults to 1
-            rotationIntensity={1} // XYZ rotation intensity, defaults to 1
-            floatIntensity={0.2} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
+            speed={1} // Animation speed, defaults to 1
+            rotationIntensity={0.2} // XYZ rotation intensity, defaults to 1
+            floatIntensity={0.02} // Up/down float intensity, works like a multiplier with floatingRange,defaults to 1
             floatingRange={[10, 1]} // Range of y-axis values the object will float within, defaults to [-0.1,0.1]
         >
             <PerlinSun debug={ options.debug } />

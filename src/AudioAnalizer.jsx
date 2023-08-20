@@ -40,6 +40,10 @@ export class AudioAnalizer {
         this.isChangingTime = false;
         // Initialize memory for audio textures
         this.setupTextures();
+
+        this.averageFrequency = [ 0, 0, 0, 0, 0 ];
+        // Paint the audio textures to have safe values 
+        this.paintAudioTexture();
     }
 
     setupDragDropEvents() {
@@ -63,6 +67,10 @@ export class AudioAnalizer {
         // Arrays for analizer data (bars and osciloscope)
         this.analizerData    = new Uint8Array(this.fftSize * 0.5);
         this.analizerDataSin = new Uint8Array(this.fftSize * 0.5);
+        for (let i = 0; i < this.fftSize * 0.5; i++) {
+            this.analizerData[i] = 0;
+            this.analizerDataSin[i] = 128;
+        }
 
         // Audio textures
         this.bufferCanvasSquare         = new BufferCanvas(this.square, this.square);

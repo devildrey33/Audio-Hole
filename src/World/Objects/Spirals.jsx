@@ -1,7 +1,7 @@
 import * as THREE from "three"
-import audio from "../AudioAnalizer.jsx";
-import SpiralsVertex from "../Shaders/Spirals/SpiralsVertex.glsl"
-import SpiralsFragment from "../Shaders/Spirals/SpiralsFragment.glsl"
+import audio from "../../AudioAnalizer.jsx";
+import SpiralsVertex from "../../Shaders/Spirals/SpiralsVertex.glsl"
+import SpiralsFragment from "../../Shaders/Spirals/SpiralsFragment.glsl"
 import { useControls } from "leva";
 import { useFrame, useThree } from "@react-three/fiber"
 import { useMemo, useRef } from "react";
@@ -28,6 +28,7 @@ export default function Spirals({meshRef = useRef(), debug = false}) {
     
     useFrame((state, delta) => {       
         uniforms.uTime.value += delta ;
+        uniforms.uThicknessSin.value = 0.01 + ((audio.averageFrequency[2] / 255) * 0.05);
     });
 
 
@@ -51,8 +52,8 @@ export default function Spirals({meshRef = useRef(), debug = false}) {
                                     onChange: (v) => { uniforms.uFrequencySin.value = v } },
                 SpeedSin        : { value : uniforms.uSpeedSin.value        , min : 0.1,  max : 2,    step : 0.01,
                                     onChange: (v) => { uniforms.uSpeedSin.value = v } },
-                ThicknessSin    : { value : uniforms.uThicknessSin.value    , min : 0.01, max : 0.75, step : 0.01,
-                                    onChange: (v) => { uniforms.uThicknessSin.value = v } }
+/*                ThicknessSin    : { value : uniforms.uThicknessSin.value    , min : 0.01, max : 0.75, step : 0.01,
+                                    onChange: (v) => { uniforms.uThicknessSin.value = v } }*/
             }
         );
     }

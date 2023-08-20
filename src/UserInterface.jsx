@@ -11,6 +11,7 @@ import UI_AudioInfo from "./UserInterface/UI_AudioInfo.jsx";
 import UI_AudioControls from "./UserInterface/UI_AudioControls.jsx";
 import songs from "./Config/Songs.jsx"
 import audio from "./AudioAnalizer.jsx";
+import { PerspectiveCamera } from '@react-three/drei';
 
 export default function UserInterface () {
 
@@ -25,7 +26,6 @@ export default function UserInterface () {
 
     // State for fps counter
     const [getFps, setFps] = useState(60);
-
 
     useEffect(() => {
         // fisrt render        
@@ -68,9 +68,9 @@ export default function UserInterface () {
             getIsPlaying      = { getIsPlaying      } 
         />
 
-
         {/* Canvas */}
         <Canvas className="Experience_Canvas">
+            
             <World 
                 setFps            = { setFps } 
             />

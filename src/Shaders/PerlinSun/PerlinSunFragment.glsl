@@ -1,14 +1,16 @@
 
 
-//uniform float     uAlpha;
+
 uniform sampler2D uAudioTexture;
+uniform float     uAudioStrengthFreq;
+uniform float     uAudioStrengthSin;
+uniform float     uRadiusFreq;
+uniform float     uRadiusSin;
 uniform float     uTime;
 //uniform float     uHover;
 uniform float     uNoiseStrength;
 uniform float     uNoiseSpeed;
 //uniform float     uLowFrequency;
-uniform vec3      uColorFrequency;
-uniform vec3      uColorSin;
 
 varying vec2      vUv; // Coordenadas UV del fragmento
 
@@ -91,8 +93,22 @@ float cnoise(vec3 P){
 }
 
 
+vec3 getColor(float time) {
+  float t = fract(time);  // Fracción de tiempo entre 0 y 1
+  
+  // Red, green y blue varían en ciclos independientes de tiempo
+  float red = cos(t * 6.2831);  // Variación sinusoidal en el rango [-1, 1]
+  float green = cos(t * 6.2831); // Variación cosinusoidal en el rango [-1, 1]
+  float blue = sin(t * 6.2831 * 2.0); // Variación sinusoidal rápida en el rango [-1, 1]
+  
+  // Normalización y asignación del color resultante
+  vec3 color = vec3(red, green, blue) * 0.5 + 0.75;
+  
+  return color;
+}
+
 // Make a circle with the frequency data
-vec4 circleFreq(vec4 currentColor, vec2 center, float radius, vec3 color) {
+vec4 circleFreq(vec4 currentColor, vec2 center) {
     vec2 pos = vec2(0.55, 0.5);
     float dist = length(vUv - pos);
     float rad = atan(vUv.y - pos.y, vUv.x - pos.x);
@@ -104,26 +120,31 @@ vec4 circleFreq(vec4 currentColor, vec2 center, float radius, vec3 color) {
         normAngle = 1.0 - (1.0 + ((rad - PI) / PI));
     }
 
-    float audioValue = (texture2D(uAudioTexture, vec2(normAngle, 0.0)).r - 0.5) * .25;
+    float audioValue = (texture2D(uAudioTexture, vec2(normAngle, 0.0)).r - 0.5) * .25 * uAudioStrengthFreq;
     // Perlin noise
-    float strength = cnoise(vec3(rad * 2.0, dist * uNoiseStrength,  uTime + color.b * uNoiseSpeed)) * radius * 0.1;
-/*    if (normAngle < 0.01 || normAngle > 0.99) {
-        strength = 0.0;
-    }*/
+//    float distNS = dist * uNoiseStrength;
+    float strength = cnoise(vec3(rad * 2.0, dist * uNoiseStrength,  uTime * uNoiseSpeed)) * 0.1;
+//    float strength = cnoise(vec3(-PI + (rad * 2.0), -(distNS * 0.5) + dist * uNoiseStrength,  uTime * uNoiseSpeed)) * 0.1;
 
-    if (dist - audioValue + strength < radius) {
-//        color.rgb += audioValue * 0.5;
-//        color.rgb = color.rgb + audioValue * 0.5;
-        return vec4(color, 1.0);
-
-//        return vec4(getColor(uTime * 0.05) , 0.0 + (2.0 * dist) - sin(uTime) * 0.25);
+    if (dist - audioValue + strength + 0.005 < uRadiusFreq) {
+        float angle = uTime * .5 * PI;  // Ángulo de rotación en función del tiempo
+        
+        // Aplicar matriz de rotación al vector de coordenadas UV
+        float cosAngle = cos(angle);
+        float sinAngle = sin(angle);
+        mat2 rotationMatrix = mat2(cosAngle, -sinAngle, sinAngle, cosAngle);
+        vec2 rotatedUV = rotationMatrix * vUv;        
+        return vec4(abs(sin(uTime * 0.1)), abs(rotatedUV.x), abs(rotatedUV.y), 1.0); //vec4(color, 1.0);
+    }
+    else if (dist - audioValue + strength < uRadiusFreq) {
+        return vec4(1.0, 1.0, 1.0, 1.0);
     } 
     return currentColor;
 }
 
 
 // // Make a circle with the time domain data
-vec4 circleSin(vec4 currentColor, vec2 center, float radius, vec3 color) {
+vec4 circleSin(vec4 currentColor, vec2 center) {
     vec2 pos1 = vec2(0.4, 0.5);
     float dist = length(vUv - center);
     float rad = atan(vUv.y - center.y, vUv.x - center.x);
@@ -135,18 +156,19 @@ vec4 circleSin(vec4 currentColor, vec2 center, float radius, vec3 color) {
         normAngle = (1.0 + ((rad - PI) / PI));
     }
 
-    float audioValue = (texture2D(uAudioTexture, vec2(normAngle, 0.0)).g - 0.5) * .5;
+    float audioValue = (texture2D(uAudioTexture, vec2(normAngle, 0.0)).g - 0.5) * .5 * uAudioStrengthSin;
     // Perlin noise
     float strength = 0.0; //cnoise(vec3(rad * TAU * 5.0, dist * 100.0,  uTime + color.b)) * radius * 0.1;
 
-    if (dist - audioValue + strength < radius) {
-        color.rgb += audioValue * 0.25;
-        return vec4(color, 0.5 + audioValue);
+    if (dist - audioValue + strength + 0.01 < uRadiusSin) {
+        return vec4(getColor(uTime * 0.05) , 1.0 /* 0.5 + (2.0 * dist) - sin(uTime) * 0.25 */);
+    }
+    else if (dist - audioValue + strength < uRadiusSin) {
+//        color.g += 1.0 - audioValue;
+        return vec4(0.0, 0.0, 0.0, 1.0);
     } 
     return currentColor;
 }
-
-
 
 void main() {
 
@@ -155,14 +177,9 @@ void main() {
     // Base color
     vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
 
-//    color = circleNoise(color, center, 0.25, vec3(0.0, 0.0, 1.0));
-//    color = circleNoise(color, center, 0.125, vec3(0.5, 0.5, 0.25));
+    color = circleFreq(color, center);
+    color = circleSin(color, center);
 
-    color = circleFreq(color, center, 0.4, uColorFrequency);
-    color = circleSin(color, center, 0.25, uColorSin);
-
-    // Apply the round hover border
-   // color = borderRoundRect(color, vec2(1.0, 1.0), 0.125);
     if (color.a == 0.0) discard;
 
     gl_FragColor = color;
