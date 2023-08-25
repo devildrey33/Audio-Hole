@@ -161,12 +161,13 @@ vec4 circleSin(vec4 currentColor, vec2 center) {
     float strength = 0.0; //cnoise(vec3(rad * TAU * 5.0, dist * 100.0,  uTime + color.b)) * radius * 0.1;
 
     if (dist - audioValue + strength + 0.01 < uRadiusSin) {
-        return vec4(getColor(uTime * 0.05) , 1.0 /* 0.5 + (2.0 * dist) - sin(uTime) * 0.25 */);
+//        return vec4(getColor(uTime * 0.05) , 1.0 /* 0.5 + (2.0 * dist) - sin(uTime) * 0.25 */);
+        return vec4(1.0, .5, .5, 0.5 + (2.0 * dist) - sin(uTime) * 0.125);
     }
-    else if (dist - audioValue + strength < uRadiusSin) {
+/*    else if (dist - audioValue + strength < uRadiusSin) {
 //        color.g += 1.0 - audioValue;
         return vec4(0.0, 0.0, 0.0, 1.0);
-    } 
+    } */
     return currentColor;
 }
 

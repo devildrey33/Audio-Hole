@@ -5,6 +5,7 @@ import PerlinSunFragment from "../../Shaders/PerlinSun/PerlinSunFragment.glsl"
 import { useControls } from "leva";
 import { useFrame } from "@react-three/fiber"
 import { useMemo, useRef } from "react";
+import { Billboard } from "@react-three/drei";
 
 
 export default function PerlinSun({meshRef = useRef(), debug = false}) { 
@@ -27,8 +28,14 @@ export default function PerlinSun({meshRef = useRef(), debug = false}) {
     });
 
 
-    return <mesh ref= { meshRef }
-        position={ [ 20, 5, -35 ] }
+    return <Billboard 
+    follow={true}
+    lockX={true}
+    lockY={true}
+    lockZ={true}
+    >
+    <mesh ref={ meshRef }
+        position={ [ 20, 10, -45 ] }
         rotation-z={ -Math.PI * 0.5 }
     >
         <planeGeometry args={ [ 12, 12 ] } />
@@ -41,4 +48,5 @@ export default function PerlinSun({meshRef = useRef(), debug = false}) {
         />
 
     </mesh>
+    </Billboard>
 }
