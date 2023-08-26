@@ -28,25 +28,19 @@ export default function PerlinSun({meshRef = useRef(), debug = false}) {
     });
 
 
-    return <Billboard 
-    follow={true}
-    lockX={true}
-    lockY={true}
-    lockZ={true}
-    >
-    <mesh ref={ meshRef }
-        position={ [ 20, 10, -45 ] }
-        rotation-z={ -Math.PI * 0.5 }
-    >
-        <planeGeometry args={ [ 12, 12 ] } />
-        <shaderMaterial 
-            uniforms       = { uniforms }
-            side           = { THREE.DoubleSide }
-            transparent    = { true }
-            vertexShader   = { PerlinSunVertex }
-            fragmentShader = { PerlinSunFragment }
-        />
+    return <mesh ref={ meshRef }
+            position={ [ 20, 10, -45 ] }
+            rotation-z={ -Math.PI * 0.5 }
+        >
+            <planeGeometry args={ [ 12, 12 ] } />
+            <shaderMaterial 
+                uniforms       = { uniforms }
+//                side           = { THREE.DoubleSide }
+                transparent    = { true }
+                vertexShader   = { PerlinSunVertex }
+                fragmentShader = { PerlinSunFragment }
+            />
 
-    </mesh>
-    </Billboard>
+        </mesh>
+        
 }

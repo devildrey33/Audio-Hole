@@ -1,26 +1,25 @@
-import { OrbitControls, Float, TransformControls, MeshReflectorMaterial, Environment } from '@react-three/drei'
+import { OrbitControls, Float, TransformControls, MeshReflectorMaterial, Environment, CameraShake } from '@react-three/drei'
 import { useFrame, useThree } from "@react-three/fiber"
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import options from './Config/Options.jsx';
 import audio from './AudioAnalizer.jsx';
 import Spirals from './World/Objects/Spirals.jsx'
-import { useControls } from 'leva'
 import Roof from './World/Objects/Roof.jsx';
 import * as THREE from "three"
 import PerlinSun from './World/Objects/PerlinSun.jsx';
-import { Bloom, ChromaticAberration, DepthOfField, EffectComposer, Noise } from '@react-three/postprocessing'
 import Postprocessing from './World/PostProcessing.jsx';
+import LinearOsciloscope from './World/Objects/LinearOsciloscope.jsx';
 
 let currentTime = 0;
 let actualFrame = 0;
 let fps = 60;
 
 export default function World ({ setFps }) {
-    const camera = useThree((state) => state.camera);
+    const { camera, mouse } = useThree();
     const spiralMeshRef = useRef();    
     const perlinSunRef = useRef();
-    
-//    const mesh = useRef();
+    const [vec] = useState(() => new THREE.Vector3());
+    //    const mesh = useRef();
 
     const calculateFps = () => {
         if (currentTime > actualFrame) {
@@ -42,39 +41,12 @@ export default function World ({ setFps }) {
         currentTime = state.clock.elapsedTime;
         calculateFps();
 
+        // Rotate the spiral mesh
         spiralMeshRef.current.rotation.y += delta;
 
-        camera.rotation.z -= delta *0.002;
-//        spiralMesh.coneUniforms.uTime = state.clock.elapsedTime;
+        // Update camera position
+        camera.position.lerp(vec.set(mouse.x * 1.5, mouse.y * 1.5, 10), 0.05);
     });
-
-//    const directionalRef = useRef();
-//    const spotRef = useRef();
-
-
-    if (options.debug) {
-/*        useControls('Directional Light', {
-            visible  : { value: true,
-                         onChange: (v) => { directionalRef.current.visible = v }, },
-            position : { x: 1, y: 1, z: -5, 
-                         onChange: (v) => { directionalRef.current.position.copy(v) }, },
-            color    : { value: 'white',
-                         onChange: (v) => { directionalRef.current.color = new THREE.Color(v) }, },
-            intensity: { value : 5, min : 0, max : 10, step : 0.1, 
-                         onChange: (v) => { directionalRef.current.intensity = v } }
-        })
-
-        /*useControls('Spot Light', {
-            visible  : { value: false,
-                        onChange: (v) => { spotRef.current.visible = v }, },
-            position : { x: -2, y: 2, z: -5, 
-                        onChange: (v) => { spotRef.current.position.copy(v) }, },
-            color    : { value: 'white',
-                        onChange: (v) => { spotRef.current.color = new THREE.Color(v) }, },
-            intensity: { value : 5, min : 0, max : 10, step : 0.1, 
-                        onChange: (v) => { spotRef.current.intensity = v } }
-        })*/
-    }
 
 
 
@@ -104,6 +76,8 @@ export default function World ({ setFps }) {
             <PerlinSun meshRef={ perlinSunRef } debug={ options.debug } />
         </Float>
 
+        <LinearOsciloscope />
+
         { /* reflective floor */ }
       { /* <mesh rotation-x= { -Math.PI * 0.5 } position-y = { - 8} position-z={ -22 } >
             <planeGeometry args={ [ 256, 64, 32,32 ]} />
@@ -121,6 +95,14 @@ export default function World ({ setFps }) {
             />
         </mesh>    */    }
 
+        <CameraShake
+             maxYaw         ={0.033} 
+             maxPitch       ={0.05} 
+             maxRoll        ={0.041} 
+             yawFrequency   ={0.35} 
+             pitchFrequency ={0.25} 
+             rollFrequency  ={0.14} 
+        />
 
         { /* Postprocessing */ }
 {        

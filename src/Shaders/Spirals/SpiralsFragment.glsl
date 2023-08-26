@@ -64,7 +64,7 @@ vec4 drawAudio(vec2 pos) {
     }
     // Paint the spiral
     if (p < (uFrequency * uThickness)) {        
-        return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), 1.0);
+        return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), 0.75);
     }
 
     discard;
