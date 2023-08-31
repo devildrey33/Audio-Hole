@@ -38,11 +38,24 @@ export default class Sun {
         this.mesh = new THREE.Mesh(this.geometry, this.material);
 //        this.mesh.rotation.z = -Math.PI;
         this.mesh.rotation.z = -Math.PI * 0.5;
-        this.mesh.position.set(0, 0, -185);
+        this.mesh.position.set(0, 0, -135);
 //        this.mesh.position.set(20, 15, -135);
         this.mesh.name = "Sun";
     
         this.scene.add(this.mesh);
+
+
+
+        this.sunLight = new THREE.DirectionalLight('#ffffff', this.experience.options.sunLightIntensity)
+        this.sunLight.shadow.camera.far = 64;
+        this.sunLight.shadow.mapSize.set(1024, 1024);
+        this.sunLight.shadow.normalBias = 0.05;
+        this.sunLight.shadow.camera.bottom = -16;
+        this.sunLight.shadow.camera.top    =  16;
+        this.sunLight.shadow.camera.left   = -16;
+        this.sunLight.shadow.camera.right  =  16;
+        this.sunLight.position.set(0, 0, -134);      
+        this.scene.add(this.sunLight)  
     }
 
     update() {

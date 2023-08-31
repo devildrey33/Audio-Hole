@@ -32,10 +32,10 @@ export default class Arrowciloscope {
     createRandValues() {
         //this.color = this.colors[Math.floor(Math.random() * 10)];
         this.color = new THREE.Color(Math.random(), Math.random(), Math.random());
-        console.log(this.color);
-        this.speed = 0.3 + Math.random() * 2;
+        this.speed = 0.3 + Math.random() * 1;
+//        this.speed = 0.03 + Math.random() * 0.2;
         this.size  = 0.01 + Math.random() * 0.2;
-        this.rotationSpeed = 0.001 ;
+        this.rotationSpeed = Math.random() * 0.005 ;
 
         this.angle = Math.PI - Math.random(Math.PI * 2);
         this.radius = 0.4 + Math.random() * 2.8;
@@ -60,6 +60,7 @@ export default class Arrowciloscope {
                 uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
                 uAudioStrength : { value : this.experience.options.osciloscopeAudioStrength },
                 uAudioZoom     : { value : this.experience.options.osciloscopeAudioZoom },
+                uAudioValue    : { value : 0 },
                 uSize          : { value : this.size },
                 uColor         : { value : this.color }
 //                uTime         : { value : 0 }
@@ -91,6 +92,7 @@ export default class Arrowciloscope {
         this.mesh.position.x = Math.cos(this.angle * this.radius);
         this.mesh.position.y = Math.sin(this.angle * this.radius);
         
+        this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.averageFrequency[4] / 64);
 
         if (this.mesh.position.z < - 60) {
             this.createRandValues();

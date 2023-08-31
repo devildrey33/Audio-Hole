@@ -30,7 +30,8 @@ const options = {
     // Bloom
     bloomThreshold                  : -15.4,
     bloomRadius                     : -5.32,
-    bloomStrength                   : 0.0,
+    bloomIntensity                  : 1,
+//    bloomStrength                   : 0.0,
     bloomEnabled                    : true,
     
     // Spirals      
@@ -43,10 +44,12 @@ const options = {
     spiralThickness                 : 0.05,
     spiralFrequencySin              : 0.5,
     spiralSpeedSin                  : 0.75,
-    spiralThicknessSin              : 0.01,
+    spiralThicknessSin              : 0.001,
 
     osciloscopeAudioStrength        : 0.5,
-    osciloscopeAudioZoom            : 1
+    osciloscopeAudioZoom            : 1,
+
+    sunLightIntensity               : 1
 }
 
 export default options;

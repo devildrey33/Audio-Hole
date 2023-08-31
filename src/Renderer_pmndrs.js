@@ -42,13 +42,13 @@ export default class Renderer {
 
         this.effectComposer.addPass(new RenderPass(this.scene, this.camera.instance));
 
-/*        this.bloomPass = new BloomEffect({ mipmapBlur : true });
+        this.bloomPass = new BloomEffect({ mipmapBlur : false });
         //this.bloomPass.strength = this.experience.options.bloomStrength;   
-        this.bloomPass.intensity = 1.5;
-        this.bloomPass.luminanceMaterial.threshold = 0.9;
-        this.bloomPass.luminanceMaterial.smoothing = 0.4;
+        this.bloomPass.intensity = this.experience.options.bloomIntensity;
+        this.bloomPass.luminanceMaterial.threshold = 10.9;
+        this.bloomPass.luminanceMaterial.smoothing = 100.1;
 
-        this.effectComposer.addPass(new EffectPass(this.camera.instance, this.bloomPass));*/
+        this.effectComposer.addPass(new EffectPass(this.camera.instance, this.bloomPass));
 
         this.godRaysPass = new GodRaysEffect(this.camera.instance, sunMesh);
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass));

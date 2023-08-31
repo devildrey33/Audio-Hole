@@ -26,6 +26,7 @@ export default class Spirals {
                 uAudioZoom         : { value : this.experience.options.spiralAudioZoom },
                 uAudioStrengthSin  : { value : this.experience.options.spiralAudioStrengthSin },
                 uAudioZoomSin      : { value : this.experience.options.spiralAudioZoomSin },
+                uAudioValue        : { value : 0 },
                 uTime              : { value : 0 },
                 uFrequency         : { value : this.experience.options.spiralFrequency },
                 uSpeed             : { value : this.experience.options.spiralSpeed },
@@ -66,6 +67,8 @@ export default class Spirals {
         const advance = this.time.delta / 1000;
         // update rotation on the cilynder
         this.mesh.rotation.y += advance;
+        // update audio value on spiral
+        this.material.uniforms.uAudioValue.value = 0.01 +  (this.audioAnalizer.averageFrequency[4] / 64);
         // update time on spiral
         this.material.uniforms.uTime.value += advance;   
         // Set osciloscope line thickness applying the low sound average frequency

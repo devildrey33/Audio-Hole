@@ -14,6 +14,8 @@ uniform float       uThicknessSin;
 
 uniform float       uTime;
 
+uniform float       uAudioValue;
+
 varying vec2        vUv; 
 
 
@@ -55,16 +57,17 @@ vec4 drawAudio(vec2 pos) {
     vec2 nPosSin = vec2(pos.x, pos.y + (pos.x * uFrequencySin) + mod(uTime * uSpeedSin, 1.0) + audioValueSin);
     float pSin = mod(nPosSin.y, uFrequencySin);
 
-    
+    //float nThickness = uThickness + uAudioValue * 0.05;
 
     // Paint the spiral osciloscope
     if (pSin < (uFrequencySin * uThicknessSin)) {        
-        return vec4(1.0, 1.0, 1.0, (1.0 - pos.y) * 1.5);
+        return vec4(1.0, 1.0, 1.0, uAudioValue * ((1.0 - pos.y) * 1.5));
         //return vec4(hsl2rgb(vec3(uTime * 0.331, 1, pos.y * 0.75 )), pSin * 10.0) * 1.5;
     }
     // Paint the spiral
     if (p < (uFrequency * uThickness)) {        
-        return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), (1.0 - pos.y) * 0.5);
+//        return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), (1.0 - pos.y) * 0.5);
+        return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), uAudioValue * ((1.0 - pos.y) * 0.5));
     }
 
     discard;
