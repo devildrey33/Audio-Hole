@@ -12,8 +12,12 @@ export default class Camera {
         this.scene = this.experience.scene;
         this.canvas = this.experience.canvas;
 
+        this.mouseX = 0;
+        this.mouseY = 0;
+
         this.setInstance();
         if (options.orbitControls === true) this.setOrbitControls();
+        else                                this.setCameraControls();
     }
 
 
@@ -33,12 +37,22 @@ export default class Camera {
 //        this.controls.enableDamping = true;
     }
 
+    setCameraControls() {
+        this.experience.canvas.addEventListener("mousemove", (e) => {
+            this.mouseX = e.clientX - (this.sizes.width * 0.5);
+            this.mouseY = e.clientY - (this.sizes.height * 0.5);
+        });
+    }
+
     resize() {
         this.instance.aspect = this.sizes.width / this.sizes.height;
         this.instance.updateProjectionMatrix();
     }
 
     update() {
-        
+        // update camera rotation using mouse coordinates
+        this.instance.rotation.y = THREE.MathUtils.lerp(this.instance.rotation.y, (this.mouseX * Math.PI) / 50000, 0.05) 
+        this.instance.rotation.x = THREE.MathUtils.lerp(this.instance.rotation.x, (this.mouseY * Math.PI) / 50000, 0.05)
+
     }
 }

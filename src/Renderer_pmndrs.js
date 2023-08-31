@@ -42,16 +42,25 @@ export default class Renderer {
 
         this.effectComposer.addPass(new RenderPass(this.scene, this.camera.instance));
 
-        this.bloomPass = new BloomEffect({ mipmapBlur : false });
+        this.bloomPass = new BloomEffect({ mipmapBlur : true, levels : 8        });
         //this.bloomPass.strength = this.experience.options.bloomStrength;   
         this.bloomPass.intensity = this.experience.options.bloomIntensity;
-        this.bloomPass.luminanceMaterial.threshold = 10.9;
-        this.bloomPass.luminanceMaterial.smoothing = 100.1;
+        this.bloomPass.luminanceMaterial.threshold = this.experience.options.bloomThreshold;
+        this.bloomPass.luminanceMaterial.smoothing = this.experience.options.bloomSmoothing;
+        this.bloomPass.mipmapBlurPass.radius = this.experience.options.bloomRadius;
 
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.bloomPass));
 
         this.godRaysPass = new GodRaysEffect(this.camera.instance, sunMesh);
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass));
+
+        this.godRaysPass.godRaysMaterial.density  = this.experience.options.godRaysDensity;
+        this.godRaysPass.godRaysMaterial.decay = this.experience.options.godRaysDecay;
+        this.godRaysPass.godRaysMaterial.weight = this.experience.options.godRaysWeigth;
+        this.godRaysPass.godRaysMaterial.exposure = this.experience.options.godRaysExposure;
+        this.godRaysPass.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
+        this.godRaysPass.godRaysMaterial.samples = this.experience.options.godRaysSamples;
+
 
 /*        this.godRaysPass2 = new GodRaysEffect(this.camera.instance, spiralsMesh);
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass2));

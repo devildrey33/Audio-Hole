@@ -28,9 +28,10 @@ const options = {
     orbitControls           : window.location.hash === '#debug',
 
     // Bloom
-    bloomThreshold                  : -15.4,
-    bloomRadius                     : -5.32,
-    bloomIntensity                  : 1,
+    bloomIntensity                  : 0.3,    // 2.7
+    bloomThreshold                  : 159.5,  // -234.8
+    bloomSmoothing                  : -342,   // 240.1
+    bloomRadius                     : 1.4,    // 1.4
 //    bloomStrength                   : 0.0,
     bloomEnabled                    : true,
     
@@ -49,7 +50,14 @@ const options = {
     osciloscopeAudioStrength        : 0.5,
     osciloscopeAudioZoom            : 1,
 
-    sunLightIntensity               : 1
+    sunLightIntensity               : 1,
+
+    godRaysDensity                  : 0.96,
+    godRaysDecay                    : 0.9,
+    godRaysWeigth                   : 0.4,
+    godRaysExposure                 : 0.6,
+    godRaysClampMax                 : 1.0,
+    godRaysSamples                  : 60,
 }
 
 export default options;

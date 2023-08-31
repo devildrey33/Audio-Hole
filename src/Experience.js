@@ -10,6 +10,7 @@ import Camera from './Camera.js';
 import Renderer from './Renderer_pmndrs.js';
 
 import World from './World/World.js';
+import Debug from './Utils/Debug.js';
 
 
 let experienceInstance = null;
@@ -49,7 +50,11 @@ export default class Experience {
         this.camera         = new Camera();
         this.world          = new World();
         this.renderer       = new Renderer(this.world.sun.mesh, this.world.spirals.mesh);
-//        this.debug          = new Debug();
+
+        if (this.options.debug === true) {
+            this.debug      = new Debug();
+        }
+        
 
         // Listen events
         this.sizes.on('resize', () => { this.resize(); })
