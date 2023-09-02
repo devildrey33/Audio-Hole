@@ -3,7 +3,10 @@ import Experience from '../Experience.js'
 //import Arrowciloscope from './Arrowciloscope.js';
 import Spirals from './Spirals.js';
 import Sun from './Sun.js';
+import Rays from './Rays.js';
 import ToHole from "./ToHole.js";
+import Bars from './Bars.js';
+
 
 export default class World {
     constructor() {
@@ -15,27 +18,38 @@ export default class World {
         this.sizes      = this.experience.sizes;
         this.time       = this.experience.time;
         // World ready
-        this.ready      = false;
+//        this.ready      = false;
         // setup
         this.setup();     
 
-        this.ready = true;
     }        
 
-    setup() {
 
+
+    setup() {
         this.spirals = new Spirals(this);
         this.sun     = new Sun(this);
+        // Create empty temporal function to update rays (because whe need his texture)
+        this.rays    = { update : () => { } }
 //        this.osciloscpe = new Arrowciloscope(new THREE.Color(200, 100, 0), 1, 0.1);
         this.toHole = new ToHole();
+
+        this.bars = new Bars(this);
+    }
+
+    // All resources are loaded
+    resourcesLoaded() {
+//        this.rays = new Rays();
     }
 
     update() {
-        if (this.ready === true) {
+        //if (this.ready === true) {
             this.spirals.update();
             this.sun.update();
+//            this.rays.update();
             this.toHole.update();
-        }
+//        }
     }
+
 
 }

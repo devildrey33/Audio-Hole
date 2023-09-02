@@ -1,4 +1,4 @@
-const options = {
+export default {
     // Debug mode : use #debug at the end of the url
     debug                   : window.location.hash === '#debug',
     // Y position. Use 'auto' to center canvas horizontaly to the view port
@@ -27,13 +27,6 @@ const options = {
     // Allow orbit controls (only on debug by default)
     orbitControls           : window.location.hash === '#debug',
 
-    // Bloom
-    bloomIntensity                  : 0.3,    // 2.7
-    bloomThreshold                  : 159.5,  // -234.8
-    bloomSmoothing                  : -342,   // 240.1
-    bloomRadius                     : 1.4,    // 1.4
-//    bloomStrength                   : 0.0,
-    bloomEnabled                    : true,
     
     // Spirals      
     spiralAudioStrength             : 0.4,
@@ -47,17 +40,39 @@ const options = {
     spiralSpeedSin                  : 0.75,
     spiralThicknessSin              : 0.001,
 
+    // Sun
+    sunAudioStrengthFreq            : 1.0,
+    sunAudioStrengthSin             : 2.1,
+    sunNoiseStrength                : 15,
+    sunNoiseSpeed                   : 1,
+    sunLightIntensity               : 1,
+
+
+    // Rays (particles)
+    raysCount                       : 50,
+
+    // Bars
+    barsAudioStrength               : 5,
+
+
     osciloscopeAudioStrength        : 0.5,
     osciloscopeAudioZoom            : 1,
 
-    sunLightIntensity               : 1,
 
+    // Bloom (postprocessing)
+    bloomIntensity                  : 0.3,    // 2.7
+    bloomThreshold                  : 159.5,  // -234.8
+    bloomSmoothing                  : -342,   // 240.1
+    bloomRadius                     : 1.4,    // 1.4
+//    bloomStrength                   : 0.0,
+    bloomEnabled                    : true,
+
+    // God rays (postprocessing)
     godRaysDensity                  : 0.96,
     godRaysDecay                    : 0.9,
     godRaysWeigth                   : 0.4,
     godRaysExposure                 : 0.6,
     godRaysClampMax                 : 1.0,
     godRaysSamples                  : 60,
-}
+};
 
-export default options;

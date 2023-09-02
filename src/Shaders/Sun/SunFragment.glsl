@@ -1,13 +1,9 @@
 uniform sampler2D uAudioTexture;
 uniform float     uAudioStrengthFreq;
 uniform float     uAudioStrengthSin;
-uniform float     uRadiusFreq;
-uniform float     uRadiusSin;
 uniform float     uTime;
-//uniform float     uHover;
 uniform float     uNoiseStrength;
 uniform float     uNoiseSpeed;
-//uniform float     uLowFrequency;
 
 varying vec2      vUv; // Coordenadas UV del fragmento
 
@@ -106,6 +102,8 @@ vec3 getColor(float time) {
 
 // Make a circle with the frequency data
 vec4 circleFreq(vec4 currentColor, vec2 center) {
+    const float radiusFreq = 0.3;
+
     vec2 pos = vec2(0.55, 0.5);
     float dist = length(vUv - pos);
     float rad = atan(vUv.y - pos.y, vUv.x - pos.x);
@@ -123,7 +121,7 @@ vec4 circleFreq(vec4 currentColor, vec2 center) {
     float strength = cnoise(vec3(rad * 2.0, dist * uNoiseStrength,  uTime * uNoiseSpeed)) * 0.1;
 //    float strength = cnoise(vec3(-PI + (rad * 2.0), -(distNS * 0.5) + dist * uNoiseStrength,  uTime * uNoiseSpeed)) * 0.1;
 
-    if (dist - audioValue + strength + 0.005 < uRadiusFreq) {
+    if (dist - audioValue + strength + 0.005 < radiusFreq) {
         float angle = uTime * .5 * PI;  // Ángulo de rotación en función del tiempo
         
         // Aplicar matriz de rotación al vector de coordenadas UV
@@ -142,6 +140,8 @@ vec4 circleFreq(vec4 currentColor, vec2 center) {
 
 // // Make a circle with the time domain data
 vec4 circleSin(vec4 currentColor, vec2 center) {
+    const float radiusSin = 0.25 * 0.5;
+    
     vec2 pos1 = vec2(0.4, 0.5);
     float dist = length(vUv - center);
     float rad = atan(vUv.y - center.y, vUv.x - center.x);
@@ -157,9 +157,11 @@ vec4 circleSin(vec4 currentColor, vec2 center) {
     // Perlin noise
     float strength = 0.0; //cnoise(vec3(rad * TAU * 5.0, dist * 100.0,  uTime + color.b)) * radius * 0.1;
 
-    if (dist - audioValue + strength + 0.01 < uRadiusSin) {
+    if (dist - audioValue + strength + 0.01 < radiusSin) {
 //        return vec4(getColor(uTime * 0.05) , 1.0 /* 0.5 + (2.0 * dist) - sin(uTime) * 0.25 */);
         return vec4(1.0, .5, .5, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
+//        return vec4(0.6, 0.2, 0.7, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
+//        return vec4(abs(sin(uTime * 5.312)), abs(cos(uTime * 0.32)), 0.5, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
     }
 /*    else if (dist - audioValue + strength < uRadiusSin) {
 //        color.g += 1.0 - audioValue;

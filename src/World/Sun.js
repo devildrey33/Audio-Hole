@@ -17,21 +17,18 @@ export default class Sun {
     setup() {
         this.geometry = new THREE.PlaneGeometry(12, 12);
 
-//        console.log(this.experience.debugOptions.perlinSunColorFrequency);
         this.material = new THREE.ShaderMaterial({
             uniforms : {
                 uAudioTexture      : { value : this.audioAnalizer.bufferCanvasLinear.texture },
                 uTime              : { value : 0 },
-                uAudioStrengthFreq : { value : 1.0 },
-                uAudioStrengthSin  : { value : 1.0 },
-                uRadiusFreq        : { value : 0.4 },
-                uRadiusSin         : { value : 0.25 },
-                uNoiseStrength     : { value : 15 },
-                uNoiseSpeed        : { value : 1 }
+                uAudioStrengthFreq : { value : this.experience.options.sunAudioStrengthFreq },
+                uAudioStrengthSin  : { value : this.experience.options.sunAudioStrengthSin },
+                uNoiseStrength     : { value : this.experience.options.sunNoiseStrength },
+                uNoiseSpeed        : { value : this.experience.options.sunNoiseSpeed }
             },
             vertexShader    : SunVertexShader,
             fragmentShader  : SunFragmentShader,
-//            transparent     : true, 
+            transparent     : true, 
 //            side            : THREE.DoubleSide,
         });
 

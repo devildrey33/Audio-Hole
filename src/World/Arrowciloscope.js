@@ -57,9 +57,9 @@ export default class Arrowciloscope {
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
-                uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
+/*                uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
                 uAudioStrength : { value : this.experience.options.osciloscopeAudioStrength },
-                uAudioZoom     : { value : this.experience.options.osciloscopeAudioZoom },
+                uAudioZoom     : { value : this.experience.options.osciloscopeAudioZoom },*/
                 uAudioValue    : { value : 0 },
                 uSize          : { value : this.size },
                 uColor         : { value : this.color }

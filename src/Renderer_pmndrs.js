@@ -68,7 +68,7 @@ export default class Renderer {
         this.godRaysPass2.godRaysMaterial.density = 0.2;
 //        this.godRaysPass2.godRaysMaterial.decay = 0.2;*/
         
-        console.log(this.bloomPass, this.godRaysPass)
+//        console.log(this.bloomPass, this.godRaysPass)
 
         // bloom pass
 /*        this.bloomPass = new UnrealBloomPass( new THREE.Vector2( this.sizes.width, this.sizes.height ), 1.5, 0.4, 0.85 );

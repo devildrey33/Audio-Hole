@@ -11,6 +11,8 @@ import Renderer from './Renderer_pmndrs.js';
 
 import World from './World/World.js';
 import Debug from './Utils/Debug.js';
+import Resources from './Utils/Resources.js';
+import sources from "./Config/resourcesToLoad.js"
 
 
 let experienceInstance = null;
@@ -29,6 +31,7 @@ export default class Experience {
         this.songs = songs;
         // select a random song
         this.song = this.songs[Math.floor(Math.random() * this.songs.length)];
+        this.songLoading = true;
 
         // default options
         this.options = options;
@@ -39,6 +42,9 @@ export default class Experience {
         this.htmlElements   = new HTMLElements();
         // Initialize time
         this.time           = new Time();
+
+        this.resources      = new Resources(sources);
+        this.loading = true;
 
         this.audioAnalizer  = new AudioAnalizer();
         this.audioAnalizer.loadSong(this.song.path);
@@ -57,20 +63,21 @@ export default class Experience {
         
 
         // Listen events
-        this.sizes.on('resize', () => { this.resize(); })
-        this.time.on ('tick'  , () => { this.update(); })
+        this.sizes.on    ('resize', () => { this.resize(); })
+        this.time.on     ('tick'  , () => { this.update(); })
+        this.resources.on('ready' , () => { this.resourcesLoaded(); })
     }
 
-    // Get loading state
+/*    // Get loading state
     get loading() {
         let Ret = this.htmlElements.elementExperience.getAttribute("loading");
         return (Ret === "true" || Ret === true);
-    }
+    }*/
 
     // Set loading state
-    set loading(isLoading) {
+/*    set loading(isLoading) {
         this.htmlElements.elementExperience.setAttribute("loading", isLoading);
-    }    
+    }    */
 
     /**
      * Function called on resize
@@ -90,8 +97,20 @@ export default class Experience {
         this.renderer.update();
     }
  
+    /**
+     * Function called when all thre resources are loaded (except the song)
+     */
+    resourcesLoaded() {
+        this.loading = false;
+        this.setLoading();
+        this.world.resourcesLoaded();
+    }
 
-
+    setLoading() {
+        let isLoading = true;
+        if (this.loading === false && this.songLoading === false) isLoading = false;
+        this.htmlElements.elementExperience.setAttribute("loading", isLoading);
+    }
 
     /** 
      * This function destroy the whole scene

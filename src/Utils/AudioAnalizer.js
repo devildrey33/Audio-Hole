@@ -97,7 +97,8 @@ export default class AudioAnalizer {
         if (typeof this.song !== "undefined") {
             this.song.pause();
             this.songLoaded = false;
-            this.experience.loading = true;
+            this.experience.songLoading = true;
+            this.experience.setLoading();
             this.experience.htmlElements.audioUI(true);            
         }
          
@@ -109,7 +110,8 @@ export default class AudioAnalizer {
             this.canPlay();
         });
         this.song.addEventListener('error',   () => { 
-            this.experience.loading = false; 
+            this.experience.songLoading = false; 
+            this.experience.setLoading();
             this.experience.htmlElements.audioUI(true);
             window.alert("error loading : " + path);
         });
@@ -177,7 +179,8 @@ export default class AudioAnalizer {
             this.gainNode.connect(this.context.destination);
             // Update max time on the time slider
 //            this.refTime.current.setAttribute("max", this.song.duration);
-            this.experience.loading = false;
+            this.experience.songLoading = false;
+            this.experience.setLoading();
         }
     }
 

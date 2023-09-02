@@ -16,8 +16,13 @@ export default class Camera {
         this.mouseY = 0;
 
         this.setInstance();
-        if (options.orbitControls === true) this.setOrbitControls();
-        else                                this.setCameraControls();
+        if (options.orbitControls === true) {
+            this.setOrbitControls();
+            this.update = () => {};
+        }
+        else {
+            this.setCameraControls();
+        }
     }
 
 
