@@ -31,9 +31,10 @@ export default class AudioAnalizer {
     }
     
     volume(vol) {
-        this.currentVolume = vol;
+        if (typeof vol !== "undefined") this.currentVolume = vol;
+
         if (typeof this.gainNode !== "undefined") {
-            this.gainNode.gain.value = vol;
+            this.gainNode.gain.value = this.currentVolume;
         }
     }
 
@@ -150,11 +151,9 @@ export default class AudioAnalizer {
             this.loadSong(path);
         }
 
+        this.context.resume();
         // Ensure the current volume is the same of the UI
         this.volume(this.currentVolume);
-
-        this.context.resume();
-
         
         // If song is playing
         if (this.song.duration > 0 && !this.song.paused) { 
@@ -166,6 +165,7 @@ export default class AudioAnalizer {
             return true;               
         }        
     };
+
 
     canPlay() {
         if (this.songLoaded !== true) {
@@ -209,19 +209,20 @@ export default class AudioAnalizer {
         // greus  de 0hz a 256hz
         // mitjos de 257hz a 2000hz
         // aguts  de 2001hz a 16000hz
-        let hzBar      = this.context.sampleRate / this.fftSize;
-        let divisions  = [ 256, 2000, 16000, 50000 ];
-        let total      = [ 0, 0, 0, 0, 0 ];// Graves, Medios, Agudos, Agudos inaudibles, Media de todo
-        let values     = [ 0, 0, 0, 0, 0 ];// Graves, Medios, Agudos, Agudos inaudibles, Media de todo
-        let pos        = 0;        
-        let totalFreq = this.fftSize / 2;
+        let hzBar       = this.context.sampleRate / this.fftSize;
+//        console.log(this.context.sampleRate)
+        const divisions = [ 256, 2000, 16000, 50000 ];
+        let total       = [ 0, 0, 0, 0, 0 ];// Graves, Medios, Agudos, Agudos inaudibles, Media de todo
+        let values      = [ 0, 0, 0, 0, 0 ];// Graves, Medios, Agudos, Agudos inaudibles, Media de todo
+        let pos         = 0;        
+        const totalFreq = this.fftSize / 2;
         for (let i = 0; i < totalFreq; i++) {
             if (i * hzBar > divisions[pos]) {
                 pos++;
             }
             total[pos]  ++;
-            values[pos] += this.analizerData[i];            
-            values[4]   += this.analizerData[i];
+            values[pos] += this.analizerData[i];    // set the current pos average
+            values[4]   += this.analizerData[i];    // set the total average
         }
         
         return [ values[0] / total[0],    // High

@@ -66,6 +66,11 @@ export default class Experience {
         this.sizes.on    ('resize', () => { this.resize(); })
         this.time.on     ('tick'  , () => { this.update(); })
         this.resources.on('ready' , () => { this.resourcesLoaded(); })
+
+        this.canvas.addEventListener("click", (e) => { 
+            this.renderer.shockWavePass.explode(); 
+        })
+
     }
 
 /*    // Get loading state

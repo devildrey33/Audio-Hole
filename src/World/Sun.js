@@ -10,11 +10,12 @@ export default class Sun {
         this.time          = this.experience.time;
         this.audioAnalizer = this.experience.audioAnalizer;
         this.world         = world;
-        this.setup();
+        this.setupSun();
+        this.setupLight();
     }
 
     
-    setup() {
+    setupSun() {
         this.geometry = new THREE.PlaneGeometry(12, 12);
 
         this.material = new THREE.ShaderMaterial({
@@ -40,11 +41,11 @@ export default class Sun {
         this.mesh.name = "Sun";
     
         this.scene.add(this.mesh);
+    }
 
-
-
+    setupLight() {
         this.sunLight = new THREE.DirectionalLight('#ffffff', this.experience.options.sunLightIntensity)
-        this.sunLight.shadow.camera.far = 64;
+        this.sunLight.shadow.camera.far = 256;
         this.sunLight.shadow.mapSize.set(1024, 1024);
         this.sunLight.shadow.normalBias = 0.05;
         this.sunLight.shadow.camera.bottom = -16;
@@ -52,6 +53,7 @@ export default class Sun {
         this.sunLight.shadow.camera.left   = -16;
         this.sunLight.shadow.camera.right  =  16;
         this.sunLight.position.set(0, 0, -134);      
+        this.sunLight.castShadow = true;
         this.scene.add(this.sunLight)  
     }
 

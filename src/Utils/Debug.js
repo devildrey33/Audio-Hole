@@ -11,10 +11,36 @@ export default class Debug {
     setup() {
         this.gui = new dat.GUI({ width : 300 });
 
-        this.setupSpirals(true);
-        this.setupSun(true);
-        this.setupBloom(true);
-        this.setupGodRays(true);
+        this.setupSpirals();
+        this.setupSun();
+        this.setupBloom();
+        this.setupGodRays();
+        this.setupShockWave(true);
+    }
+
+    setupShockWave(open = false) {
+        this.shockWave = this.experience.renderer.shockWavePass;
+        this.shockWaveUI = this.gui.addFolder("ShockWave (post processing").open(open);
+
+        this.shockWaveUI.add(this.experience.options, 'shockWaveSpeed').min(0.1).max(5).step(0.1).name("Speed").onChange(() => {
+            this.shockWave.speed = this.experience.options.shockWaveSpeed;
+        });
+        this.shockWaveUI.add(this.experience.options, 'shockWaveMaxRadius').min(0.1).max(5).step(0.1).name("Max radius").onChange(() => {
+            this.shockWave.maxRadius = this.experience.options.shockWaveMaxRadius;
+        });
+        this.shockWaveUI.add(this.experience.options, 'shockWaveWaveSize').min(0.1).max(5).step(0.1).name("Wave size").onChange(() => {
+            this.shockWave.waveSize = this.experience.options.shockWaveWaveSize;
+        });
+        this.shockWaveUI.add(this.experience.options, 'shockWaveAmplitude').min(0.01).max(5).step(0.1).name("Amplitude").onChange(() => {
+            this.shockWave.amplitude = this.experience.options.shockWaveAmplitude;
+        });
+
+/*        // Shock wave (postprocessing)
+    shockWaveSpeed                  : 2,
+    shockWaveMaxRadius              : 1,
+    shockWaveWaveSize               : 0.2,
+    shockWaveAmplitude              : 0.05,*/
+
     }
 
     setupBloom(open = false) {

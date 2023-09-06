@@ -5,7 +5,7 @@ import ArrowciloscopeFragmentShader from "../Shaders/Arrowciloscope/Arrowcilosco
 
 
 export default class Arrowciloscope {
-    colors = [
+/*    colors = [
         new THREE.Color(139, 0, 0),
         new THREE.Color(255, 140, 0),
         new THREE.Color(255, 215, 0),
@@ -16,7 +16,7 @@ export default class Arrowciloscope {
         new THREE.Color(255, 218, 185),
         new THREE.Color(255, 69, 0),
         new THREE.Color(255, 255, 102),
-    ];
+    ];*/
 
     constructor() {
         this.experience           = new Experience();
@@ -72,7 +72,6 @@ export default class Arrowciloscope {
 //            depthWrite      : false
         });
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-        this.mesh.name = "Osciloscope";
 
         this.mesh.rotation.x = Math.PI * 0.5;
         this.mesh.rotation.z = Math.PI * 0.5;

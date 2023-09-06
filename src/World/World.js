@@ -35,6 +35,7 @@ export default class World {
         this.toHole = new ToHole();
 
         this.bars = new Bars(this);
+
     }
 
     // All resources are loaded

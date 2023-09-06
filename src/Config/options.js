@@ -52,7 +52,8 @@ export default {
     raysCount                       : 50,
 
     // Bars
-    barsAudioStrength               : 5,
+    barsAudioStrength               : 25,
+    barsAudioZoom                   : 1.5,
 
 
     osciloscopeAudioStrength        : 0.5,
@@ -74,5 +75,11 @@ export default {
     godRaysExposure                 : 0.6,
     godRaysClampMax                 : 1.0,
     godRaysSamples                  : 60,
+
+    // Shock wave (postprocessing)
+    shockWaveSpeed                  : 3.7,
+    shockWaveMaxRadius              : 1,
+    shockWaveWaveSize               : 0.2,
+    shockWaveAmplitude              : 2,
 };
 

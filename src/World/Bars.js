@@ -18,7 +18,7 @@ export default class Bars {
         this.world           = world;
         
         // Could be a square but makes no sense with the floor
-        this.createBars(256,1);
+        this.createBars(1024,1);
     }
 
     visible(show) {
@@ -41,6 +41,7 @@ export default class Bars {
             uniforms : {
                 uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
                 uAudioStrength : { value : this.experience.options.barsAudioStrength },
+                uAudioZoom     : { value : this.experience.options.barsAudioZoom },
 //                uTime         : { value : 0 }
             },
             vertexShader    : BarsVertexShader,
@@ -53,10 +54,10 @@ export default class Bars {
 
         for (let z = 0; z < height; z++) {
             for (let x = 0; x < width; x++) {
-                const geometry = new THREE.BoxGeometry(0.09, 0.1, 0.09);
+                const geometry = new THREE.BoxGeometry(0.9, 1, 0.9);
 
-                const nx = (-(width * 0.5) + x) * 0.1;
-                const nz = (-(height * 0.5) + z) * 0.1;
+                const nx = (-(width * 0.5) + x) * 1;
+                const nz = (-(height * 0.5) + z) * 1;
 
                 geometry.translate(nx, 0, nz);
 
@@ -85,7 +86,7 @@ export default class Bars {
         this.mesh = new THREE.Mesh(this.geometry, this.material);
 //        this.mesh.castShadow = this.experience.debugOptions.shadows;
 
-        this.mesh.position.set(-3, 0.0, -15);
+//        this.mesh.position.set(, 0.0, -15);
 
 //        this.mesh.rotation.y = Math.PI * 0.5;
         this.mesh.rotation.x = -Math.PI * 0.5;
@@ -93,8 +94,14 @@ export default class Bars {
         this.mesh.rotation.y = Math.PI;
         this.mesh.name = "Bars";
 
+        // not working with custom shader...
+        this.mesh.castShadow = true;
+        this.mesh.receiveShadow = true;
 
-        this.scene.add(this.mesh);
+        this.group = new THREE.Group();
+        this.group.add(this.mesh);
+        this.group.position.set(-50, 0, -512);
+        this.scene.add(this.group);
     }
 
     

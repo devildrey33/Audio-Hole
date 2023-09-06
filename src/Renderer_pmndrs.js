@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from "./Experience";
-import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, BrightnessContrastEffect } from "postprocessing";
+import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ShockWaveEffect } from "postprocessing";
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
 export default class Renderer {
@@ -61,6 +61,15 @@ export default class Renderer {
         this.godRaysPass.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
         this.godRaysPass.godRaysMaterial.samples = this.experience.options.godRaysSamples;
 
+
+        this.shockWavePass = new ShockWaveEffect(this.camera.instance, new THREE.Vector3(0, 0, -10));
+
+        this.shockWavePass.speed = this.experience.options.shockWaveSpeed;
+        this.shockWavePass.maxRadius = this.experience.options.shockWaveMaxRadius;
+        this.shockWavePass.waveSize = this.experience.options.shockWaveWaveSize;
+        this.shockWavePass.amplitude = this.experience.options.shockWaveAmplitude;
+
+        this.effectComposer.addPass(new EffectPass(this.camera.instance, this.shockWavePass));
 
 /*        this.godRaysPass2 = new GodRaysEffect(this.camera.instance, spiralsMesh);
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass2));
