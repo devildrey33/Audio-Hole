@@ -6,6 +6,7 @@ import Sun from './Sun.js';
 import Rays from './Rays.js';
 import ToHole from "./ToHole.js";
 import Bars from './Bars.js';
+import HMLOsciloscope from './HMLOsciloscope.js';
 
 
 export default class World {
@@ -36,6 +37,7 @@ export default class World {
 
         this.bars = new Bars(this);
 
+        this.hmlOsciloscope = new HMLOsciloscope();
     }
 
     // All resources are loaded
@@ -49,6 +51,7 @@ export default class World {
             this.sun.update();
 //            this.rays.update();
             this.toHole.update();
+            this.hmlOsciloscope.update();
 //        }
     }
 
