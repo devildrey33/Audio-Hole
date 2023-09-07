@@ -79,7 +79,7 @@ export default {
     godRaysSamples                  : 60,
 
     // Shock wave (postprocessing)
-    shockWaveSpeed                  : 3.7,
+    shockWaveSpeed                  : 3.2,
     shockWaveMaxRadius              : 1,
     shockWaveWaveSize               : 0.2,
     shockWaveAmplitude              : 2,

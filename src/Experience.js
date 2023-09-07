@@ -54,9 +54,11 @@ export default class Experience {
             this.onAudioPause,
             this.onAudioError,
             this.onAudioCanPlay,
+            this.onAudioLoading, 
+            this.onAudioBpmChange,
             this.options.songsDragDrop
         );
-        this.audioAnalizer.loadSong(this.song.path);
+        this.audioAnalizer.loadSong(this.song.path, this.song.bpm);
         // Set the canvas element
         this.canvas         = this.htmlElements.elementCanvas;
 
@@ -95,7 +97,7 @@ export default class Experience {
     */
     update() {
         this.camera.update();
-        this.audioAnalizer.update();
+        this.audioAnalizer.update(this.time.delta);
         this.world.update();
         this.renderer.update();
     }
@@ -149,6 +151,15 @@ export default class Experience {
         this.setLoading();
     }
 
+    onAudioLoading = () => {
+        this.songLoading = true;
+        this.setLoading();
+        this.htmlElements.audioUI(true);    
+    }
+
+    onAudioBpmChange = (currentBpm) => {
+        console.log("Bpm : " + this.audioAnalizer.bpm + " Current beat : " + currentBpm);
+    }
     /** 
      * This function destroy the whole scene
      */

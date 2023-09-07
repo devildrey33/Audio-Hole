@@ -17,7 +17,7 @@ export default class HMLOsciloscope {
     }
 
     setup() {
-        this.geometry = new THREE.PlaneGeometry(1024, 40);
+        this.geometry = new THREE.PlaneGeometry(1024, 50);
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {

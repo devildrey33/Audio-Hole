@@ -13,6 +13,8 @@ export default class AudioAnalizer {
         onEnded           = () => {}, // Song has reached the end
         onError           = () => {}, // Error...
         onCanPlay         = () => {}, // Song is ready to play
+        onLoading         = () => {}, // Starting to load the song
+        onBpmChange       = () => {}, // Current beat per minute is updated
         allowDropSong     = true
     ) {
         // Setup callbacks
@@ -23,6 +25,8 @@ export default class AudioAnalizer {
         this.onEnded          = onEnded;
         this.onError          = onError;
         this.onCanPlay        = onCanPlay;
+        this.onLoading        = onLoading;
+        this.onBpmChange      = onBpmChange;
 
         // Get the experience object
 //        this.experience = new Experience();
@@ -39,6 +43,14 @@ export default class AudioAnalizer {
         this.averageFrequency = [ 0, 0, 0, 0, 0 ];
         // Paint the audio textures to have safe values 
         this.paintAudioTexture();
+        // Time to calculate beats per minute
+        this.bpmTime = 0;
+        // Beats per minute, if its 0 its not calculated
+        this.bpm = 0;        
+        
+        this.isPlaying = false;
+
+        this.currentBpm = 0;
     }
 
     setupDragDropEvents() {
@@ -112,14 +124,17 @@ export default class AudioAnalizer {
     }    
 
 
-    loadSong(path) {
+    loadSong(path, bpm = 0) {
         if (typeof this.song !== "undefined") {
             this.song.pause();
-/*            this.songLoaded = false;
-            this.experience.songLoading = true;
-            this.experience.setLoading();
-            this.experience.htmlElements.audioUI(true);    */        
+            this.songLoaded = false;
+            this.isPlaying = false;
+            this.onLoading();
         }
+        // Reset time to calculate beats per minute
+        this.bpmTime = 0;
+        this.bpm = bpm;
+        this.currentBpm = 0;
          
         this.song                = new Audio();
         this.song.controls       = true;
@@ -129,9 +144,11 @@ export default class AudioAnalizer {
             this.canPlay();
         });
         this.song.addEventListener('error',   () => { 
+            this.isPlaying = false;
             this.onError();
         });
         this.song.addEventListener('ended'  , () => { 
+            this.isPlaying = false;
             this.onEnded();
         });                
         // Update max time
@@ -141,6 +158,16 @@ export default class AudioAnalizer {
         // Update current time
         this.song.addEventListener('timeupdate'  , () => { 
             this.onTimeUpdate(this.song.currentTime);
+            // Calculate current beats per minute NOT ACURATE
+/*            if (this.bpm !== 0) {
+                const mspb = 60000 / this.bpm;
+                let currentBpm = Math.floor((this.song.currentTime * 1000) / mspb);
+                if (currentBpm !== this.currentBpm) {
+                    this.currentBpm = currentBpm;
+                    this.onBpmChange(this.currentBpm);
+                }
+            }*/ 
+            
         });
         
         
@@ -174,12 +201,13 @@ export default class AudioAnalizer {
         // If song is playing
         if (this.song.duration > 0 && !this.song.paused) { 
             this.song.pause();
-            return false;  
+            this.isPlaying = false;
         } 
         else {
             this.song.play();   
-            return true;               
+            this.isPlaying = true;
         }        
+        return this.isPlaying;               
     };
 
 
@@ -201,7 +229,7 @@ export default class AudioAnalizer {
     }
 
 
-    update() {
+    update(delta) {
         // Avoid update if analizer is not created
         if (typeof this.analizer === "undefined") return;
 
@@ -214,6 +242,18 @@ export default class AudioAnalizer {
 
         // Get average frequency
         this.averageFrequency = this.getAverageFrequency();
+
+        // Calculate current beats per minute 
+        // TO DO : need to update currentBpm
+        if (this.isPlaying === true && this.bpm !== 0) {
+            this.bpmTime += delta;
+            const mspb = 60000 / this.bpm;
+            if (this.bpmTime > mspb) {
+                this.currentBpm ++;
+                this.bpmTime -= mspb;
+                this.onBpmChange(this.currentBpm);
+            }
+        }
     }
 
     setTime(newTime) {

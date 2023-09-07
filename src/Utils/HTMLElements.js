@@ -33,7 +33,7 @@ export default class HTMLElements {
                 }
             }
             
-            this.experience.audioAnalizer.loadSong(this.experience.song.path);
+            this.experience.audioAnalizer.loadSong(this.experience.song.path, this.experience.song.bpm);
             this.experience.audioAnalizer.playPause();
 //            this.experience.world.audioInfo.setup();
         });
@@ -70,6 +70,13 @@ export default class HTMLElements {
         // Update current time
         this.elementAudioTime.addEventListener('change', (e) => { 
             this.experience.audioAnalizer.song.currentTime = this.elementAudioTime.value;
+            // Update current beat per minute acording to the new time
+            if (this.experience.audioAnalizer.bpm !== 0) {
+                // Update current beat per minute
+                const mspb = 60000 / this.experience.audioAnalizer.bpm;
+                this.experience.audioAnalizer.currentBpm = Math.floor((this.experience.audioAnalizer.song.currentTime * 1000) / mspb);
+                this.experience.onAudioBpmChange(this.experience.audioAnalizer.currentBpm);
+            }
         }); 
 
     }
