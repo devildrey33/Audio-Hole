@@ -59,7 +59,7 @@ export default {
     osciloscopeAudioStrength        : 0.5,
     osciloscopeAudioZoom            : 1,
 
-    hmsOsciloscopeAudioStrength     : 1,
+    hmsOsciloscopeAudioStrength     : 0.5,
 
 
     // Bloom (postprocessing)

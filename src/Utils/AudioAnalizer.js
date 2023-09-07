@@ -1,18 +1,36 @@
 import * as THREE from "three"
 import BufferCanvas from "./BufferCanvas.js";
-import Experience from "../Experience.js";
+//import Experience from "../Experience.js";
 
 
 /* Audio analizer singleton */
 export default class AudioAnalizer {
-    constructor() {
+    constructor(
+        onPlay            = () => {}, // Playing the song
+        onPause           = () => {}, // Pausing the song
+        onTimeUpdate      = () => {}, // Updating current song time
+        onDurationChange  = () => {}, // First time whe know duration of the song
+        onEnded           = () => {}, // Song has reached the end
+        onError           = () => {}, // Error...
+        onCanPlay         = () => {}, // Song is ready to play
+        allowDropSong     = true
+    ) {
+        // Setup callbacks
+        this.onPlay           = onPlay;
+        this.onPause          = onPause;
+        this.onTimeUpdate     = onTimeUpdate;
+        this.onDurationChange = onDurationChange;
+        this.onEnded          = onEnded;
+        this.onError          = onError;
+        this.onCanPlay        = onCanPlay;
+
         // Get the experience object
-        this.experience = new Experience();
+//        this.experience = new Experience();
 
         // Song loaded flag
         this.songLoaded = false;
         // Setup the drag & drop events
-        if (this.experience.options.songsDragDrop) this.setupDragDropEvents();
+        if (allowDropSong) this.setupDragDropEvents();
         // Set the default volume
         this.currentVolume = 0.5;
         // Initialize memory for audio textures
@@ -97,10 +115,10 @@ export default class AudioAnalizer {
     loadSong(path) {
         if (typeof this.song !== "undefined") {
             this.song.pause();
-            this.songLoaded = false;
+/*            this.songLoaded = false;
             this.experience.songLoading = true;
             this.experience.setLoading();
-            this.experience.htmlElements.audioUI(true);            
+            this.experience.htmlElements.audioUI(true);    */        
         }
          
         this.song                = new Audio();
@@ -111,35 +129,33 @@ export default class AudioAnalizer {
             this.canPlay();
         });
         this.song.addEventListener('error',   () => { 
-            this.experience.songLoading = false; 
-            this.experience.setLoading();
-            this.experience.htmlElements.audioUI(true);
-            window.alert("error loading : " + path);
+            this.onError();
         });
         this.song.addEventListener('ended'  , () => { 
-            this.experience.htmlElements.audioUI(true);
+            this.onEnded();
         });                
         // Update max time
         this.song.addEventListener('durationchange'  , () => { 
-            // Update max time on the time slider
-            this.experience.htmlElements.elementAudioTime.setAttribute("max", this.song.duration);
+            this.onDurationChange(this.song.duration);
         });                
         // Update current time
         this.song.addEventListener('timeupdate'  , () => { 
-            if (this.experience.htmlElements.dragTime == false)
-              this.experience.htmlElements.elementAudioTime.value = this.song.currentTime;
-//                this.refTime.current.value = this.song.currentTime;
+            this.onTimeUpdate(this.song.currentTime);
         });
         
         
-        this.song.addEventListener('play'  , () => { this.experience.htmlElements.audioUI(false); });        
-        this.song.addEventListener('pause' , () => { this.experience.htmlElements.audioUI(true); });        
+        this.song.addEventListener('play'  , () => { 
+            this.onPlay();
+        });        
+        this.song.addEventListener('pause' , () => { 
+            this.onPause();
+         });        
     }
 
 
 
     loadSongDrop(files) {
-        this.experience.htmlElements.audioUI(false);
+//        this.experience.htmlElements.audioUI(false);
         this.loadSong(URL.createObjectURL(files[0]));
     }
 
@@ -179,8 +195,8 @@ export default class AudioAnalizer {
             this.gainNode.connect(this.context.destination);
             // Update max time on the time slider
 //            this.refTime.current.setAttribute("max", this.song.duration);
-            this.experience.songLoading = false;
-            this.experience.setLoading();
+
+            this.onCanPlay();
         }
     }
 
@@ -269,9 +285,9 @@ export default class AudioAnalizer {
 
 
     destroy() {
-        this.experience.canvas.removeEventListener("dragenter", this.eventDragEnter);
-        this.experience.canvas.removeEventListener("dragover" , this.eventDragOver);
-        this.experience.canvas.removeEventListener("drop"     , this.eventDrop);
+        this.document.body.removeEventListener("dragenter", this.eventDragEnter);
+        this.document.body.removeEventListener("dragover" , this.eventDragOver);
+        this.document.body.removeEventListener("drop"     , this.eventDrop);
     }    
 }
 

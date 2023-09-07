@@ -46,7 +46,16 @@ export default class Experience {
         this.resources      = new Resources(sources);
         this.loading = true;
 
-        this.audioAnalizer  = new AudioAnalizer();
+        this.audioAnalizer  = new AudioAnalizer(
+            this.onAudioPlay,
+            this.onAudioPause,
+            this.onAudioTimeUpdate,
+            this.onAudioDurationChange,
+            this.onAudioPause,
+            this.onAudioError,
+            this.onAudioCanPlay,
+            this.options.songsDragDrop
+        );
         this.audioAnalizer.loadSong(this.song.path);
         // Set the canvas element
         this.canvas         = this.htmlElements.elementCanvas;
@@ -72,17 +81,6 @@ export default class Experience {
         })
 
     }
-
-/*    // Get loading state
-    get loading() {
-        let Ret = this.htmlElements.elementExperience.getAttribute("loading");
-        return (Ret === "true" || Ret === true);
-    }*/
-
-    // Set loading state
-/*    set loading(isLoading) {
-        this.htmlElements.elementExperience.setAttribute("loading", isLoading);
-    }    */
 
     /**
      * Function called on resize
@@ -117,12 +115,47 @@ export default class Experience {
         this.htmlElements.elementExperience.setAttribute("loading", isLoading);
     }
 
+    /* 
+     * Audio events
+     */
+    onAudioPlay = () => {
+        this.htmlElements.audioUI(false); 
+    }
+
+    // onPause and onEnded callbacks
+    onAudioPause = () => { 
+        this.htmlElements.audioUI(true);
+    }
+
+    onAudioTimeUpdate = (currentTime) => {
+        if (this.htmlElements.dragTime == false)
+            this.htmlElements.elementAudioTime.value = currentTime;
+    }
+
+    onAudioDurationChange = (newDuration) => {
+        // Update max time on the time slider
+        this.htmlElements.elementAudioTime.setAttribute("max", newDuration);
+    }
+
+    onAudioError = () => {
+        this.songLoading = false; 
+        this.setLoading();
+        this.htmlElements.audioUI(true);
+        window.alert("error loading : " + path);
+    }
+
+    onAudioCanPlay = () => {
+        this.songLoading = false;
+        this.setLoading();
+    }
+
     /** 
      * This function destroy the whole scene
      */
     destroy() {
-        this.sizes.off('resize')
-        this.time.off('tick')
+        this.sizes.off('resize');
+        this.time.off('tick');
+        this.resources.off('ready');
 
         // Traverse the whole scene
         this.scene.traverse((child) => {

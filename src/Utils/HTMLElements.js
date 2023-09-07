@@ -74,17 +74,17 @@ export default class HTMLElements {
 
     }
 
-    audioUI(play) {
+    audioUI(playing) {
 
 //        let play = !this.song.paused;
 
-        this.elementPlay.setAttribute("play", play);
-        this.elementPause.setAttribute("play", play);
+        this.elementPlay.setAttribute("play", playing);
+        this.elementPause.setAttribute("play", playing);
 
         this.elementSongInfoName.innerHTML = "<a href='" + this.experience.song.url + "' target='_blank'>" + this.experience.song.name + "</a>";
         this.elementSongInfoArtist.innerHTML = "<a href='" + this.experience.song.url + "' target='_blank'>" + this.experience.song.group + "</a>";
 
-        if (this.defaultSong === true && (play === "true" || play === true)) 
+        if (this.defaultSong === true && (playing === "true" || playing === true)) 
             this.elementSongInfo.setAttribute("visible", false);
         else
             this.elementSongInfo.setAttribute("visible", true);

@@ -17,14 +17,14 @@ export default class HMLOsciloscope {
     }
 
     setup() {
-        this.geometry = new THREE.PlaneGeometry(1024, 30);
+        this.geometry = new THREE.PlaneGeometry(1024, 40);
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
                 uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
                 uAudioStrength : { value : this.experience.options.hmsOsciloscopeAudioStrength },
 //                uAudioZoom     : { value : this.experience.options.osciloscopeAudioZoom },*/
-/*                uAudioValue    : { value : 0 },
+                uAudioValue    : { value : 0 },/*
                 uSize          : { value : this.size },
                 uColor         : { value : this.color }*/
                 uTime         : { value : 0 }
@@ -38,7 +38,7 @@ export default class HMLOsciloscope {
         this.mesh = new THREE.Mesh(this.geometry, this.material);
 
         this.mesh.rotation.y = Math.PI * 0.5;
-        this.mesh.position.set(48, -15, -512);
+        this.mesh.position.set(48, -16, -512);
 //        this.mesh.rotation.z = Math.PI * 0.5;
 //        this.mesh.position.copy(this.position);
 
@@ -48,5 +48,7 @@ export default class HMLOsciloscope {
 
     update() {        
         this.material.uniforms.uTime.value += this.time.delta / 100;
+
+        this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.averageFrequency[4] / 64);
     }
 }
