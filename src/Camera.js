@@ -31,7 +31,7 @@ export default class Camera {
         // Adapt camera to view port
 //        const xz = (this.sizes.width > this.sizes.height) ? 25 : 40;
 //        this.instance.position.set(-xz * 0.5, 13, xz);
-        this.instance.position.set(0, 0, 1);
+        this.instance.position.set(0, 0, 2);
         this.scene.add(this.instance);
 //        console.log (this.instance.position);
     }

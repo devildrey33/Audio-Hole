@@ -15,7 +15,8 @@ export default class AudioAnalizer {
         onCanPlay         = () => {}, // Song is ready to play
         onLoading         = () => {}, // Starting to load the song
         onBpmChange       = () => {}, // Current beat per minute is updated
-        allowDropSong     = true
+        allowDropSong     = true,
+        volume            = 0.5       // 
     ) {
         // Setup callbacks
         this.onPlay           = onPlay;
@@ -36,7 +37,7 @@ export default class AudioAnalizer {
         // Setup the drag & drop events
         if (allowDropSong) this.setupDragDropEvents();
         // Set the default volume
-        this.currentVolume = 0.5;
+        this.currentVolume = volume;
         // Initialize memory for audio textures
         this.setupTextures();
 
@@ -244,7 +245,11 @@ export default class AudioAnalizer {
         this.averageFrequency = this.getAverageFrequency();
 
         // Calculate current beats per minute 
-        // TO DO : need to update currentBpm
+        this.calculateCurrentBeat(delta);
+    }
+
+
+    calculateCurrentBeat(delta) {
         if (this.isPlaying === true && this.bpm !== 0) {
             this.bpmTime += delta;
             const mspb = 60000 / this.bpm;

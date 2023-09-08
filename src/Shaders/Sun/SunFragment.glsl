@@ -140,7 +140,8 @@ vec4 circleFreq(vec4 currentColor, vec2 center) {
 
 // // Make a circle with the time domain data
 vec4 circleSin(vec4 currentColor, vec2 center) {
-    const float radiusSin = 0.25 * 0.5;
+    // Bounce the radius a little
+    float radiusSin = 0.125 + (sin(uTime) * 0.025);
     
     vec2 pos1 = vec2(0.4, 0.5);
     float dist = length(vUv - center);

@@ -56,7 +56,8 @@ export default class Experience {
             this.onAudioCanPlay,
             this.onAudioLoading, 
             this.onAudioBpmChange,
-            this.options.songsDragDrop
+            this.options.songsDragDrop,
+            this.options.audioVolume
         );
         this.audioAnalizer.loadSong(this.song.path, this.song.bpm);
         // Set the canvas element

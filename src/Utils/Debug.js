@@ -1,6 +1,7 @@
 import * as dat from 'lil-gui'
 import options from '../Config/options.js'
 import Experience from '../Experience.js'
+import { TetrahedralUpscaler } from 'postprocessing';
 
 export default class Debug {
     constructor() {
@@ -13,14 +14,14 @@ export default class Debug {
 
         this.setupSpirals();
         this.setupSun();
-        this.setupBloom();
-        this.setupGodRays();
+        this.setupBloom(TetrahedralUpscaler);
+        this.setupGodRays(true);
         this.setupShockWave(true);
     }
 
     setupShockWave(open = false) {
         this.shockWave = this.experience.renderer.shockWavePass;
-        this.shockWaveUI = this.gui.addFolder("ShockWave (post processing").open(open);
+        this.shockWaveUI = this.gui.addFolder("ShockWave (post processing)").open(open);
 
         this.shockWaveUI.add(this.experience.options, 'shockWaveSpeed').min(0.1).max(5).step(0.1).name("Speed").onChange(() => {
             this.shockWave.speed = this.experience.options.shockWaveSpeed;
@@ -44,7 +45,7 @@ export default class Debug {
     }
 
     setupBloom(open = false) {
-        this.bloom = this.experience.renderer.bloomPass;
+        this.bloom = this.experience.renderer.bloomEffect;
 
         this.bloomUI = this.gui.addFolder("Bloom (post processing)").open(open);
         this.bloomUI.add(this.experience.options, 'bloomIntensity').min(-5.0).max(5).step(0.1).name("Intensity").onChange(() => {
@@ -59,11 +60,17 @@ export default class Debug {
         this.bloomUI.add(this.experience.options, 'bloomRadius').min(-10.0).max(10).step(0.1).name("Radius").onChange(() => {
             this.bloom.mipmapBlurPass.radius = this.experience.options.bloomRadius;
         });
+        this.bloomUI.add(this.experience.options, 'bloomEnabled').name("Enabled").onChange(() => {
+            if (this.experience.options.bloomEnabled === true) 
+                this.experience.renderer.effectComposer.addPass(this.experience.renderer.bloomPass);
+            else 
+                this.experience.renderer.effectComposer.removePass(this.experience.renderer.bloomPass);
+        });
 
     }
 
     setupGodRays(open = false) {
-        this.godRays = this.experience.renderer.godRaysPass;
+        this.godRays = this.experience.renderer.godRaysEffect;
 
         this.godRaysUI = this.gui.addFolder("God Rays (post processing)").open(open);
         this.godRaysUI.add(this.experience.options, 'godRaysDensity').min(-5.0).max(5).step(0.1).name("Density").onChange(() => {
@@ -84,6 +91,12 @@ export default class Debug {
         this.godRaysUI.add(this.experience.options, 'godRaysSamples').min(1).max(200).step(1).name("Samples").onChange(() => {
             this.godRays.godRaysMaterial.samples = this.experience.options.godRaysSamples;
         });
+/*        this.godRaysUI.add(this.experience.options, 'godRaysEnabled').name("Enabled").onChange(() => {
+            if (this.experience.options.godRaysEnabled === true) 
+                this.experience.renderer.effectComposer.addPass(this.experience.renderer.godRaysPass);
+            else 
+                this.experience.renderer.effectComposer.removePass(this.experience.renderer.godRaysPass);
+        });*/
     
     }
 

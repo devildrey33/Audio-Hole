@@ -42,24 +42,25 @@ export default class Renderer {
 
         this.effectComposer.addPass(new RenderPass(this.scene, this.camera.instance));
 
-        this.bloomPass = new BloomEffect({ mipmapBlur : true, levels : 8        });
+        this.bloomEffect = new BloomEffect({ mipmapBlur : true, levels : 8 });
         //this.bloomPass.strength = this.experience.options.bloomStrength;   
-        this.bloomPass.intensity = this.experience.options.bloomIntensity;
-        this.bloomPass.luminanceMaterial.threshold = this.experience.options.bloomThreshold;
-        this.bloomPass.luminanceMaterial.smoothing = this.experience.options.bloomSmoothing;
-        this.bloomPass.mipmapBlurPass.radius = this.experience.options.bloomRadius;
+        this.bloomEffect.intensity = this.experience.options.bloomIntensity;
+        this.bloomEffect.luminanceMaterial.threshold = this.experience.options.bloomThreshold;
+        this.bloomEffect.luminanceMaterial.smoothing = this.experience.options.bloomSmoothing;
+        this.bloomEffect.mipmapBlurPass.radius = this.experience.options.bloomRadius;
+        this.bloomPass = new EffectPass(this.camera.instance, this.bloomEffect)
+        this.effectComposer.addPass(this.bloomPass);
 
-        this.effectComposer.addPass(new EffectPass(this.camera.instance, this.bloomPass));
+        this.godRaysEffect = new GodRaysEffect(this.camera.instance, sunMesh);
+        this.godRaysPass = new EffectPass(this.camera.instance, this.godRaysEffect);
+        this.effectComposer.addPass(this.godRaysPass);
 
-        this.godRaysPass = new GodRaysEffect(this.camera.instance, sunMesh);
-        this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass));
-
-        this.godRaysPass.godRaysMaterial.density  = this.experience.options.godRaysDensity;
-        this.godRaysPass.godRaysMaterial.decay = this.experience.options.godRaysDecay;
-        this.godRaysPass.godRaysMaterial.weight = this.experience.options.godRaysWeigth;
-        this.godRaysPass.godRaysMaterial.exposure = this.experience.options.godRaysExposure;
-        this.godRaysPass.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
-        this.godRaysPass.godRaysMaterial.samples = this.experience.options.godRaysSamples;
+        this.godRaysEffect.godRaysMaterial.density  = this.experience.options.godRaysDensity;
+        this.godRaysEffect.godRaysMaterial.decay = this.experience.options.godRaysDecay;
+        this.godRaysEffect.godRaysMaterial.weight = this.experience.options.godRaysWeigth;
+        this.godRaysEffect.godRaysMaterial.exposure = this.experience.options.godRaysExposure;
+        this.godRaysEffect.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
+        this.godRaysEffect.godRaysMaterial.samples = this.experience.options.godRaysSamples;
 
 
         this.shockWavePass = new ShockWaveEffect(this.camera.instance, new THREE.Vector3(0, 0, -10));

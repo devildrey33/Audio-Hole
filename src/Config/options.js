@@ -24,10 +24,11 @@ export default {
     rootElement             : document.body,
     // Allow drag & drop songs
     songsDragDrop           : true,
+    // default audio volume
+    audioVolume             : 0.25,
     // Allow orbit controls (only on debug by default)
     orbitControls           : window.location.hash === '#debug',
 
-    
     // Spirals      
     spiralAudioStrength             : 0.4,
     spiralAudioZoom                 : 2.0,
@@ -61,13 +62,16 @@ export default {
 
     hmsOsciloscopeAudioStrength     : 0.5,
 
+    // Voronoi Background 
+    voronoiBackgroundSpeed          : 1.0,
+    voronoiBackgroundThickness      : 0.01,
+    voronoiBackgroundCount          : 128.0,
 
     // Bloom (postprocessing)
     bloomIntensity                  : 0.3,    // 2.7
     bloomThreshold                  : 159.5,  // -234.8
     bloomSmoothing                  : -342,   // 240.1
     bloomRadius                     : 1.4,    // 1.4
-//    bloomStrength                   : 0.0,
     bloomEnabled                    : true,
 
     // God rays (postprocessing)
@@ -77,11 +81,14 @@ export default {
     godRaysExposure                 : 0.6,
     godRaysClampMax                 : 1.0,
     godRaysSamples                  : 60,
+    godRaysEnabled                  : true,
 
     // Shock wave (postprocessing)
     shockWaveSpeed                  : 3.2,
     shockWaveMaxRadius              : 1,
     shockWaveWaveSize               : 0.2,
-    shockWaveAmplitude              : 2,
+    shockWaveAmplitude              : 10,
+
+
 };
 

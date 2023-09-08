@@ -190,7 +190,7 @@ export default class HTMLElements {
             strHTML +=`</select>
                     <span>volume</span>
                     <div class='Experience_AC_Volume'>
-                        <input type='range' name='volume' min='0' max='2' value='1' step='0.01' ></input>
+                        <input type='range' name='volume' min='0' max='1' value='${this.experience.options.audioVolume}' step='0.01'></input>
                     </div>
                 </div>
                 <div class='Experience_AC_Time'>
