@@ -96,8 +96,13 @@ html, body {
     font-size:24px;
 }
 
-.Experience_TxtFPS {
+.Experience_TxtFPS, .Experience_TxtBPM {
     font-size:14px;
+}
+
+.Experience_BPM {
+    font-size:21px;
+    color:rgb(160, 205, 218);
 }
 
 
@@ -191,6 +196,20 @@ html, body {
 /* 
  * Audio controls
  */
+ /* Disable play button while loading and mage a grayscale on them */
+.Experience[loading = "true"] > .Experience_Play,  .Experience[loading = "true"] > .Experience_Play > img {
+    pointer-events:none;
+    filter: grayscale(1);
+}
+.Experience[loading = "true"] > .Experience_Play > img {
+    transition: filter 300ms linear;
+}
+
+.Experience_Play, .Experience_Pause, .Experience_SongInfo {
+    transition: filter 300ms linear;
+    user-select: none;
+}
+
  .Experience_AudioControls {
     user-select: none;
     position:fixed;

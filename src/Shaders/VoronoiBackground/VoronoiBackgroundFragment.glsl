@@ -26,6 +26,6 @@ void main() {
     }
 //    vec4 point = texture2D(uPointsTexture, vUv);
 
-
-    gl_FragColor = vec4(0.1 - distMin, 0.1 - distMin * 3.0, point.b * 0.25, 0.1);
+    gl_FragColor = vec4(0.05 * 0.25, 0.05 * 0.25, 0.05 + point.a + point.b * 0.15, 0.1);
+//    gl_FragColor = vec4(0.05 - distMin * 0.25, 0.05 - distMin * 0.25, 0.05 +  point.b * 0.25, 0.1);
 }

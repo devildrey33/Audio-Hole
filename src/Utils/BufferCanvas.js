@@ -5,7 +5,7 @@ export default class BufferCanvas {
         this.canvas  = document.createElement("canvas");
         this.canvas.setAttribute("width", width);
         this.canvas.setAttribute("height", height);
-        this.context = this.canvas.getContext("2d", { willReadFrequently : true }); 
+        this.context = this.canvas.getContext("2d", { willReadFrequently : false }); 
         this.width   = width;
         this.height  = height;
     }

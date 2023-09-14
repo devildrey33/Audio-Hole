@@ -14,25 +14,25 @@ export default class Debug {
 
         this.setupSpirals();
         this.setupSun();
-        this.setupBloom(TetrahedralUpscaler);
-        this.setupGodRays(true);
+        this.setupBloom();
+        this.setupGodRays();
         this.setupShockWave(true);
     }
 
     setupShockWave(open = false) {
-        this.shockWave = this.experience.renderer.shockWavePass;
+        this.shockWave = this.experience.renderer.shockWaveEffect;
         this.shockWaveUI = this.gui.addFolder("ShockWave (post processing)").open(open);
 
-        this.shockWaveUI.add(this.experience.options, 'shockWaveSpeed').min(0.1).max(5).step(0.1).name("Speed").onChange(() => {
+        this.shockWaveUI.add(this.experience.options, 'shockWaveSpeed').min(0.1).max(15).step(0.01).name("Speed").onChange(() => {
             this.shockWave.speed = this.experience.options.shockWaveSpeed;
         });
-        this.shockWaveUI.add(this.experience.options, 'shockWaveMaxRadius').min(0.1).max(5).step(0.1).name("Max radius").onChange(() => {
+        this.shockWaveUI.add(this.experience.options, 'shockWaveMaxRadius').min(0.1).max(5).step(0.01).name("Max radius").onChange(() => {
             this.shockWave.maxRadius = this.experience.options.shockWaveMaxRadius;
         });
-        this.shockWaveUI.add(this.experience.options, 'shockWaveWaveSize').min(0.1).max(5).step(0.1).name("Wave size").onChange(() => {
+        this.shockWaveUI.add(this.experience.options, 'shockWaveWaveSize').min(0.1).max(5).step(0.01).name("Wave size").onChange(() => {
             this.shockWave.waveSize = this.experience.options.shockWaveWaveSize;
         });
-        this.shockWaveUI.add(this.experience.options, 'shockWaveAmplitude').min(0.01).max(5).step(0.1).name("Amplitude").onChange(() => {
+        this.shockWaveUI.add(this.experience.options, 'shockWaveAmplitude').min(0.01).max(30).step(0.01).name("Amplitude").onChange(() => {
             this.shockWave.amplitude = this.experience.options.shockWaveAmplitude;
         });
 
@@ -48,16 +48,16 @@ export default class Debug {
         this.bloom = this.experience.renderer.bloomEffect;
 
         this.bloomUI = this.gui.addFolder("Bloom (post processing)").open(open);
-        this.bloomUI.add(this.experience.options, 'bloomIntensity').min(-5.0).max(5).step(0.1).name("Intensity").onChange(() => {
+        this.bloomUI.add(this.experience.options, 'bloomIntensity').min(-5.0).max(5).step(0.01).name("Intensity").onChange(() => {
             this.bloom.intensity = this.experience.options.bloomIntensity;
         });
-        this.bloomUI.add(this.experience.options, 'bloomThreshold').min(-500.0).max(500).step(0.1).name("Threshold").onChange(() => {
+        this.bloomUI.add(this.experience.options, 'bloomThreshold').min(-5.0).max(5).step(0.01).name("Threshold").onChange(() => {
             this.bloom.luminanceMaterial.threshold = this.experience.options.bloomThreshold;
         });
-        this.bloomUI.add(this.experience.options, 'bloomSmoothing').min(-500.0).max(500).step(0.1).name("Smoothing").onChange(() => {
+        this.bloomUI.add(this.experience.options, 'bloomSmoothing').min(-5.0).max(5).step(0.01).name("Smoothing").onChange(() => {
             this.bloom.luminanceMaterial.smoothing = this.experience.options.bloomSmoothing;
         });
-        this.bloomUI.add(this.experience.options, 'bloomRadius').min(-10.0).max(10).step(0.1).name("Radius").onChange(() => {
+        this.bloomUI.add(this.experience.options, 'bloomRadius').min(-2.0).max(2).step(0.01).name("Radius").onChange(() => {
             this.bloom.mipmapBlurPass.radius = this.experience.options.bloomRadius;
         });
         this.bloomUI.add(this.experience.options, 'bloomEnabled').name("Enabled").onChange(() => {

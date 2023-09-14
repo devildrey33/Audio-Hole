@@ -63,14 +63,14 @@ export default class Renderer {
         this.godRaysEffect.godRaysMaterial.samples = this.experience.options.godRaysSamples;
 
 
-        this.shockWavePass = new ShockWaveEffect(this.camera.instance, new THREE.Vector3(0, 0, -10));
+        this.shockWaveEffect = new ShockWaveEffect(this.camera.instance, new THREE.Vector3(0, 0, -10));
+        this.shockWavePass = new EffectPass(this.camera.instance, this.shockWaveEffect);
+        this.shockWaveEffect.speed = this.experience.options.shockWaveSpeed;
+        this.shockWaveEffect.maxRadius = this.experience.options.shockWaveMaxRadius;
+        this.shockWaveEffect.waveSize = this.experience.options.shockWaveWaveSize;
+        this.shockWaveEffect.amplitude = this.experience.options.shockWaveAmplitude;
 
-        this.shockWavePass.speed = this.experience.options.shockWaveSpeed;
-        this.shockWavePass.maxRadius = this.experience.options.shockWaveMaxRadius;
-        this.shockWavePass.waveSize = this.experience.options.shockWaveWaveSize;
-        this.shockWavePass.amplitude = this.experience.options.shockWaveAmplitude;
-
-        this.effectComposer.addPass(new EffectPass(this.camera.instance, this.shockWavePass));
+        this.effectComposer.addPass(this.shockWavePass);
 
 /*        this.godRaysPass2 = new GodRaysEffect(this.camera.instance, spiralsMesh);
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass2));

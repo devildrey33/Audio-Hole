@@ -3,11 +3,11 @@ import Experience from '../Experience.js'
 //import Arrowciloscope from './Arrowciloscope.js';
 import Spirals from './Spirals.js';
 import Sun from './Sun.js';
-import Rays from './Rays.js';
+//import Rays from './Rays.js';
 import ToHole from "./ToHole.js";
 import Bars from './Bars.js';
 import HMLOsciloscope from './HMLOsciloscope.js';
-import VoronoiBackground from './VoronoiBackground.js';
+//import VoronoiBackground from './VoronoiBackground.js';
 
 
 export default class World {
@@ -36,11 +36,12 @@ export default class World {
 //        this.osciloscpe = new Arrowciloscope(new THREE.Color(200, 100, 0), 1, 0.1);
         this.toHole = new ToHole();
 
+//        this.bars = new Bars3D(this);
         this.bars = new Bars(this);
 
         this.hmlOsciloscope = new HMLOsciloscope();
 
-        this.voronoiBackground = new VoronoiBackground();
+//        this.voronoiBackground = new VoronoiBackground();
     }
 
     // All resources are loaded
@@ -55,7 +56,8 @@ export default class World {
 //            this.rays.update();
             this.toHole.update();
             this.hmlOsciloscope.update();
-            this.voronoiBackground.update();
+            this.bars.update();
+//            this.voronoiBackground.update();
 //        }
     }
 

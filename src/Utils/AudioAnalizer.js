@@ -5,39 +5,31 @@ import BufferCanvas from "./BufferCanvas.js";
 
 /* Audio analizer singleton */
 export default class AudioAnalizer {
-    constructor(
-        onPlay            = () => {}, // Playing the song
-        onPause           = () => {}, // Pausing the song
-        onTimeUpdate      = () => {}, // Updating current song time
-        onDurationChange  = () => {}, // First time whe know duration of the song
-        onEnded           = () => {}, // Song has reached the end
-        onError           = () => {}, // Error...
-        onCanPlay         = () => {}, // Song is ready to play
-        onLoading         = () => {}, // Starting to load the song
-        onBpmChange       = () => {}, // Current beat per minute is updated
-        allowDropSong     = true,
-        volume            = 0.5       // 
-    ) {
-        // Setup callbacks
-        this.onPlay           = onPlay;
-        this.onPause          = onPause;
-        this.onTimeUpdate     = onTimeUpdate;
-        this.onDurationChange = onDurationChange;
-        this.onEnded          = onEnded;
-        this.onError          = onError;
-        this.onCanPlay        = onCanPlay;
-        this.onLoading        = onLoading;
-        this.onBpmChange      = onBpmChange;
-
-        // Get the experience object
-//        this.experience = new Experience();
+    constructor(audioOptions) {
+        const audioDefaultOptions = {
+            // Default callbacks
+            onPlay            : () => {}, // Playing the song
+            onPause           : () => {}, // Pausing the song
+            onTimeUpdate      : () => {}, // Updating current song time
+            onDurationChange  : () => {}, // First time whe know duration of the song
+            onEnded           : () => {}, // Song has reached the end
+            onError           : () => {}, // Error...
+            onCanPlay         : () => {}, // Song is ready to play
+            onLoading         : () => {}, // Starting to load the song
+            onBpmChange       : () => {}, // Current beat per minute is updated
+            // Default values
+            allowDropSong     : true,
+            volume            : 0.5       // 
+        }
+        
+        this.audioOptions = { ...audioDefaultOptions, ...audioOptions };
 
         // Song loaded flag
         this.songLoaded = false;
         // Setup the drag & drop events
-        if (allowDropSong) this.setupDragDropEvents();
+        if (this.audioOptions.allowDropSong) this.setupDragDropEvents();
         // Set the default volume
-        this.currentVolume = volume;
+        this.currentVolume = this.audioOptions.volume;
         // Initialize memory for audio textures
         this.setupTextures();
 
@@ -103,11 +95,11 @@ export default class AudioAnalizer {
         // Exit if context is initialized
         if (typeof this.context !== "undefined") return;        
         
-        this.context                          = new AudioContext();
-        this.gainNode                         = this.context.createGain();
-        this.analizer                         = this.context.createAnalyser();
-        this.analizer.fftSize                 = this.fftSize;
-        this.analizer.smoothingTimeConstant   = 0.8; // 
+        this.context                          = new AudioContext();             // Create context
+        this.gainNode                         = this.context.createGain();      // Setup gain
+        this.analizer                         = this.context.createAnalyser();  // Setup analizer
+        this.analizer.fftSize                 = this.fftSize;                   // fftSize
+        this.analizer.smoothingTimeConstant   = 0.8;                            // Smoothing Time
     }
 
     eventDragEnter(e) {
@@ -130,7 +122,7 @@ export default class AudioAnalizer {
             this.song.pause();
             this.songLoaded = false;
             this.isPlaying = false;
-            this.onLoading();
+            this.audioOptions.onLoading();
         }
         // Reset time to calculate beats per minute
         this.bpmTime = 0;
@@ -143,22 +135,23 @@ export default class AudioAnalizer {
         this.song.src            = path;          // "/Canciones/cancion.mp3"
         this.song.addEventListener('canplay', () => { 
             this.canPlay();
+            this.audioOptions.onCanPlay();
         });
         this.song.addEventListener('error',   () => { 
             this.isPlaying = false;
-            this.onError();
+            this.audioOptions.onError();
         });
         this.song.addEventListener('ended'  , () => { 
             this.isPlaying = false;
-            this.onEnded();
+            this.audioOptions.onEnded();
         });                
         // Update max time
         this.song.addEventListener('durationchange'  , () => { 
-            this.onDurationChange(this.song.duration);
+            this.audioOptions.onDurationChange(this.song.duration);
         });                
         // Update current time
         this.song.addEventListener('timeupdate'  , () => { 
-            this.onTimeUpdate(this.song.currentTime);
+            this.audioOptions.onTimeUpdate(this.song.currentTime);
             // Calculate current beats per minute NOT ACURATE
 /*            if (this.bpm !== 0) {
                 const mspb = 60000 / this.bpm;
@@ -173,10 +166,10 @@ export default class AudioAnalizer {
         
         
         this.song.addEventListener('play'  , () => { 
-            this.onPlay();
+            this.audioOptions.onPlay();
         });        
         this.song.addEventListener('pause' , () => { 
-            this.onPause();
+            this.audioOptions.onPause();
          });        
     }
 
@@ -189,10 +182,10 @@ export default class AudioAnalizer {
 
 
     // Función que detecta si está en play o en pausa, y asigna el estado contrario
-    playPause(path) {
+    playPause(path, bpm) {
         if (typeof this.context === "undefined") {
             this.setupAudio();
-            this.loadSong(path);
+            this.loadSong(path, bpm);
         }
 
         this.context.resume();
@@ -222,10 +215,6 @@ export default class AudioAnalizer {
             this.audioSource.connect(this.analizer);
             this.analizer.connect(this.gainNode);
             this.gainNode.connect(this.context.destination);
-            // Update max time on the time slider
-//            this.refTime.current.setAttribute("max", this.song.duration);
-
-            this.onCanPlay();
         }
     }
 
@@ -256,7 +245,7 @@ export default class AudioAnalizer {
             if (this.bpmTime > mspb) {
                 this.currentBpm ++;
                 this.bpmTime -= mspb;
-                this.onBpmChange(this.currentBpm);
+                this.audioOptions.onBpmChange(this.currentBpm);
             }
         }
     }

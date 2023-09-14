@@ -10,7 +10,9 @@ export default {
     // Height in pixels. Use 'auto' to fit all viewport height
     height                  : "auto",           
     // Show framerate inside the butons frame
-    showFPS                 : true,            
+    showFPS                 : true,
+    // Show current beat per minute            
+    showBPM                 : true,
     // Show full screen buton in the buttons frame
     buttonFullScreen        : true,            
     // Show my logo buton in the buttons frame (that redirects to devildrey33.es)
@@ -53,25 +55,27 @@ export default {
     raysCount                       : 50,
 
     // Bars
-    barsAudioStrength               : 25,
+    barsAudioStrength               : 0.75,
     barsAudioZoom                   : 1.5,
+    barsSpeed                       : 1.0,
 
 
     osciloscopeAudioStrength        : 0.5,
     osciloscopeAudioZoom            : 1,
 
     hmsOsciloscopeAudioStrength     : 0.5,
+    hmsOsciloscopeSpeed             : 2,
 
     // Voronoi Background 
     voronoiBackgroundSpeed          : 1.0,
     voronoiBackgroundThickness      : 0.01,
-    voronoiBackgroundCount          : 128.0,
+    voronoiBackgroundCount          : 64.0,
 
     // Bloom (postprocessing)
-    bloomIntensity                  : 0.3,    // 2.7
-    bloomThreshold                  : 159.5,  // -234.8
-    bloomSmoothing                  : -342,   // 240.1
-    bloomRadius                     : 1.4,    // 1.4
+    bloomIntensity                  : 2.0,   // 0.3,   // 2.7
+    bloomThreshold                  : 4.3,    // 159.5, // -234.8
+    bloomSmoothing                  : -1.97, // -342,  // 240.1
+    bloomRadius                     : 0.7,   // 1.4,   // 1.4
     bloomEnabled                    : true,
 
     // God rays (postprocessing)
@@ -84,10 +88,10 @@ export default {
     godRaysEnabled                  : true,
 
     // Shock wave (postprocessing)
-    shockWaveSpeed                  : 3.2,
-    shockWaveMaxRadius              : 1,
+    shockWaveSpeed                  : 7.5,
+    shockWaveMaxRadius              : 1.6,
     shockWaveWaveSize               : 0.2,
-    shockWaveAmplitude              : 10,
+    shockWaveAmplitude              : 20,
 
 
 };

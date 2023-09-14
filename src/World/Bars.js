@@ -1,111 +1,62 @@
 import Experience from "../Experience";
 import * as THREE from 'three'
-import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+
 import BarsVertexShader from "../Shaders/Bars/BarsVertex.glsl"
 import BarsFragmentShader from "../Shaders/Bars/BarsFragment.glsl"
-//import BarsDepthVertexShader from "../Shaders/Bars/BarsDepthVertexShader.glsl"
-
-/*
- * Bars are merged and they are using ShaderMaterial
- */
 
 export default class Bars {
-    
     constructor(world) {
-        this.experience      = new Experience();
-        this.audioAnalizer   = this.experience.audioAnalizer;
-        this.scene           = this.experience.scene;
-        this.world           = world;
-        
-        // Could be a square but makes no sense with the floor
-        this.createBars(1024,1);
+        this.experience           = new Experience();
+        this.scene                = this.experience.scene;
+        this.audioAnalizer        = this.experience.audioAnalizer;
+        this.time                 = this.experience.time;
+
+        this.setup();
     }
 
-    visible(show) {
-        if (show === true) this.scene.add(this.bars);
-        else               this.scene.remove(this.bars);
-    }
-
-    createBars(width, height) {
-        if (typeof(this.bars) !== "undefined") {
-            this.scene.remove(this.bars);
-            this.geometry.dispose();
-            this.material.dispose();
-        }
-
-        let   size       = width * height;
-
-        let cubeGeometries = [];
+    setup() {
+        this.geometry = new THREE.PlaneGeometry(2048 * 4, 350);
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
                 uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
                 uAudioStrength : { value : this.experience.options.barsAudioStrength },
                 uAudioZoom     : { value : this.experience.options.barsAudioZoom },
-//                uTime         : { value : 0 }
+                uAudioValue    : { value : 0 },
+                uSpeed         : { value : this.experience.options.barsSpeed },
+                uTime          : { value : 0 }
             },
             vertexShader    : BarsVertexShader,
             fragmentShader  : BarsFragmentShader,
-            transparent     : true
+            transparent     : true,
+            side            : THREE.DoubleSide,
+//            depthWrite      : false
         });
-
-
-//        let counter = 0;
-
-        for (let z = 0; z < height; z++) {
-            for (let x = 0; x < width; x++) {
-                const geometry = new THREE.BoxGeometry(0.9, 1, 0.9);
-
-                const nx = (-(width * 0.5) + x) * 1;
-                const nz = (-(height * 0.5) + z) * 1;
-
-                geometry.translate(nx, 0, nz);
-
-                cubeGeometries.push(geometry);
-            }
-        }
-
-        const numPos = 24;
-        this.idArray  = new Float32Array(size * numPos);        
-        this.geometry = BufferGeometryUtils.mergeGeometries(cubeGeometries);
-        let count = 0;
-        // fill each cube with his id
-        for (let g = 0; g < size * numPos; g+= numPos) {
-            for (let n = 0; n < numPos; n++) {
-                this.idArray[g + n] = count / size;
-            }            
-            count++;
-        }
-        this.geometry.setAttribute('aId', new THREE.BufferAttribute(this.idArray, 1));
-
-        // clear cube geometries used to create the merged geometry
-        for (let i = 0; i < size; i++) {
-            cubeGeometries[i].dispose();
-        }
-
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-//        this.mesh.castShadow = this.experience.debugOptions.shadows;
+        this.mesh2 = new THREE.Mesh(this.geometry, this.material);
 
-//        this.mesh.position.set(, 0.0, -15);
+        this.mesh.rotation.y = Math.PI * 0.5;
+        this.mesh.position.set(-500, 0, -1024 * 4);
 
-//        this.mesh.rotation.y = Math.PI * 0.5;
-        this.mesh.rotation.x = -Math.PI * 0.5;
-        this.mesh.rotation.z = Math.PI * 0.5;
-        this.mesh.rotation.y = Math.PI;
-        this.mesh.name = "Bars";
+        this.mesh2.rotation.y = Math.PI * 0.5;
+        this.mesh2.position.set(500, 0, -1024 * 4);
+//        this.mesh.rotation.z = Math.PI * 0.5;
+//        this.mesh.position.copy(this.position);
 
-        // not working with custom shader...
-        this.mesh.castShadow = true;
-        this.mesh.receiveShadow = true;
-
-        this.group = new THREE.Group();
-        this.group.add(this.mesh);
-        this.group.position.set(-50, 0, -512);
-        this.scene.add(this.group);
+        this.scene.add(this.mesh);        
+        this.scene.add(this.mesh2);        
     }
 
-    
-    update() {
+
+    update() {        
+        this.material.uniforms.uTime.value += this.time.delta / 100;
+
+        this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.averageFrequency[4] / 64);
+
+        
+        this.mesh.scale.y  = 0.3 + Math.abs(Math.cos(this.time.current / 3000)) * 3;
+        this.mesh2.scale.y = this.mesh.scale.y;
+
     }
 
 }

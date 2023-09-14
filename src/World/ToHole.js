@@ -4,7 +4,7 @@ import Arrowciloscope from "./Arrowciloscope";
 
 
 export default class ToHole {
-    numArrows = 25;
+    numArrows = 50;
 
     constructor() {
 //        this.experience = new Experience();

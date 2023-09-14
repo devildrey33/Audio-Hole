@@ -46,19 +46,19 @@ export default class Experience {
         this.resources      = new Resources(sources);
         this.loading = true;
 
-        this.audioAnalizer  = new AudioAnalizer(
-            this.onAudioPlay,
-            this.onAudioPause,
-            this.onAudioTimeUpdate,
-            this.onAudioDurationChange,
-            this.onAudioPause,
-            this.onAudioError,
-            this.onAudioCanPlay,
-            this.onAudioLoading, 
-            this.onAudioBpmChange,
-            this.options.songsDragDrop,
-            this.options.audioVolume
-        );
+        this.audioAnalizer  = new AudioAnalizer({
+            onPlay           : this.onAudioPlay,
+            onPause          : this.onAudioPause,
+            onTimeUpdate     : this.onAudioTimeUpdate,
+            onDurationChange : this.onAudioDurationChange,
+            onEnded          : this.onAudioEnded,
+            onError          : this.onAudioError,
+            onCanPlay        : this.onAudioCanPlay,
+            onLoading        : this.onAudioLoading, 
+            onBpmChange      : this.onAudioBpmChange,
+            allowDropSong    : this.options.songsDragDrop,
+            volume           : this.options.audioVolume
+        });
         this.audioAnalizer.loadSong(this.song.path, this.song.bpm);
         // Set the canvas element
         this.canvas         = this.htmlElements.elementCanvas;
@@ -79,10 +79,13 @@ export default class Experience {
         this.time.on     ('tick'  , () => { this.update(); })
         this.resources.on('ready' , () => { this.resourcesLoaded(); })
 
-        this.canvas.addEventListener("click", (e) => { 
-            this.renderer.shockWavePass.explode(); 
-        })
+        if (this.options.debug === true) {
+            this.canvas.addEventListener("click", (e) => { 
+                this.renderer.shockWaveEffect.explode(); 
+            });
+        }
 
+        this.beats = 0;
     }
 
     /**
@@ -125,11 +128,15 @@ export default class Experience {
         this.htmlElements.audioUI(false); 
     }
 
-    // onPause and onEnded callbacks
     onAudioPause = () => { 
         this.htmlElements.audioUI(true);
     }
 
+    onAudioEnded = () => { 
+        this.htmlElements.audioUI(true);
+        this.beats = 0;
+    }
+    
     onAudioTimeUpdate = (currentTime) => {
         if (this.htmlElements.dragTime == false)
             this.htmlElements.elementAudioTime.value = currentTime;
@@ -142,13 +149,15 @@ export default class Experience {
 
     onAudioError = () => {
         this.songLoading = false; 
+        this.beats = 0;
         this.setLoading();
         this.htmlElements.audioUI(true);
-        window.alert("error loading : " + path);
+        window.alert("error loading : " + this.song.path);
     }
 
     onAudioCanPlay = () => {
         this.songLoading = false;
+        this.beats = 0;
         this.setLoading();
     }
 
@@ -159,7 +168,13 @@ export default class Experience {
     }
 
     onAudioBpmChange = (currentBpm) => {
-        console.log("Bpm : " + this.audioAnalizer.bpm + " Current beat : " + currentBpm);
+        this.beats ++;
+        if (this.beats === 32) {
+            this.renderer.shockWaveEffect.explode();
+            this.beats = 0;
+        }
+        if (this.options.showBPM === true) this.htmlElements.elementBPM.innerHTML = currentBpm;
+//        console.log("Bpm : " + this.audioAnalizer.bpm + " Current beat : " + currentBpm);
     }
     /** 
      * This function destroy the whole scene

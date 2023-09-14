@@ -127,6 +127,12 @@ export default class HTMLElements {
                                 "<div class='Experience_TxtFPS'>fps</div>" +
                             "</div>";
             }
+            if (this.options.showBPM === true) {
+                strHTML +=  "<div class='Experience_Panel Experience_Static' title='Beats per minute'>" +
+                                "<div class='Experience_BPM'>0</div>" +
+                                "<div class='Experience_TxtBPM'>cbpm</div>" +
+                            "</div>";
+            }
             // Show full screen button
             if (this.options.buttonFullScreen === true) {
                 strHTML +=  "<div id='fullScreen' class='Experience_Panel Experience_Control' title='Full screen mode'>" +
@@ -232,15 +238,19 @@ export default class HTMLElements {
             this.elementAudioVolume = document.querySelector("#" + this.elementExperience.id + " > .Experience_AudioControls  .Experience_AC_Volume input");
             // Audio time slider element
             this.elementAudioTime = document.querySelector("#" + this.elementExperience.id + " > .Experience_AudioControls > .Experience_AC_Time > input");
-            // Audio time slider element
+            // Audio information element
             this.elementAudioInfo = document.querySelector("#" + this.elementExperience.id + " > .Experience_AudioControls  .Experience_AC_Info");
 
             // Get the play and pause button elements
             this.elementPlay  = document.querySelector("#" + this.elementExperience.id + " > .Experience_Play");
             this.elementPause = document.querySelector("#" + this.elementExperience.id + " > .Experience_Pause");            
             // Play pause button listen click
-            this.elementPlay.addEventListener( "click", (e) => {  this.audioUI(!this.experience.audioAnalizer.playPause());  });
-            this.elementPause.addEventListener("click", (e) => {  this.audioUI(!this.experience.audioAnalizer.playPause());  });
+            this.elementPlay.addEventListener( "click", (e) => { 
+                this.audioUI(!this.experience.audioAnalizer.playPause(this.experience.song.path, this.experience.song.bpm));  
+            });
+            this.elementPause.addEventListener("click", (e) => {  
+                this.audioUI(!this.experience.audioAnalizer.playPause());  
+            });
 
 
         
@@ -254,6 +264,11 @@ export default class HTMLElements {
             if (this.options.showFPS === true) {
                 // Get FPS html element from the doom
                 this.elementFPS = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Static > .Experience_FPS")
+            }
+            // if BPM are show
+            if (this.options.showBPM === true) {
+                // Get BPM html element from the doom
+                this.elementBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Static > .Experience_BPM")
             }
         }
 

@@ -11,6 +11,7 @@ export default class Camera {
         this.sizes = this.experience.sizes;
         this.scene = this.experience.scene;
         this.canvas = this.experience.canvas;
+        this.time = this.experience.time;
 
         this.mouseX = 0;
         this.mouseY = 0;
@@ -27,7 +28,7 @@ export default class Camera {
 
 
     setInstance() {
-        this.instance = new THREE.PerspectiveCamera(35, this.sizes.width / this.sizes.height, 0.1, 1000);
+        this.instance = new THREE.PerspectiveCamera(35, this.sizes.width / this.sizes.height, 0.1, 20000);
         // Adapt camera to view port
 //        const xz = (this.sizes.width > this.sizes.height) ? 25 : 40;
 //        this.instance.position.set(-xz * 0.5, 13, xz);
@@ -58,6 +59,6 @@ export default class Camera {
         // update camera rotation using mouse coordinates
         this.instance.rotation.y = THREE.MathUtils.lerp(this.instance.rotation.y, (this.mouseX * Math.PI) / 50000, 0.05) 
         this.instance.rotation.x = THREE.MathUtils.lerp(this.instance.rotation.x, (this.mouseY * Math.PI) / 50000, 0.05)
-
+        this.instance.rotation.z += this.time.delta / 7500;
     }
 }

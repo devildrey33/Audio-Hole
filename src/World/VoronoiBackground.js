@@ -9,10 +9,11 @@ export default class VoronoiBackground {
         this.experience = new Experience();
         this.scene = this.experience.scene;
         this.time  = this.experience.time;
-        this.setup();
+        this.setupCanvasBuffer();
+        this.setupMesh();
     }
 
-    setup() { 
+    setupCanvasBuffer() {
         const width = this.experience.options.voronoiBackgroundCount;
         const height = 1;
         // Create an audio texture using a memory canvas
@@ -22,16 +23,19 @@ export default class VoronoiBackground {
         // Paint random values into the texture
         for (let x = 0; x < width; x++) {
             let pos = x * 4;
-            this.imageData.data[pos + 0] = (0.25 + Math.random() * 0.5) * 255; // x 
-            this.imageData.data[pos + 1] = Math.random() * 255; // y
+            this.imageData.data[pos + 0] = Math.random() * 255; //(0.4 + Math.random() * 0.2) * 255; // x 
+            this.imageData.data[pos + 1] = Math.random() * 255; //(0.25 + Math.random() * 0.5) * 255; // y
             this.imageData.data[pos + 2] = Math.random() * 255; // color variation
             this.imageData.data[pos + 3] = Math.random() * 255; // more random?
         }
         this.bufferCanvas.context.putImageData(this.imageData, 0, 0, 0, 0, width, height);
         this.bufferCanvas.texture.needsUpdate = true;
+    }
 
+    setupMesh() { 
 
-        this.geometry = new THREE.CylinderGeometry( 750, 750, 1000, 32, 1, true );
+        this.geometry = new THREE.PlaneGeometry(1000, 1000);
+//        this.geometry = new THREE.CylinderGeometry( 750, 750, 1000, 32, 1, true );
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
@@ -52,6 +56,7 @@ export default class VoronoiBackground {
         });
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
+        this.mesh.position.z = -700;
         this.scene.add(this.mesh);
         console.log("te"); 
     }
