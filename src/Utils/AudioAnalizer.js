@@ -138,10 +138,12 @@ export default class AudioAnalizer {
             this.audioOptions.onCanPlay();
         });
         this.song.addEventListener('error',   () => { 
+            this.currentBpm = 0;
             this.isPlaying = false;
             this.audioOptions.onError();
         });
         this.song.addEventListener('ended'  , () => { 
+            this.currentBpm = 0;
             this.isPlaying = false;
             this.audioOptions.onEnded();
         });                

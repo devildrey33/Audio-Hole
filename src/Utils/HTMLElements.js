@@ -121,16 +121,16 @@ export default class HTMLElements {
             // Añado la etiqueta para el marco de los controles
             strHTML += '<div class="Experience_Controls">';
             // Show FPS
-            if (this.options.showFPS === true) {
-                strHTML +=  "<div class='Experience_Panel Experience_Static' title='Frames Per Second'>" +
-                                "<div class='Experience_FPS'>60</div>" +
-                                "<div class='Experience_TxtFPS'>fps</div>" +
-                            "</div>";
-            }
             if (this.options.showBPM === true) {
                 strHTML +=  "<div class='Experience_Panel Experience_Static' title='Beats per minute'>" +
                                 "<div class='Experience_BPM'>0</div>" +
                                 "<div class='Experience_TxtBPM'>cbpm</div>" +
+                            "</div>";
+            }
+            if (this.options.showFPS === true) {
+                strHTML +=  "<div class='Experience_Panel Experience_Static' title='Frames Per Second'>" +
+                                "<div class='Experience_FPS'>60</div>" +
+                                "<div class='Experience_TxtFPS'>fps</div>" +
                             "</div>";
             }
             // Show full screen button
@@ -269,6 +269,7 @@ export default class HTMLElements {
             if (this.options.showBPM === true) {
                 // Get BPM html element from the doom
                 this.elementBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Static > .Experience_BPM")
+                this.elementTxtBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Static > .Experience_TxtBPM")
             }
         }
 

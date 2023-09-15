@@ -54,7 +54,7 @@ export default class Bars {
         this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.averageFrequency[4] / 64);
 
         
-        this.mesh.scale.y  = 1.1 + Math.cos(this.time.current / 3000) * 3;
+        this.mesh.scale.y  = 0.5 + (1.0 + Math.cos(this.time.current / 3000))  * (this.material.uniforms.uAudioValue.value * 0.5);
         this.mesh2.scale.y = this.mesh.scale.y;
 
     }

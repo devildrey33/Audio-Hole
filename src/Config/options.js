@@ -73,9 +73,9 @@ export default {
 
     // Bloom (postprocessing)
     bloomIntensity                  : 2.0,   // 0.3,   // 2.7
-    bloomThreshold                  : 4.3,    // 159.5, // -234.8
+    bloomThreshold                  : -15.4, //4.3,    // 159.5, // -234.8
     bloomSmoothing                  : -1.97, // -342,  // 240.1
-    bloomRadius                     : 0.7,   // 1.4,   // 1.4
+    bloomRadius                     : -5.32, //0.7,   // 1.4,   // 1.4
     bloomEnabled                    : true,
 
     // God rays (postprocessing)

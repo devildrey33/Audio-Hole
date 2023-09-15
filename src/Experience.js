@@ -6,8 +6,8 @@ import HTMLElements from "./Utils/HTMLElements.js";
 import options from "./Config/options.js";
 import AudioAnalizer from "./Utils/AudioAnalizer.js";
 import Camera from './Camera.js';
-//import Renderer from './Renderer.js';
-import Renderer from './Renderer_pmndrs.js';
+import Renderer from './Renderer.js';
+//import Renderer from './Renderer_pmndrs.js';
 
 import World from './World/World.js';
 import Debug from './Utils/Debug.js';
@@ -145,6 +145,11 @@ export default class Experience {
     onAudioDurationChange = (newDuration) => {
         // Update max time on the time slider
         this.htmlElements.elementAudioTime.setAttribute("max", newDuration);
+
+        this.song.bpmMS = (60000 / this.song.bpm);
+        if (this.options.showBPM === true) {
+            this.htmlElements.elementTxtBPM.innerHTML = Math.floor(this.song.bpmMS);
+        }
     }
 
     onAudioError = () => {
@@ -168,11 +173,11 @@ export default class Experience {
     }
 
     onAudioBpmChange = (currentBpm) => {
-        this.beats ++;
+/*        this.beats ++;
         if (this.beats === 32) {
             this.renderer.shockWaveEffect.explode();
             this.beats = 0;
-        }
+        }*/
         if (this.options.showBPM === true) this.htmlElements.elementBPM.innerHTML = currentBpm;
 //        console.log("Bpm : " + this.audioAnalizer.bpm + " Current beat : " + currentBpm);
     }

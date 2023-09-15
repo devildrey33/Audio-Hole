@@ -77,19 +77,23 @@ export default class Renderer {
         // If this is the last pass in your pipeline, set `renderToScreen` to `true`
 //        godraysPass.renderToScreen = true;
 //        composer.addPass(godraysPass);
+        // Color correction pass
 
         // bloom pass
         this.bloomPass = new UnrealBloomPass( new THREE.Vector2( this.sizes.width, this.sizes.height ), 1.5, 0.4, 0.85 );
         this.bloomPass.threshold = this.experience.options.bloomThreshold;
-        this.bloomPass.strength  = this.experience.options.bloomStrength;
+        this.bloomPass.strength  = this.experience.options.bloomStrength + 1;
         this.bloomPass.radius    = this.experience.options.bloomRadius;        
         this.bloomPass.enabled   = this.experience.options.bloomEnabled;     
 
         this.effectComposer.addPass(this.bloomPass);           
 
-        // Color correction pass
-//        this.colorCorrectionPass = new ShaderPass( ColorCorrectionShader );
-//        this.effectComposer.addPass(this.colorCorrectionPass);       
+        this.colorCorrectionPass = new ShaderPass( ColorCorrectionShader );
+        this.colorCorrectionPass.uniforms.powRGB.value = new THREE.Vector3(3, 3, 4);
+        this.colorCorrectionPass.uniforms.mulRGB.value = new THREE.Vector3(2, 2, 5);
+        this.colorCorrectionPass.uniforms.addRGB.value = new THREE.Vector3(0.15, 0.15, 0.25);
+        this.effectComposer.addPass(this.colorCorrectionPass);       
+
     }
 
     /**

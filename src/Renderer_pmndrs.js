@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import Experience from "./Experience";
 import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ShockWaveEffect } from "postprocessing";
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+//import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import ColorCorrectionEffect from "./PostProcessing/ColorCorrectionEffect.js"
 
 export default class Renderer {
     // Costructor
@@ -69,8 +70,16 @@ export default class Renderer {
         this.shockWaveEffect.maxRadius = this.experience.options.shockWaveMaxRadius;
         this.shockWaveEffect.waveSize = this.experience.options.shockWaveWaveSize;
         this.shockWaveEffect.amplitude = this.experience.options.shockWaveAmplitude;
-
         this.effectComposer.addPass(this.shockWavePass);
+
+
+        this.colorCorrectionEffect = new ColorCorrectionEffect();
+        this.colorCorrectionPass = new EffectPass(this.camera.instance, this.colorCorrectionEffect);
+//        this.effectComposer.addPass(this.colorCorrectionEffect);
+
+        
+
+        console.log(this.shockWaveEffect);
 
 /*        this.godRaysPass2 = new GodRaysEffect(this.camera.instance, spiralsMesh);
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass2));

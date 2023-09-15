@@ -57,7 +57,7 @@ void main() {
 //        finalColor.a = 0.1 - (vUv.x * 0.1);
 //        finalColor.a *= uAudioValue * 0.05;
 //    }    
-    finalColor.a *= (0.01 + uAudioValue) * 0.5 * (1.0 - vUv.x);
+    finalColor.a *= (0.01 + uAudioValue) * 0.5 * vUv.x;
 //    if (finalColor.a < 0.01) discard;
     gl_FragColor = finalColor;
 //    vec2 lowSinus = 0.5 + (0.5 * sin(vUv * 3.14159));

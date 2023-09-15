@@ -160,7 +160,7 @@ vec4 circleSin(vec4 currentColor, vec2 center) {
 
     if (dist - audioValue + strength + 0.01 < radiusSin) {
 //        return vec4(getColor(uTime * 0.05) , 1.0 /* 0.5 + (2.0 * dist) - sin(uTime) * 0.25 */);
-        return vec4(1.0, .5, .5, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
+        return vec4(.5, .5, .25, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
 //        return vec4(0.6, 0.2, 0.7, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
 //        return vec4(abs(sin(uTime * 5.312)), abs(cos(uTime * 0.32)), 0.5, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
     }
