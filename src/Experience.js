@@ -6,8 +6,8 @@ import HTMLElements from "./Utils/HTMLElements.js";
 import options from "./Config/options.js";
 import AudioAnalizer from "./Utils/AudioAnalizer.js";
 import Camera from './Camera.js';
-import Renderer from './Renderer.js';
-//import Renderer from './Renderer_pmndrs.js';
+//import Renderer from './Renderer.js';
+import Renderer from './Renderer_pmndrs.js';
 
 import World from './World/World.js';
 import Debug from './Utils/Debug.js';
@@ -102,6 +102,14 @@ export default class Experience {
     update() {
         this.camera.update();
         this.audioAnalizer.update(this.time.delta);
+        if (this.options.showBPM === true)  {
+            // update Audio levels
+            this.htmlElements.elementAudioLevelH.style.top = (54 - ((this.audioAnalizer.averageFrequency[0] / 255) * 54)) + "px";
+            this.htmlElements.elementAudioLevelM.style.top = (54 - ((this.audioAnalizer.averageFrequency[1] / 255) * 54)) + "px";
+            this.htmlElements.elementAudioLevelL.style.top = (54 - ((this.audioAnalizer.averageFrequency[2] / 255) * 54)) + "px";
+            this.htmlElements.elementAudioLevelT.style.top = (54 - ((this.audioAnalizer.averageFrequency[4] / 255) * 54)) + "px";
+        }
+
         this.world.update();
         this.renderer.update();
     }

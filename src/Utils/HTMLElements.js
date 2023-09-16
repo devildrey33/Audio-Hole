@@ -57,7 +57,7 @@ export default class HTMLElements {
         // Audio time slider element touchstart
         this.elementAudioTime.addEventListener('touchstart', (e) => { 
             this.dragTime = true;
-        }); 
+        }, { passive: true }); 
         // Audio time slider element mouseup
         this.elementAudioTime.addEventListener('mouseup', (e) => { 
             this.dragTime = false;
@@ -65,7 +65,7 @@ export default class HTMLElements {
         // Audio time slider element touchend
         this.elementAudioTime.addEventListener('touchend', (e) => { 
             this.dragTime = false;
-        }); 
+        }, { passive: true }); 
 
         // Update current time
         this.elementAudioTime.addEventListener('change', (e) => { 
@@ -125,6 +125,13 @@ export default class HTMLElements {
                 strHTML +=  "<div class='Experience_Panel Experience_Static' title='Beats per minute'>" +
                                 "<div class='Experience_BPM'>0</div>" +
                                 "<div class='Experience_TxtBPM'>cbpm</div>" +
+                            "</div>";
+
+                strHTML +=  "<div class='Experience_Panel Experience_Static Experience_AudioLevels' title='Audio levels (High / Medium / Low / Total)'>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelH'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelM'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelL'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelT'></div>" +
                             "</div>";
             }
             if (this.options.showFPS === true) {
@@ -255,21 +262,26 @@ export default class HTMLElements {
 
         
             // Obtengo la etiqueta del canvas 
-            this.elementCanvas = document.querySelector("#" + this.elementExperience.id + " > .Experience_Canvas")
+            this.elementCanvas = document.querySelector("#" + this.elementExperience.id + " > .Experience_Canvas");
             // Obtengo la etiqueta del marco para la carga
-            this.elementLoading = document.querySelector("#" + this.elementExperience.id + " > .Experience_Loading")
+            this.elementLoading = document.querySelector("#" + this.elementExperience.id + " > .Experience_Loading");
             // Obtengo la etiqueta del marco para los controles
-            this.elementControls = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls")
+            this.elementControls = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls");
             // if FPS are show
             if (this.options.showFPS === true) {
                 // Get FPS html element from the doom
-                this.elementFPS = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Static > .Experience_FPS")
+                this.elementFPS = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Static > .Experience_FPS");
             }
             // if BPM are show
             if (this.options.showBPM === true) {
                 // Get BPM html element from the doom
-                this.elementBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Static > .Experience_BPM")
-                this.elementTxtBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Static > .Experience_TxtBPM")
+                this.elementBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Panel > .Experience_BPM");
+                this.elementTxtBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Panel > .Experience_TxtBPM");
+                
+                this.elementAudioLevelH = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelH");
+                this.elementAudioLevelM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelM");
+                this.elementAudioLevelL = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelL");
+                this.elementAudioLevelT = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelT");
             }
         }
 

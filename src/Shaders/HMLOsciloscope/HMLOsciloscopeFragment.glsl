@@ -1,6 +1,6 @@
 uniform sampler2D uAudioTexture;    // AUdio data values
 uniform float     uAudioStrength;   // Audio strength
-uniform float     uAudioValue;      // Audio average value
+uniform vec4      uAudioValue;      // Audio average value
 uniform float     uTime;            // Current time
 uniform float     uSpeed;           // Spped
 
@@ -20,8 +20,18 @@ varying vec2      vUv;
 
 // https://shader.how/to/draw-a-sine-wave/
 
-vec4 Line2(vec3 color, float audioValue, float speed) {
-    float curve = 0.25 * sin((30.25 * vUv.x) + (uSpeed * speed * uTime));
+#define PI 3.1415
+
+vec4 Line(vec3 color, float audioValue, float speed, float width) {
+    const float freq = 15.0;
+    const float amp = 1.0 / 15.0;
+    vec2 uv = vUv - 0.5;
+    float y = sin(uv.x * PI * freq * (uTime) * speed) * amp;
+    return vec4(color - abs(uv.y - (y + 0.01)), 1.0);
+}
+
+vec4 Line2(vec3 color, float audioValue, float speed, float width) {
+    float curve = (0.25 * width) * sin((10.25 * vUv.x) + (uSpeed * speed * uTime));
 
     float lineAShape = smoothstep(1.0 - clamp(distance(curve + (vUv.y) + (audioValue * 0.5), 0.5 ) * 1.0, 0.0, 1.0), 1.0, 0.99);
     vec4  lineACol = (1.0 - lineAShape) * vec4(mix(vec4(color, 1.0), vec4(0.0), lineAShape));
@@ -45,11 +55,11 @@ void main() {
     float audioValue = ((texture2D(uAudioTexture, vec2(mod(vUv.x * 4.0, 1.0), 0.0)).g ) * uAudioStrength);    
 
     vec4 finalColor = vec4(0.0, 0.0, 0.0, 0.0);
-    finalColor += vec4(Line2(vec3(0.5, 0.5, 1.0), audioValue, .230));
-    finalColor += vec4(Line2(vec3(0.5, 1.0, 0.5), audioValue, .235));
-    finalColor += vec4(Line2(vec3(1.0, 0.5, 0.5), audioValue, .240));
+    finalColor += Line2(vec3(0.5, 0.5, 1.0), audioValue, .230, uAudioValue.r);
+    finalColor += Line2(vec3(0.5, 1.0, 0.5), audioValue, .435, uAudioValue.g);
+    finalColor += Line2(vec3(1.0, 0.5, 0.5), audioValue, .640, uAudioValue.b);
 //    finalColor += vec4(Line2(vec3(0.0), audioValue, .245));
-    vec4 tmpCol = vec4(Line2(vec3(1.0, 1.0, 1.0), audioValue, .245));
+    vec4 tmpCol = Line2(vec3(1.0, 1.0, 1.0), audioValue, .845, uAudioValue.a);
     if (tmpCol.a > 0.1) finalColor = tmpCol;
 //        finalColor.rgb += Line(uv, 1.0, 16.0, audioValue * 5.0, 2.0);
 //        finalColor.rgb += Line(uv, 1.0, 16.0, audioValue * 5.0, 4.0);
@@ -57,7 +67,9 @@ void main() {
 //        finalColor.a = 0.1 - (vUv.x * 0.1);
 //        finalColor.a *= uAudioValue * 0.05;
 //    }    
-    finalColor.a *= (0.01 + uAudioValue) * 0.5 * vUv.x;
+    finalColor.a *= (0.01 + uAudioValue.g) * 0.5 * vUv.x;
+    //finalColor.a = 1.0;
+
 //    if (finalColor.a < 0.01) discard;
     gl_FragColor = finalColor;
 //    vec2 lowSinus = 0.5 + (0.5 * sin(vUv * 3.14159));

@@ -1,6 +1,8 @@
+const isDebug = window.location.hash === '#debug';
+
 export default {
     // Debug mode : use #debug at the end of the url
-    debug                   : window.location.hash === '#debug',
+    debug                   : isDebug,
     // Y position. Use 'auto' to center canvas horizontaly to the view port
     top                     : 0,
     // X position. Use 'auto' to center canvas verticaly to the view port
@@ -10,9 +12,9 @@ export default {
     // Height in pixels. Use 'auto' to fit all viewport height
     height                  : "auto",           
     // Show framerate inside the butons frame
-    showFPS                 : true,
+    showFPS                 : isDebug,
     // Show current beat per minute            
-    showBPM                 : true,
+    showBPM                 : isDebug,
     // Show full screen buton in the buttons frame
     buttonFullScreen        : true,            
     // Show my logo buton in the buttons frame (that redirects to devildrey33.es)
@@ -29,7 +31,7 @@ export default {
     // default audio volume
     audioVolume             : 0.25,
     // Allow orbit controls (only on debug by default)
-    orbitControls           : window.location.hash === '#debug',
+    orbitControls           : isDebug,
 
     // Spirals      
     spiralAudioStrength             : 0.4,
@@ -72,10 +74,10 @@ export default {
     voronoiBackgroundCount          : 64.0,
 
     // Bloom (postprocessing)
-    bloomIntensity                  : 2.0,   // 0.3,   // 2.7
+    bloomIntensity                  : .1, //2.0,   // 0.3,   // 2.7
     bloomThreshold                  : -15.4, //4.3,    // 159.5, // -234.8
     bloomSmoothing                  : -1.97, // -342,  // 240.1
-    bloomRadius                     : -5.32, //0.7,   // 1.4,   // 1.4
+    bloomRadius                     : 1.68, //-5.32, //0.7,   // 1.4,   // 1.4
     bloomEnabled                    : true,
 
     // God rays (postprocessing)

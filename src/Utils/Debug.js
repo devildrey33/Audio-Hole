@@ -14,9 +14,9 @@ export default class Debug {
 
         this.setupSpirals();
         this.setupSun();
-        this.setupBloom();
+        this.setupBloom(true);
         this.setupGodRays();
-        this.setupShockWave(true);
+        this.setupShockWave();
     }
 
     setupShockWave(open = false) {
@@ -48,16 +48,16 @@ export default class Debug {
         this.bloom = this.experience.renderer.bloomEffect;
 
         this.bloomUI = this.gui.addFolder("Bloom (post processing)").open(open);
-        this.bloomUI.add(this.experience.options, 'bloomIntensity').min(-5.0).max(5).step(0.01).name("Intensity").onChange(() => {
+        this.bloomUI.add(this.experience.options, 'bloomIntensity').min(-15.0).max(15).step(0.01).name("Intensity").onChange(() => {
             this.bloom.intensity = this.experience.options.bloomIntensity;
         });
-        this.bloomUI.add(this.experience.options, 'bloomThreshold').min(-5.0).max(5).step(0.01).name("Threshold").onChange(() => {
+        this.bloomUI.add(this.experience.options, 'bloomThreshold').min(-15.0).max(15).step(0.01).name("Threshold").onChange(() => {
             this.bloom.luminanceMaterial.threshold = this.experience.options.bloomThreshold;
         });
-        this.bloomUI.add(this.experience.options, 'bloomSmoothing').min(-5.0).max(5).step(0.01).name("Smoothing").onChange(() => {
+        this.bloomUI.add(this.experience.options, 'bloomSmoothing').min(-15.0).max(15).step(0.01).name("Smoothing").onChange(() => {
             this.bloom.luminanceMaterial.smoothing = this.experience.options.bloomSmoothing;
         });
-        this.bloomUI.add(this.experience.options, 'bloomRadius').min(-2.0).max(2).step(0.01).name("Radius").onChange(() => {
+        this.bloomUI.add(this.experience.options, 'bloomRadius').min(-12.0).max(12).step(0.01).name("Radius").onChange(() => {
             this.bloom.mipmapBlurPass.radius = this.experience.options.bloomRadius;
         });
         this.bloomUI.add(this.experience.options, 'bloomEnabled').name("Enabled").onChange(() => {

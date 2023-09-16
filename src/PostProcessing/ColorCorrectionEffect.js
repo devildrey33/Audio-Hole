@@ -1,5 +1,6 @@
-import { Effect, BlendFunction } from "postprocessing";
+import { Effect, BlendFunction, EffectAttribute } from "postprocessing";
 import * as THREE from 'three'
+import ColorCorrectionFragment from "./ColorCorrectionFragment.glsl"
 
 /**
  * trying to implement Color correction in pmndr postprocessing...
@@ -8,30 +9,17 @@ import * as THREE from 'three'
 export default class ColorCorrectionEffect extends Effect {
 
 	constructor() {
-		const fragment = /* glsl */`
-		uniform vec3 powRGB;
-		uniform vec3 mulRGB;
-		uniform vec3 addRGB;
-
-		void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
-			outputColor = vec4(1.0, 0.0, 0.0, 1.0);
-			//outputColor.rgb = mulRGB * pow( ( inputColor.rgb + addRGB ), powRGB );
-		}`;
-
-		super(
-			"ColorCorrectionEffect", 
-			fragment,
+		super("ColorCorrectionEffect", ColorCorrectionFragment,
 			{
-				blendFunction: BlendFunction.Normal,
+				blendFunction: BlendFunction.ADD,
+//				attributes: EffectAttribute.CONVOLUTION,
 				uniforms : new Map([
-					[ "powRGB" , new THREE.Uniform(new THREE.Vector3( 2, 2, 2 )) ],
-					[ "mulRGB" , new THREE.Uniform(new THREE.Vector3( 1, 1, 1 )) ],
-					[ "addRGB" , new THREE.Uniform(new THREE.Vector3( 0, 0, 0 )) ]
+					[ "powRGB" , new THREE.Uniform(new THREE.Vector3( 3, 3, 24 )) ],
+					[ "mulRGB" , new THREE.Uniform(new THREE.Vector3( 2, 2, 15 )) ],
+					[ "addRGB" , new THREE.Uniform(new THREE.Vector3( 0.05, 0.05, 0.25 )) ]
 				])
 			}
 		)
-
-		console.log(this);
 	}
 
 };

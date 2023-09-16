@@ -24,7 +24,8 @@ void main() {
     color += Bars(vec3(0.5, 0.5, 1.0), 0.6, 0.8);
     color -= Bars(vec3(.7, .7, .0), 1.3, .50);
     if (color.r > 0.0 || color.g > 0.0 || color.b > 0.0) {
-        gl_FragColor = vec4(color, 0.5 * (1.0 - vUv.x));        
+        gl_FragColor = vec4(color, 1.0);        
+        gl_FragColor = vec4(color, 1.0 * (1.0 - vUv.x));        
     }
     else {
         discard;

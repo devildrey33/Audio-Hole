@@ -69,6 +69,7 @@ export default class Spirals {
         this.mesh.rotation.y += advance;
         // update audio value on spiral
         this.material.uniforms.uAudioValue.value = 0.01 +  (this.audioAnalizer.averageFrequency[4] / 64);
+//        this.material.uniforms.uAudioValue.value = 1.0;
         // update time on spiral
         this.material.uniforms.uTime.value += advance;   
         // Set osciloscope line thickness applying the low sound average frequency

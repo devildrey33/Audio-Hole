@@ -40,17 +40,20 @@ export default class Renderer {
 
 
         this.effectComposer = new EffectComposer(this.instance);
+//        this.effectComposer.autoRenderToScreen = true;
 
         this.effectComposer.addPass(new RenderPass(this.scene, this.camera.instance));
 
-        this.bloomEffect = new BloomEffect({ mipmapBlur : true, levels : 8 });
+        this.bloomEffect = new BloomEffect({ mipmapBlur : true, levels : 6 });
         //this.bloomPass.strength = this.experience.options.bloomStrength;   
         this.bloomEffect.intensity = this.experience.options.bloomIntensity;
         this.bloomEffect.luminanceMaterial.threshold = this.experience.options.bloomThreshold;
         this.bloomEffect.luminanceMaterial.smoothing = this.experience.options.bloomSmoothing;
         this.bloomEffect.mipmapBlurPass.radius = this.experience.options.bloomRadius;
-        this.bloomPass = new EffectPass(this.camera.instance, this.bloomEffect)
+        this.bloomPass = new EffectPass(this.camera.instance, this.bloomEffect);
+//        this.bloomPass.dithering = false;
         this.effectComposer.addPass(this.bloomPass);
+
 
         this.godRaysEffect = new GodRaysEffect(this.camera.instance, sunMesh);
         this.godRaysPass = new EffectPass(this.camera.instance, this.godRaysEffect);
@@ -75,11 +78,11 @@ export default class Renderer {
 
         this.colorCorrectionEffect = new ColorCorrectionEffect();
         this.colorCorrectionPass = new EffectPass(this.camera.instance, this.colorCorrectionEffect);
-//        this.effectComposer.addPass(this.colorCorrectionEffect);
+        this.effectComposer.addPass(this.colorCorrectionPass);
 
-        
+//        this.colorCorrectionEffect.uniforms.powRGB.value = new THREE.Vector3(2, 2, 3);
 
-        console.log(this.shockWaveEffect);
+        console.log(this.colorCorrectionPass);
 
 /*        this.godRaysPass2 = new GodRaysEffect(this.camera.instance, spiralsMesh);
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass2));
@@ -102,6 +105,8 @@ export default class Renderer {
 
         this.brightnessContrastPass.contrast = 0.25;
         this.brightnessContrastPass.brightness = 0.25*/
+
+        
     }
 
     /**
@@ -127,8 +132,9 @@ export default class Renderer {
 //        this.bloomPass.luminanceMaterial.smoothing = 1.0 + (this.experience.audioAnalizer.averageFrequency[2] / 255);
 //        console.log(this.bloomPass.luminanceMaterial.uniforms.smoothing.value);
         // Set bloom radius using a sine wave and time to go from -1.5 to 3.5
-//        this.bloomPass.radius = -1.5 + (Math.sin(this.time.elapsed / 10000) * 5.5);
-
+//        this.bloomEffect.intensity = (1.4 + (Math.sin(this.time.elapsed / 10000))) * 0.5;
+//        console.log(this.bloomEffect.intensity);
+//console.log(this.bloomPass.radius);
 
         this.effectComposer.render();
         //this.instance.render(this.scene, this.camera.instance)

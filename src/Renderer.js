@@ -71,7 +71,7 @@ export default class Renderer {
         this.effectComposer.addPass(this.renderPass);
 
 
-
+        this.setupGodRays();
 
 //        const godraysPass = new GodraysPass(pointLight, this.camera.instance);
         // If this is the last pass in your pipeline, set `renderToScreen` to `true`
@@ -95,7 +95,10 @@ export default class Renderer {
         this.effectComposer.addPass(this.colorCorrectionPass);       
 
     }
-
+    
+    setupGodRays() {
+        
+    }
     /**
      * Function called on resize
     */

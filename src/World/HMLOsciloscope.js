@@ -16,13 +16,13 @@ export default class HMLOsciloscope {
     }
 
     setup() {
-        this.geometry = new THREE.PlaneGeometry(2048 * 4, 350);
+        this.geometry = new THREE.PlaneGeometry(2048 * 4, 1280);
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
                 uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
                 uAudioStrength : { value : this.experience.options.hmsOsciloscopeAudioStrength },
-                uAudioValue    : { value : 0 },
+                uAudioValue    : { value : new THREE.Vector4(0.0, 0.0, 0.0, 0.0) },
                 uSpeed         : { value : this.experience.options.hmsOsciloscopeSpeed },
                 uTime          : { value : 0 }
             },
@@ -38,11 +38,11 @@ export default class HMLOsciloscope {
         this.mesh.rotation.z = -Math.PI * 0.5 ;
         this.mesh.rotation.x = -Math.PI * 0.5 ;
 //        this.mesh.rotation.y = Math.PI * 0.5;
-        this.mesh.position.set(0, 750, -1024 * 4);
+        this.mesh.position.set(150, 750, -1024 * 4);
 
         this.mesh2.rotation.z = -Math.PI * 0.5 ;
         this.mesh2.rotation.x = -Math.PI * 0.5 ;
-        this.mesh2.position.set(0, -750, -1024 * 4);
+        this.mesh2.position.set(150, -750, -1024 * 4);
 //        this.mesh.rotation.z = Math.PI * 0.5;
 //        this.mesh.position.copy(this.position);
 
@@ -54,10 +54,16 @@ export default class HMLOsciloscope {
     update() {        
         this.material.uniforms.uTime.value += this.time.delta / 100;
 
-        this.material.uniforms.uAudioValue.value = (this.audioAnalizer.averageFrequency[4] / 64);
+        this.material.uniforms.uAudioValue.value = new THREE.Vector4(
+            this.audioAnalizer.averageFrequency[0] / 196, 
+            this.audioAnalizer.averageFrequency[1] / 196,
+            this.audioAnalizer.averageFrequency[2] / 196,
+            this.audioAnalizer.averageFrequency[4] / 196
+        );
+//        this.material.uniforms.uAudioValue.value = (this.audioAnalizer.averageFrequency[4] / 64);
 
-        this.mesh.scale.y  =  0.5 + (1.0 + Math.sin(this.time.current / 3000))* 2 * (this.material.uniforms.uAudioValue.value * 0.5);
-        this.mesh2.scale.y = this.mesh.scale.y;
+//        this.mesh.scale.y  =  0.5 + (1.0 + Math.sin(this.time.current / 3000))* 2 * (this.material.uniforms.uAudioValue.value * 0.5);
+//        this.mesh2.scale.y = this.mesh.scale.y;
         
     }
 }
