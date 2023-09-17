@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from "./Experience";
-import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ShockWaveEffect } from "postprocessing";
+import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ShockWaveEffect, ToneMappingEffect, ToneMappingMode } from "postprocessing";
 //import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import ColorCorrectionEffect from "./PostProcessing/ColorCorrectionEffect.js"
 
@@ -30,8 +30,10 @@ export default class Renderer {
 
         this.instance.outputColorSpace = THREE.SRGBColorSpace;
 //        this.instance.outputEncoding = THREE.sRGBEncoding;
+        this.instance.toneMapping = THREE.NoToneMapping;
         this.instance.toneMapping = THREE.CineonToneMapping;
         this.instance.toneMappingExposure = 1.75;
+
 //        this.instance.shadowMap.enabled = true;
 //        this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
 //        this.instance.setClearColor('#050505');
@@ -39,17 +41,19 @@ export default class Renderer {
         this.instance.setPixelRatio(this.sizes.pixelRatio);
 
 
-        this.effectComposer = new EffectComposer(this.instance);
+        this.effectComposer = new EffectComposer(this.instance, {
+                frameBufferType: THREE.HalfFloatType
+        });
 //        this.effectComposer.autoRenderToScreen = true;
 
         this.effectComposer.addPass(new RenderPass(this.scene, this.camera.instance));
 
-        this.bloomEffect = new BloomEffect({ mipmapBlur : true, levels : 6 });
+        this.bloomEffect = new BloomEffect({ mipmapBlur : true, levels : 5 });
         //this.bloomPass.strength = this.experience.options.bloomStrength;   
-        this.bloomEffect.intensity = this.experience.options.bloomIntensity;
-        this.bloomEffect.luminanceMaterial.threshold = this.experience.options.bloomThreshold;
-        this.bloomEffect.luminanceMaterial.smoothing = this.experience.options.bloomSmoothing;
-        this.bloomEffect.mipmapBlurPass.radius = this.experience.options.bloomRadius;
+        this.bloomEffect.intensity = this.experience.options.bloomPmndrsIntensity;
+        this.bloomEffect.luminanceMaterial.threshold = this.experience.options.bloomPmndrsThreshold;
+        this.bloomEffect.luminanceMaterial.smoothing = this.experience.options.bloomPmndrsSmoothing;
+        this.bloomEffect.mipmapBlurPass.radius = this.experience.options.bloomPmndrsRadius;
         this.bloomPass = new EffectPass(this.camera.instance, this.bloomEffect);
 //        this.bloomPass.dithering = false;
         this.effectComposer.addPass(this.bloomPass);
@@ -81,6 +85,13 @@ export default class Renderer {
         this.effectComposer.addPass(this.colorCorrectionPass);
 
 //        this.colorCorrectionEffect.uniforms.powRGB.value = new THREE.Vector3(2, 2, 3);
+
+
+        this.toneMappingEffect = new ToneMappingEffect();
+        this.toneMappingEffect.mode = ToneMappingMode.OPTIMIZED_CINEON;
+        this.toneMappingEffect.exposure = 1.75;
+        this.toneMappingPass = new EffectPass(this.camera.instance, this.toneMappingEffect);
+        this.effectComposer.addPass(this.toneMappingPass);
 
         console.log(this.colorCorrectionPass);
 

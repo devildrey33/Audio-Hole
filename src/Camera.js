@@ -19,7 +19,7 @@ export default class Camera {
         this.setInstance();
         if (options.orbitControls === true) {
             this.setOrbitControls();
-            this.update = () => {};
+//            this.update = () => {};
         }
         else {
             this.setCameraControls();

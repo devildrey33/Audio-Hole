@@ -154,13 +154,13 @@ vec4 circleSin(vec4 currentColor, vec2 center) {
         normAngle = (1.0 + ((rad - PI) / PI));
     }
 
-    float audioValue = (texture2D(uAudioTexture, vec2(normAngle, 0.0)).g - 0.5) * .5 * uAudioStrengthSin;
+    float audioValue = abs(texture2D(uAudioTexture, vec2(normAngle, 0.0)).g - 0.5) * .5 * uAudioStrengthSin;
     // Perlin noise
     float strength = 0.0; //cnoise(vec3(rad * TAU * 5.0, dist * 100.0,  uTime + color.b)) * radius * 0.1;
 
     if (dist - audioValue + strength + 0.01 < radiusSin) {
 //        return vec4(getColor(uTime * 0.05) , 1.0 /* 0.5 + (2.0 * dist) - sin(uTime) * 0.25 */);
-        return vec4(.5, .5, .25, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
+        return vec4(2.0, 2.0, 1.5, 0.75);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
 //        return vec4(0.6, 0.2, 0.7, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
 //        return vec4(abs(sin(uTime * 5.312)), abs(cos(uTime * 0.32)), 0.5, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
     }

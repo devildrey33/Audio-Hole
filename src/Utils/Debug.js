@@ -14,26 +14,58 @@ export default class Debug {
 
         this.setupSpirals();
         this.setupSun();
+        this.setupPostProcessing();
         this.setupBloom(true);
-        this.setupGodRays();
-        this.setupShockWave();
+
+        this.setupPostProcessingPmndrs();
+        this.setupBloomPmndrs();
+        this.setupGodRaysPmndrs();
+        this.setupShockWavePmndrs();
     }
 
-    setupShockWave(open = false) {
-        this.shockWave = this.experience.renderer.shockWaveEffect;
-        this.shockWaveUI = this.gui.addFolder("ShockWave (post processing)").open(open);
+    setupPostProcessing(open = false) {
+        this.postProcessing = this.gui.addFolder("Post processing").open(open);
+    }
 
-        this.shockWaveUI.add(this.experience.options, 'shockWaveSpeed').min(0.1).max(15).step(0.01).name("Speed").onChange(() => {
-            this.shockWave.speed = this.experience.options.shockWaveSpeed;
+    setupBloom(open = false) {
+        if (open === true) this.postProcessing.open(true);
+        this.bloom = this.experience.renderer.bloomPass;
+        this.bloomUI = this.postProcessing.addFolder("Unreal Bloom").open(open);
+        this.bloomUI.add(this.experience.options, 'bloomStrength').min(-15).max(15).step(0.01).name("Strength").onChange(() => {
+            this.bloom.strength = this.experience.options.bloomStrength;
         });
-        this.shockWaveUI.add(this.experience.options, 'shockWaveMaxRadius').min(0.1).max(5).step(0.01).name("Max radius").onChange(() => {
-            this.shockWave.maxRadius = this.experience.options.shockWaveMaxRadius;
+        this.bloomUI.add(this.experience.options, 'bloomRadius').min(-15).max(15).step(0.01).name("Radius").onChange(() => {
+            this.bloom.radius = this.experience.options.bloomRadius;
         });
-        this.shockWaveUI.add(this.experience.options, 'shockWaveWaveSize').min(0.1).max(5).step(0.01).name("Wave size").onChange(() => {
-            this.shockWave.waveSize = this.experience.options.shockWaveWaveSize;
+        this.bloomUI.add(this.experience.options, 'bloomThreshold').min(0).max(1).step(0.001).name("Threshold").onChange(() => {
+            this.bloom.threshold = this.experience.options.bloomThreshold;
         });
-        this.shockWaveUI.add(this.experience.options, 'shockWaveAmplitude').min(0.01).max(30).step(0.01).name("Amplitude").onChange(() => {
-            this.shockWave.amplitude = this.experience.options.shockWaveAmplitude;
+        this.bloomUI.add(this.experience.options, 'bloomEnabled').name("Enabled").onChange(() => {
+            this.bloom.enabled = this.experience.options.bloomEnabled;
+        });
+
+    }
+
+    setupPostProcessingPmndrs(open = false) {
+        this.postProcessingPmndrs = this.gui.addFolder("Post processing (pmndrs)").open(open);
+    }
+
+    setupShockWavePmndrs(open = false) {
+        if (open === true) this.postProcessingPmndrs.open(true);
+        this.shockWavePmndrs = this.experience.renderer.shockWaveEffect;
+        this.shockWavePmndrsUI = this.postProcessingPmndrs.addFolder("ShockWave (Pmndrs)").open(open);
+
+        this.shockWavePmndrsUI.add(this.experience.options, 'shockWaveSpeed').min(0.1).max(15).step(0.01).name("Speed").onChange(() => {
+            this.shockWavePmndrs.speed = this.experience.options.shockWaveSpeed;
+        });
+        this.shockWavePmndrsUI.add(this.experience.options, 'shockWaveMaxRadius').min(0.1).max(5).step(0.01).name("Max radius").onChange(() => {
+            this.shockWavePmndrs.maxRadius = this.experience.options.shockWaveMaxRadius;
+        });
+        this.shockWavePmndrsUI.add(this.experience.options, 'shockWaveWaveSize').min(0.1).max(5).step(0.01).name("Wave size").onChange(() => {
+            this.shockWavePmndrs.waveSize = this.experience.options.shockWaveWaveSize;
+        });
+        this.shockWavePmndrsUI.add(this.experience.options, 'shockWaveAmplitude').min(0.01).max(30).step(0.01).name("Amplitude").onChange(() => {
+            this.shockWavePmndrs.amplitude = this.experience.options.shockWaveAmplitude;
         });
 
 /*        // Shock wave (postprocessing)
@@ -44,24 +76,25 @@ export default class Debug {
 
     }
 
-    setupBloom(open = false) {
-        this.bloom = this.experience.renderer.bloomEffect;
+    setupBloomPmndrs(open = false) {
+        if (open === true) this.postProcessingPmndrs.open(true);
+        this.bloomPmndrs = this.experience.renderer.bloomEffect;
 
-        this.bloomUI = this.gui.addFolder("Bloom (post processing)").open(open);
-        this.bloomUI.add(this.experience.options, 'bloomIntensity').min(-15.0).max(15).step(0.01).name("Intensity").onChange(() => {
-            this.bloom.intensity = this.experience.options.bloomIntensity;
+        this.bloomPmndrsUI = this.postProcessingPmndrs.addFolder("Bloom (Pmndrs)").open(open);
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsIntensity').min(-2.0).max(2).step(0.01).name("Intensity").onChange(() => {
+            this.bloomPmndrs.intensity = this.experience.options.bloomPmndrsIntensity;
         });
-        this.bloomUI.add(this.experience.options, 'bloomThreshold').min(-15.0).max(15).step(0.01).name("Threshold").onChange(() => {
-            this.bloom.luminanceMaterial.threshold = this.experience.options.bloomThreshold;
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsThreshold').min(-15.0).max(15).step(0.01).name("Threshold").onChange(() => {
+            this.bloomPmndrs.luminanceMaterial.threshold = this.experience.options.bloomPmndrsThreshold;
         });
-        this.bloomUI.add(this.experience.options, 'bloomSmoothing').min(-15.0).max(15).step(0.01).name("Smoothing").onChange(() => {
-            this.bloom.luminanceMaterial.smoothing = this.experience.options.bloomSmoothing;
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsSmoothing').min(-15.0).max(15).step(0.01).name("Smoothing").onChange(() => {
+            this.bloomPmndrs.luminanceMaterial.smoothing = this.experience.options.bloomPmndrsSmoothing;
         });
-        this.bloomUI.add(this.experience.options, 'bloomRadius').min(-12.0).max(12).step(0.01).name("Radius").onChange(() => {
-            this.bloom.mipmapBlurPass.radius = this.experience.options.bloomRadius;
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsRadius').min(-2.0).max(2).step(0.01).name("Radius").onChange(() => {
+            this.bloomPmndrs.mipmapBlurPass.radius = this.experience.options.bloomPmndrsRadius;
         });
-        this.bloomUI.add(this.experience.options, 'bloomEnabled').name("Enabled").onChange(() => {
-            if (this.experience.options.bloomEnabled === true) 
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsEnabled').name("Enabled").onChange(() => {
+            if (this.experience.options.bloomPmndrsEnabled === true) 
                 this.experience.renderer.effectComposer.addPass(this.experience.renderer.bloomPass);
             else 
                 this.experience.renderer.effectComposer.removePass(this.experience.renderer.bloomPass);
@@ -69,27 +102,28 @@ export default class Debug {
 
     }
 
-    setupGodRays(open = false) {
-        this.godRays = this.experience.renderer.godRaysEffect;
+    setupGodRaysPmndrs(open = false) {
+        if (open === true) this.postProcessingPmndrs.open(true);
+        this.godRaysPmndrs = this.experience.renderer.godRaysEffect;
 
-        this.godRaysUI = this.gui.addFolder("God Rays (post processing)").open(open);
-        this.godRaysUI.add(this.experience.options, 'godRaysDensity').min(-5.0).max(5).step(0.1).name("Density").onChange(() => {
-            this.godRays.godRaysMaterial.density = this.experience.options.godRaysDensity;
+        this.godRaysPmndrsUI = this.postProcessingPmndrs.addFolder("God Rays (Pmndrs)").open(open);
+        this.godRaysPmndrsUI.add(this.experience.options, 'godRaysDensity').min(-5.0).max(5).step(0.1).name("Density").onChange(() => {
+            this.godRaysPmndrs.godRaysMaterial.density = this.experience.options.godRaysDensity;
         });
-        this.godRaysUI.add(this.experience.options, 'godRaysDecay').min(0).max(1).step(0.01).name("Decay").onChange(() => {
-            this.godRays.godRaysMaterial.decay = this.experience.options.godRaysDecay;
+        this.godRaysPmndrsUI.add(this.experience.options, 'godRaysDecay').min(0).max(1).step(0.01).name("Decay").onChange(() => {
+            this.godRaysPmndrs.godRaysMaterial.decay = this.experience.options.godRaysDecay;
         });
-        this.godRaysUI.add(this.experience.options, 'godRaysWeigth').min(-5.0).max(5).step(0.1).name("Weigth").onChange(() => {
-            this.godRays.godRaysMaterial.weight = this.experience.options.godRaysWeigth;
+        this.godRaysPmndrsUI.add(this.experience.options, 'godRaysWeigth').min(-5.0).max(5).step(0.1).name("Weigth").onChange(() => {
+            this.godRaysPmndrs.godRaysMaterial.weight = this.experience.options.godRaysWeigth;
         });
-        this.godRaysUI.add(this.experience.options, 'godRaysExposure').min(-5.0).max(5).step(0.1).name("Exposure").onChange(() => {
-            this.godRays.godRaysMaterial.weight = this.experience.options.godRaysExposure;
+        this.godRaysPmndrsUI.add(this.experience.options, 'godRaysExposure').min(-5.0).max(5).step(0.1).name("Exposure").onChange(() => {
+            this.godRaysPmndrs.godRaysMaterial.weight = this.experience.options.godRaysExposure;
         });
-        this.godRaysUI.add(this.experience.options, 'godRaysClampMax').min(-5.0).max(5).step(0.1).name("Max intensity").onChange(() => {
-            this.godRays.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
+        this.godRaysPmndrsUI.add(this.experience.options, 'godRaysClampMax').min(-5.0).max(5).step(0.1).name("Max intensity").onChange(() => {
+            this.godRaysPmndrs.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
         });
-        this.godRaysUI.add(this.experience.options, 'godRaysSamples').min(1).max(200).step(1).name("Samples").onChange(() => {
-            this.godRays.godRaysMaterial.samples = this.experience.options.godRaysSamples;
+        this.godRaysPmndrsUI.add(this.experience.options, 'godRaysSamples').min(1).max(200).step(1).name("Samples").onChange(() => {
+            this.godRaysPmndrs.godRaysMaterial.samples = this.experience.options.godRaysSamples;
         });
 /*        this.godRaysUI.add(this.experience.options, 'godRaysEnabled').name("Enabled").onChange(() => {
             if (this.experience.options.godRaysEnabled === true) 

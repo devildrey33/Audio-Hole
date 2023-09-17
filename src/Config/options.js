@@ -72,13 +72,24 @@ export default {
     voronoiBackgroundSpeed          : 1.0,
     voronoiBackgroundThickness      : 0.01,
     voronoiBackgroundCount          : 64.0,
+    
 
     // Bloom (postprocessing)
-    bloomIntensity                  : .1, //2.0,   // 0.3,   // 2.7
-    bloomThreshold                  : -15.4, //4.3,    // 159.5, // -234.8
-    bloomSmoothing                  : -1.97, // -342,  // 240.1
-    bloomRadius                     : 1.68, //-5.32, //0.7,   // 1.4,   // 1.4
+    // TopeBloom  -->  S : 0.68, R : -0.16, T : 0.036
+    // Psicodelic -->  S : 0.3,  R : 6.11,  T : 0.027
+
+    bloomStrength                   : 0.3, //0.05,
+    bloomRadius                     : 6.11, //-5.32,
+    bloomThreshold                  : 0.027,//0.05,
     bloomEnabled                    : true,
+
+
+    // Bloom Pmndrs (postprocessing)
+    bloomPmndrsIntensity            : .1, //2.0,   // 0.3,   // 2.7
+    bloomPmndrsThreshold            : -15.4, //4.3,    // 159.5, // -234.8
+    bloomPmndrsSmoothing            : -1.97, // -342,  // 240.1
+    bloomPmndrsRadius               : 1.68, //-5.32, //0.7,   // 1.4,   // 1.4
+    bloomPmndrsEnabled              : true,
 
     // God rays (postprocessing)
     godRaysDensity                  : 0.96,

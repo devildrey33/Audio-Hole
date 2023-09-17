@@ -10,7 +10,8 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 //import DisplacementFragmentShader from "./Shaders/PostProcessing/Displacement/DisplacementFragmentShader.glsl"
 //import { GodraysPass } from 'three-good-godrays';
 //import { GodraysPass } from 'https://unpkg.com/three-good-godrays@0.4.2/build/three-good-godrays.esm.js';
-import { GodRaysFakeSunShader, GodRaysDepthMaskShader, GodRaysCombineShader, GodRaysGenerateShader } from 'three/addons/shaders/GodRaysShader.js';
+//import { GodRaysFakeSunShader, GodRaysDepthMaskShader, GodRaysCombineShader, GodRaysGenerateShader } from 'three/addons/shaders/GodRaysShader.js';
+import GodRays from './PostProcessing/GodRays.js'
 
 export default class Renderer {
     // Costructor
@@ -77,17 +78,19 @@ export default class Renderer {
         // If this is the last pass in your pipeline, set `renderToScreen` to `true`
 //        godraysPass.renderToScreen = true;
 //        composer.addPass(godraysPass);
-        // Color correction pass
+
+        this.godRaysPass = new ShaderPass( GodRays );
+        this.effectComposer.addPass(this.godRaysPass);           
 
         // bloom pass
-        this.bloomPass = new UnrealBloomPass( new THREE.Vector2( this.sizes.width, this.sizes.height ), 1.5, 0.4, 0.85 );
+        this.bloomPass = new UnrealBloomPass( new THREE.Vector2( this.sizes.width, this.sizes.height ) );
         this.bloomPass.threshold = this.experience.options.bloomThreshold;
-        this.bloomPass.strength  = this.experience.options.bloomStrength + 1;
+        this.bloomPass.strength  = this.experience.options.bloomStrength;
         this.bloomPass.radius    = this.experience.options.bloomRadius;        
         this.bloomPass.enabled   = this.experience.options.bloomEnabled;     
-
         this.effectComposer.addPass(this.bloomPass);           
 
+        // Color correction pass
         this.colorCorrectionPass = new ShaderPass( ColorCorrectionShader );
         this.colorCorrectionPass.uniforms.powRGB.value = new THREE.Vector3(3, 3, 4);
         this.colorCorrectionPass.uniforms.mulRGB.value = new THREE.Vector3(2, 2, 5);
@@ -119,9 +122,11 @@ export default class Renderer {
 //        this.displacementPass.material.uniforms.uTime.value += advance;
 
         // Modify bloom strenght using low sound average frequency (bass) 
-        this.bloomPass.strength = (this.experience.audioAnalizer.averageFrequency[2] / 255);
+//        this.bloomPass.strength = (this.experience.audioAnalizer.averageFrequency[4] / 255);
         // Set bloom radius using a sine wave and time to go from -1.5 to 3.5
-        this.bloomPass.radius = -1.5 + (Math.sin(this.time.elapsed / 10000) * 5.5);
+//        this.bloomPass.radius = (Math.sin(this.time.elapsed / 10000) * 1.25);
+
+//        console.log(this.bloomPass.radius);
 
 
         this.effectComposer.render();

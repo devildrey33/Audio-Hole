@@ -14,8 +14,8 @@ export default class ColorCorrectionEffect extends Effect {
 				blendFunction: BlendFunction.ADD,
 //				attributes: EffectAttribute.CONVOLUTION,
 				uniforms : new Map([
-					[ "powRGB" , new THREE.Uniform(new THREE.Vector3( 3, 3, 24 )) ],
-					[ "mulRGB" , new THREE.Uniform(new THREE.Vector3( 2, 2, 15 )) ],
+					[ "powRGB" , new THREE.Uniform(new THREE.Vector3( 3, 3, 4 )) ],
+					[ "mulRGB" , new THREE.Uniform(new THREE.Vector3( 2, 2, 5 )) ],
 					[ "addRGB" , new THREE.Uniform(new THREE.Vector3( 0.05, 0.05, 0.25 )) ]
 				])
 			}
