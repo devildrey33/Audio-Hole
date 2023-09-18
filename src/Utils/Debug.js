@@ -15,10 +15,10 @@ export default class Debug {
         this.setupSpirals();
         this.setupSun();
         this.setupPostProcessing();
-        this.setupBloom(true);
+        this.setupBloom();
 
         this.setupPostProcessingPmndrs();
-        this.setupBloomPmndrs();
+        this.setupBloomPmndrs(true);
         this.setupGodRaysPmndrs();
         this.setupShockWavePmndrs();
     }
@@ -79,26 +79,27 @@ export default class Debug {
     setupBloomPmndrs(open = false) {
         if (open === true) this.postProcessingPmndrs.open(true);
         this.bloomPmndrs = this.experience.renderer.bloomEffect;
+        console.log(this.bloomPmndrs);
 
         this.bloomPmndrsUI = this.postProcessingPmndrs.addFolder("Bloom (Pmndrs)").open(open);
-        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsIntensity').min(-2.0).max(2).step(0.01).name("Intensity").onChange(() => {
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsIntensity').min(-15.0).max(15).step(0.01).name("Intensity").onChange(() => {
             this.bloomPmndrs.intensity = this.experience.options.bloomPmndrsIntensity;
         });
-        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsThreshold').min(-15.0).max(15).step(0.01).name("Threshold").onChange(() => {
-            this.bloomPmndrs.luminanceMaterial.threshold = this.experience.options.bloomPmndrsThreshold;
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsThreshold').min(-35.0).max(35).step(0.01).name("Threshold").onChange(() => {
+            this.bloomPmndrs.luminanceMaterial.uniforms.threshold.value = this.experience.options.bloomPmndrsThreshold;
         });
-        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsSmoothing').min(-15.0).max(15).step(0.01).name("Smoothing").onChange(() => {
-            this.bloomPmndrs.luminanceMaterial.smoothing = this.experience.options.bloomPmndrsSmoothing;
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsSmoothing').min(-35.0).max(35).step(0.01).name("Smoothing").onChange(() => {
+            this.bloomPmndrs.luminanceMaterial.uniforms.smoothing.value = this.experience.options.bloomPmndrsSmoothing;
         });
-        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsRadius').min(-2.0).max(2).step(0.01).name("Radius").onChange(() => {
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsRadius').min(-15.0).max(15).step(0.01).name("Radius").onChange(() => {
             this.bloomPmndrs.mipmapBlurPass.radius = this.experience.options.bloomPmndrsRadius;
         });
-        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsEnabled').name("Enabled").onChange(() => {
+/*        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsEnabled').name("Enabled").onChange(() => {
             if (this.experience.options.bloomPmndrsEnabled === true) 
                 this.experience.renderer.effectComposer.addPass(this.experience.renderer.bloomPass);
             else 
                 this.experience.renderer.effectComposer.removePass(this.experience.renderer.bloomPass);
-        });
+        });*/
 
     }
 

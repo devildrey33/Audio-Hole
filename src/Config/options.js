@@ -78,7 +78,7 @@ export default {
     // TopeBloom  -->  S : 0.68, R : -0.16, T : 0.036
     // Psicodelic -->  S : 0.3,  R : 6.11,  T : 0.027
 
-    bloomStrength                   : 0.3, //0.05,
+    bloomStrength                   : 0.1, //0.05,
     bloomRadius                     : 6.11, //-5.32,
     bloomThreshold                  : 0.027,//0.05,
     bloomEnabled                    : true,

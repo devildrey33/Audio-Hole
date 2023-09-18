@@ -31,8 +31,8 @@ export default class Renderer {
         this.instance.outputColorSpace = THREE.SRGBColorSpace;
 //        this.instance.outputEncoding = THREE.sRGBEncoding;
         this.instance.toneMapping = THREE.NoToneMapping;
-        this.instance.toneMapping = THREE.CineonToneMapping;
-        this.instance.toneMappingExposure = 1.75;
+//        this.instance.toneMapping = THREE.CineonToneMapping;
+//        this.instance.toneMappingExposure = 1.75;
 
 //        this.instance.shadowMap.enabled = true;
 //        this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -51,8 +51,8 @@ export default class Renderer {
         this.bloomEffect = new BloomEffect({ mipmapBlur : true, levels : 5 });
         //this.bloomPass.strength = this.experience.options.bloomStrength;   
         this.bloomEffect.intensity = this.experience.options.bloomPmndrsIntensity;
-        this.bloomEffect.luminanceMaterial.threshold = this.experience.options.bloomPmndrsThreshold;
-        this.bloomEffect.luminanceMaterial.smoothing = this.experience.options.bloomPmndrsSmoothing;
+        this.bloomEffect.luminanceMaterial.uniforms.threshold.value = this.experience.options.bloomPmndrsThreshold;
+        this.bloomEffect.luminanceMaterial.uniforms.smoothing.value = this.experience.options.bloomPmndrsSmoothing;
         this.bloomEffect.mipmapBlurPass.radius = this.experience.options.bloomPmndrsRadius;
         this.bloomPass = new EffectPass(this.camera.instance, this.bloomEffect);
 //        this.bloomPass.dithering = false;
@@ -87,13 +87,13 @@ export default class Renderer {
 //        this.colorCorrectionEffect.uniforms.powRGB.value = new THREE.Vector3(2, 2, 3);
 
 
-        this.toneMappingEffect = new ToneMappingEffect();
+/*        this.toneMappingEffect = new ToneMappingEffect();
         this.toneMappingEffect.mode = ToneMappingMode.OPTIMIZED_CINEON;
         this.toneMappingEffect.exposure = 1.75;
         this.toneMappingPass = new EffectPass(this.camera.instance, this.toneMappingEffect);
-        this.effectComposer.addPass(this.toneMappingPass);
+        this.effectComposer.addPass(this.toneMappingPass);*/
 
-        console.log(this.colorCorrectionPass);
+//        console.log(this.colorCorrectionPass);
 
 /*        this.godRaysPass2 = new GodRaysEffect(this.camera.instance, spiralsMesh);
         this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass2));

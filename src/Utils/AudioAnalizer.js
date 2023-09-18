@@ -191,8 +191,6 @@ export default class AudioAnalizer {
         }
 
         this.context.resume();
-        // Ensure the current volume is the same of the UI
-        this.volume(this.currentVolume);
         
         // If song is playing
         if (this.song.duration > 0 && !this.song.paused) { 
@@ -203,6 +201,10 @@ export default class AudioAnalizer {
             this.song.play();   
             this.isPlaying = true;
         }        
+
+        // Ensure the current volume is the same of the UI
+        this.volume(this.currentVolume);
+
         return this.isPlaying;               
     };
 

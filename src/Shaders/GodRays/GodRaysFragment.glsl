@@ -4,7 +4,7 @@ uniform sampler2D tDiffuse;
 varying vec2 vUv;
 
 #define PI 3.14159265
-#define MAX 5.0
+#define MAX 20.0
 
 float rand(vec2 co){
     return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
@@ -27,8 +27,8 @@ void main() {
     color.a = 1.0;
     color.rgb /= total;
 
-    vec4 finalColor = 1.0 - (1.0 - color) * (1.0 - original);
-//    vec4 finalColor = 1.0 - (0.75 - color) * (1.0 - original);
+//    vec4 finalColor = 1.0 - (1.0 - color) * (1.0 - original);
+    vec4 finalColor = 1.0 - (0.75 - color) * (1.0 - original);
 
     gl_FragColor = finalColor;
 //    gl_FragColor = original;

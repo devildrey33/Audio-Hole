@@ -154,7 +154,7 @@ vec4 circleSin(vec4 currentColor, vec2 center) {
         normAngle = (1.0 + ((rad - PI) / PI));
     }
 
-    float audioValue = abs(texture2D(uAudioTexture, vec2(normAngle, 0.0)).g - 0.5) * .5 * uAudioStrengthSin;
+    float audioValue = (texture2D(uAudioTexture, vec2(normAngle, 0.0)).g - 0.5) * .5 * uAudioStrengthSin;
     // Perlin noise
     float strength = 0.0; //cnoise(vec3(rad * TAU * 5.0, dist * 100.0,  uTime + color.b)) * radius * 0.1;
 

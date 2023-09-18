@@ -48,6 +48,7 @@ export default class HTMLElements {
         });*/
         // Audio volume slider element
         this.elementAudioVolume.addEventListener('input', (e) => { 
+            this.experience.audioAnalizer.currentVolume = e.currentTarget.value;
             this.experience.audioAnalizer.gainNode.gain.value = e.currentTarget.value;
         }); 
         // Audio time slider element mousedown

@@ -6,8 +6,8 @@ import HTMLElements from "./Utils/HTMLElements.js";
 import options from "./Config/options.js";
 import AudioAnalizer from "./Utils/AudioAnalizer.js";
 import Camera from './Camera.js';
-import Renderer from './Renderer.js';
-//import Renderer from './Renderer_pmndrs.js';
+//import Renderer from './Renderer.js';
+import Renderer from './Renderer_pmndrs.js';
 
 import World from './World/World.js';
 import Debug from './Utils/Debug.js';
