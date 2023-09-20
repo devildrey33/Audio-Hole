@@ -4,6 +4,9 @@ import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUti
 import BarsVertexShader from "../Shaders/Bars3D/Bars3DVertex.glsl"
 import BarsFragmentShader from "../Shaders/Bars3D/Bars3DFragment.glsl"
 //import BarsDepthVertexShader from "../Shaders/Bars/BarsDepthVertexShader.glsl"
+/*
+    NOT USED
+*/ 
 
 /*
  * Bars are merged and they are using ShaderMaterial

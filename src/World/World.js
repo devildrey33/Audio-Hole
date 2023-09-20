@@ -7,6 +7,7 @@ import Sun from './Sun.js';
 import ToHole from "./ToHole.js";
 import Bars from './Bars.js';
 import HMLOsciloscope from './HMLOsciloscope.js';
+import BPMColorCorrection from './BPMEffects/BPMColorCorrection.js';
 //import VoronoiBackground from './VoronoiBackground.js';
 
 
@@ -40,6 +41,7 @@ export default class World {
         this.bars = new Bars(this);
 
         this.hmlOsciloscope = new HMLOsciloscope();
+
 
 //        this.voronoiBackground = new VoronoiBackground();
     }

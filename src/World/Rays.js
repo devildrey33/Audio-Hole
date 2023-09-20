@@ -3,6 +3,9 @@ import * as THREE from 'three'
 import RaysVertexShader from "../Shaders/Rays/RaysVertex.glsl"
 import RaysFragmentShader from "../Shaders/Rays/RaysFragment.glsl"
 
+/*
+    NOT USED
+*/ 
 
 export default class Rays {
     constructor(world) {

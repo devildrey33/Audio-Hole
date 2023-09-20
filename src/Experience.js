@@ -13,6 +13,7 @@ import World from './World/World.js';
 import Debug from './Utils/Debug.js';
 import Resources from './Utils/Resources.js';
 import sources from "./Config/resourcesToLoad.js"
+import BPMColorCorrection from './World/BPMEffects/BPMColorCorrection.js';
 
 
 let experienceInstance = null;
@@ -69,6 +70,7 @@ export default class Experience {
         this.world          = new World();
         this.renderer       = new Renderer(this.world.sun.mesh, this.world.spirals.mesh);
 
+
         if (this.options.debug === true) {
             this.debug      = new Debug();
         }
@@ -103,6 +105,11 @@ export default class Experience {
     update() {
         this.camera.update();
         this.audioAnalizer.update(this.time.delta);
+
+        if (typeof(this.Effect) !== "undefined") {
+            this.Effect.update(this.time.delta);
+        }
+        
         if (this.options.showBPM === true)  {
             // update Audio levels
             this.htmlElements.elementAudioLevelH.style.top = (54 - ((this.audioAnalizer.averageFrequency[0] / 255) * 54)) + "px";
@@ -135,6 +142,9 @@ export default class Experience {
      */
     onAudioPlay = () => {
         this.htmlElements.audioUI(false); 
+
+        this.Effect = new BPMColorCorrection({ BPMStart : 32, BPMEnd : 48, Add : new THREE.Vector3(0.25, 0.05, 0.05)});
+
     }
 
     onAudioPause = () => { 
@@ -159,6 +169,8 @@ export default class Experience {
         if (this.options.showBPM === true) {
             this.htmlElements.elementTxtBPM.innerHTML = Math.floor(this.song.bpmMS);
         }
+
+
     }
 
     onAudioError = () => {

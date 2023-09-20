@@ -14,13 +14,15 @@ export default class Debug {
 
         this.setupSpirals();
         this.setupSun();
-        this.setupPostProcessing();
-        this.setupBloom();
+        
+//        this.setupPostProcessing();
+//        this.setupBloom();
 
         this.setupPostProcessingPmndrs();
         this.setupBloomPmndrs(true);
         this.setupGodRaysPmndrs();
         this.setupShockWavePmndrs();
+        this.setupColorCorrectionPmndrs(true);
     }
 
     setupPostProcessing(open = false) {
@@ -47,13 +49,13 @@ export default class Debug {
     }
 
     setupPostProcessingPmndrs(open = false) {
-        this.postProcessingPmndrs = this.gui.addFolder("Post processing (pmndrs)").open(open);
+        this.postProcessingPmndrs = this.gui.addFolder("Post processing (Pmndrs)").open(open);
     }
 
     setupShockWavePmndrs(open = false) {
         if (open === true) this.postProcessingPmndrs.open(true);
         this.shockWavePmndrs = this.experience.renderer.shockWaveEffect;
-        this.shockWavePmndrsUI = this.postProcessingPmndrs.addFolder("ShockWave (Pmndrs)").open(open);
+        this.shockWavePmndrsUI = this.postProcessingPmndrs.addFolder("ShockWave").open(open);
 
         this.shockWavePmndrsUI.add(this.experience.options, 'shockWaveSpeed').min(0.1).max(15).step(0.01).name("Speed").onChange(() => {
             this.shockWavePmndrs.speed = this.experience.options.shockWaveSpeed;
@@ -68,21 +70,15 @@ export default class Debug {
             this.shockWavePmndrs.amplitude = this.experience.options.shockWaveAmplitude;
         });
 
-/*        // Shock wave (postprocessing)
-    shockWaveSpeed                  : 2,
-    shockWaveMaxRadius              : 1,
-    shockWaveWaveSize               : 0.2,
-    shockWaveAmplitude              : 0.05,*/
-
     }
 
     setupBloomPmndrs(open = false) {
         if (open === true) this.postProcessingPmndrs.open(true);
         this.bloomPmndrs = this.experience.renderer.bloomEffect;
-        console.log(this.bloomPmndrs);
+//        console.log(this.bloomPmndrs);
 
-        this.bloomPmndrsUI = this.postProcessingPmndrs.addFolder("Bloom (Pmndrs)").open(open);
-        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsIntensity').min(-15.0).max(15).step(0.01).name("Intensity").onChange(() => {
+        this.bloomPmndrsUI = this.postProcessingPmndrs.addFolder("Bloom").open(open);
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsIntensity').min(-3.0).max(3).step(0.01).name("Intensity").onChange(() => {
             this.bloomPmndrs.intensity = this.experience.options.bloomPmndrsIntensity;
         });
         this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsThreshold').min(-35.0).max(35).step(0.01).name("Threshold").onChange(() => {
@@ -91,7 +87,7 @@ export default class Debug {
         this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsSmoothing').min(-35.0).max(35).step(0.01).name("Smoothing").onChange(() => {
             this.bloomPmndrs.luminanceMaterial.uniforms.smoothing.value = this.experience.options.bloomPmndrsSmoothing;
         });
-        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsRadius').min(-15.0).max(15).step(0.01).name("Radius").onChange(() => {
+        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsRadius').min(-3.0).max(3).step(0.01).name("Radius").onChange(() => {
             this.bloomPmndrs.mipmapBlurPass.radius = this.experience.options.bloomPmndrsRadius;
         });
 /*        this.bloomPmndrsUI.add(this.experience.options, 'bloomPmndrsEnabled').name("Enabled").onChange(() => {
@@ -107,7 +103,7 @@ export default class Debug {
         if (open === true) this.postProcessingPmndrs.open(true);
         this.godRaysPmndrs = this.experience.renderer.godRaysEffect;
 
-        this.godRaysPmndrsUI = this.postProcessingPmndrs.addFolder("God Rays (Pmndrs)").open(open);
+        this.godRaysPmndrsUI = this.postProcessingPmndrs.addFolder("God Rays").open(open);
         this.godRaysPmndrsUI.add(this.experience.options, 'godRaysDensity').min(-5.0).max(5).step(0.1).name("Density").onChange(() => {
             this.godRaysPmndrs.godRaysMaterial.density = this.experience.options.godRaysDensity;
         });
@@ -133,6 +129,43 @@ export default class Debug {
                 this.experience.renderer.effectComposer.removePass(this.experience.renderer.godRaysPass);
         });*/
     
+    }
+
+    setupColorCorrectionPmndrs() {
+        if (open === true) this.postProcessingPmndrs.open(true);
+        this.colorCorrectionPmndrs = this.experience.renderer.colorCorrectionEffect;
+
+        this.colorCorrectionPmndrsUI = this.postProcessingPmndrs.addFolder("Color correction").open(open);        
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionPowRGB, 'x').min(0).max(15).step(0.1).name("Power R").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("powRGB").value.x = this.experience.options.colorCorrectionPowRGB.x;
+        });
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionPowRGB, 'y').min(0).max(15).step(0.1).name("Power G").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("powRGB").value.y = this.experience.options.colorCorrectionPowRGB.y;
+        });
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionPowRGB, 'z').min(0).max(15).step(0.1).name("Power B").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("powRGB").value.z = this.experience.options.colorCorrectionPowRGB.z;
+        });
+
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionMulRGB, 'x').min(0).max(15).step(0.1).name("Multiplier R").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("mulRGB").value.x = this.experience.options.colorCorrectionMulRGB.x;
+        });
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionMulRGB, 'y').min(0).max(15).step(0.1).name("Multiplier G").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("mulRGB").value.y = this.experience.options.colorCorrectionMulRGB.y;
+        });
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionMulRGB, 'z').min(0).max(15).step(0.1).name("Multiplier B").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("mulRGB").value.z = this.experience.options.colorCorrectionMulRGB.z;
+        });
+
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionAddRGB, 'x').min(0).max(1).step(0.01).name("Add extra R").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("addRGB").value.x = this.experience.options.colorCorrectionAddRGB.x;
+        });
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionAddRGB, 'y').min(0).max(1).step(0.01).name("Add extra G").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("addRGB").value.y = this.experience.options.colorCorrectionAddRGB.y;
+        });
+        this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionAddRGB, 'z').min(0).max(1).step(0.01).name("Add extra B").onChange(() => {
+            this.colorCorrectionPmndrs.uniforms.get("addRGB").value.z = this.experience.options.colorCorrectionAddRGB.z;
+        });
+
     }
 
     setupSun(open = false) {

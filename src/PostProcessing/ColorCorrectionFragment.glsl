@@ -1,13 +1,4 @@
 
-/*#ifdef FRAMEBUFFER_PRECISION_HIGH
-
-	uniform mediump sampler2D map;
-
-#else
-
-	uniform lowp sampler2D map;
-
-#endif*/
 
 uniform vec3 powRGB;
 uniform vec3 mulRGB;

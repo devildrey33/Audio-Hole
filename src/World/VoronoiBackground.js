@@ -3,6 +3,9 @@ import * as THREE from 'three'
 import VoronoiBackgroundVertexShader from "../Shaders/VoronoiBackground/VoronoiBackgroundVertex.glsl"
 import VoronoiBackgroundFragmentShader from "../Shaders/VoronoiBackground/VoronoiBackgroundFragment.glsl"
 import BufferCanvas from "../Utils/BufferCanvas";
+/*
+    NOT USED
+*/ 
 
 export default class VoronoiBackground {
     constructor(world) {     

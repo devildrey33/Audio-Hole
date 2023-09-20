@@ -17,9 +17,16 @@ export default class ColorCorrectionEffect extends Effect {
 					[ "powRGB" , new THREE.Uniform(new THREE.Vector3( 3, 3, 4 )) ],
 					[ "mulRGB" , new THREE.Uniform(new THREE.Vector3( 2, 2, 5 )) ],
 					[ "addRGB" , new THREE.Uniform(new THREE.Vector3( 0.05, 0.05, 0.25 )) ]
-				])
+				]),
+/*				uniforms : {
+					"powRGB" : { "value"  : new THREE.Vector3( 3, 3, 4 ) },
+					"mulRGB" : { "value"  : new THREE.Vector3( 2, 2, 5 ) },
+					"addRGB" : { "value"  : new THREE.Vector3( 0.05, 0.05, 0.25 ) },
+				}*/
 			}
 		)
+
+		console.log(this.uniforms);
 	}
 
 };

@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+
 const isDebug = window.location.hash === '#debug';
 
 export default {
@@ -36,7 +38,7 @@ export default {
     // Spirals      
     spiralAudioStrength             : 0.4,
     spiralAudioZoom                 : 2.0,
-    spiralAudioStrengthSin          : 1.0,
+    spiralAudioStrengthSin          : 0.4,
     spiralAudioZoomSin              : 1.0,
     spiralFrequency                 : 0.1,
     spiralSpeed                     : 0.12,
@@ -61,17 +63,17 @@ export default {
     barsAudioZoom                   : 1.5,
     barsSpeed                       : 1.0,
 
-
+/*
     osciloscopeAudioStrength        : 0.5,
-    osciloscopeAudioZoom            : 1,
+    osciloscopeAudioZoom            : 1,*/
 
     hmsOsciloscopeAudioStrength     : 0.5,
     hmsOsciloscopeSpeed             : 2,
 
     // Voronoi Background 
-    voronoiBackgroundSpeed          : 1.0,
+    /*voronoiBackgroundSpeed          : 1.0,
     voronoiBackgroundThickness      : 0.01,
-    voronoiBackgroundCount          : 64.0,
+    voronoiBackgroundCount          : 64.0,*/
     
 
     // Bloom (postprocessing)
@@ -85,27 +87,30 @@ export default {
 
 
     // Bloom Pmndrs (postprocessing)
-    bloomPmndrsIntensity            : .1, //2.0,   // 0.3,   // 2.7
-    bloomPmndrsThreshold            : -15.4, //4.3,    // 159.5, // -234.8
+    bloomPmndrsIntensity            : .8, //2.0,   // 0.3,   // 2.7
+    bloomPmndrsThreshold            : 15.4, //4.3,    // 159.5, // -234.8
     bloomPmndrsSmoothing            : -1.97, // -342,  // 240.1
-    bloomPmndrsRadius               : 1.68, //-5.32, //0.7,   // 1.4,   // 1.4
+    bloomPmndrsRadius               : 0.98, //-5.32, //0.7,   // 1.4,   // 1.4
     bloomPmndrsEnabled              : true,
 
-    // God rays (postprocessing)
+    // God rays Pmndrs (postprocessing)
     godRaysDensity                  : 0.96,
     godRaysDecay                    : 0.9,
-    godRaysWeigth                   : 0.4,
+    godRaysWeigth                   : 0.3,
     godRaysExposure                 : 0.6,
     godRaysClampMax                 : 1.0,
     godRaysSamples                  : 60,
     godRaysEnabled                  : true,
 
-    // Shock wave (postprocessing)
+    // Shock wave Pmndrs (postprocessing)
     shockWaveSpeed                  : 7.5,
     shockWaveMaxRadius              : 1.6,
     shockWaveWaveSize               : 0.2,
     shockWaveAmplitude              : 20,
 
-
+    // Color Correction Pmndrs custom (postprocessing)
+    colorCorrectionPowRGB           : new THREE.Vector3(3.0, 3.0, 8.0),
+    colorCorrectionMulRGB           : new THREE.Vector3(2.0, 2.0, 15.0),
+    colorCorrectionAddRGB           : new THREE.Vector3(.05, .05, .5)
 };
 
