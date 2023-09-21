@@ -3,72 +3,102 @@ import * as THREE from 'three'
 import RaysVertexShader from "../Shaders/Rays/RaysVertex.glsl"
 import RaysFragmentShader from "../Shaders/Rays/RaysFragment.glsl"
 
-/*
-    NOT USED
-*/ 
 
-export default class Rays {
-    constructor(world) {
-        this.experience = new Experience();
-        this.scene = this.experience.scene;
-        this.time  = this.experience.time;
+export default class Arrowciloscope {
+/*    colors = [
+        new THREE.Color(139, 0, 0),
+        new THREE.Color(255, 140, 0),
+        new THREE.Color(255, 215, 0),
+        new THREE.Color(255, 165, 0),
+        new THREE.Color(240, 128, 128),
+        new THREE.Color(165, 42, 42),
+        new THREE.Color(255, 105, 180),
+        new THREE.Color(255, 218, 185),
+        new THREE.Color(255, 69, 0),
+        new THREE.Color(255, 255, 102),
+    ];*/
+
+    constructor() {
+        this.experience           = new Experience();
+        this.scene                = this.experience.scene;
+        this.sizes                = this.experience.sizes;
+        this.audioAnalizer        = this.experience.audioAnalizer;
+
+        this.createRandValues();
+
         this.setup();
     }
 
+    createRandValues() {
+        //this.color = this.colors[Math.floor(Math.random() * 10)];
+        this.color = new THREE.Color(Math.random(), Math.random(), Math.random());
+        this.speed = 0.3 + Math.random() * 1;
+//        this.speed = 0.03 + Math.random() * 0.2;
+        this.size  = 0.01 + Math.random() * 0.2;
+        this.rotationSpeed = Math.random() * 0.005 ;
+
+        this.angle = Math.PI - Math.random(Math.PI * 2);
+        this.radius = 0.4 + Math.random() * 2.8;
+        this.position = new THREE.Vector3(Math.cos(this.angle * this.radius) , Math.sin(this.angle * this.radius), 10);
+
+//        console.log(this.color);
+    }
+
+    appyRandValues() {
+        this.material.uniforms.uColor.value = this.color;
+        this.material.uniforms.uSize.value = this.size;
+        this.mesh.position.copy(this.position);
+    }
+
     setup() {
-        // dispose old particles
-        if (typeof this.fireFliesGeometry !== "undefined") {
-            // remove rays from scene
-            this.scene.remove(this.mesh);  
-            // Dispose the material and geometry
-            this.material.dispose();
-            this.geometry.dispose();
-        }
 
-
-        const count = this.experience.options.raysCount;
-        this.geometry      = new THREE.BufferGeometry();
-        this.positionArray = new Float32Array(count * 3);
-        this.speedArray    = new Float32Array(count);
-        for (let i = 0; i < count; i++) {
-            this.speedArray[i] = 30 + Math.random() * 100;
-            const angle  = Math.PI - Math.random(Math.PI * 2);
-            const radius = 0.4 + Math.random() * 2.8;
-            this.positionArray[i * 3 + 0] = Math.cos(angle * radius);
-            this.positionArray[i * 3 + 1] = Math.sin(angle * radius);
-            this.positionArray[i * 3 + 2] = -45 + Math.random() * 90;
-        }
-
-        this.geometry.setAttribute('position', new THREE.BufferAttribute(this.positionArray, 3));
-        this.geometry.setAttribute('aSpeed', new THREE.BufferAttribute(this.speedArray, 1));
+        
+        this.geometry = new THREE.PlaneGeometry(3, 0.2);
 
         this.material = new THREE.ShaderMaterial({
-//            transparent     : true,
-            blending        : THREE.AdditiveBlending,   // Fusionate colors with the scene
-            map             :  this.experience.resources.items.rayTexture,
-//            depthWrite      : false,                    // deactivate depthWrite to show objects behind
-            uniforms        : {
-                uTexture        : { value : this.experience.resources.items.rayTexture },
-                uTime           : { value : 0 },
+            uniforms : {
+/*                uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
+                uAudioStrength : { value : this.experience.options.osciloscopeAudioStrength },
+                uAudioZoom     : { value : this.experience.options.osciloscopeAudioZoom },*/
+                uAudioValue    : { value : 0 },
+                uSize          : { value : this.size },
+                uColor         : { value : this.color }
+//                uTime         : { value : 0 }
             },
             vertexShader    : RaysVertexShader,
-            fragmentShader  : RaysFragmentShader
+            fragmentShader  : RaysFragmentShader,
+            transparent     : true,
+            side            : THREE.DoubleSide,
+//            depthWrite      : false
         });
+        this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-/*        this.material = new THREE.MeshBasicMaterial({ 
-            map         : this.experience.resources.items.rayTexture,            
-            transparent : true,
-        })*/
-    
+        this.mesh.rotation.x = Math.PI * 0.5;
+        this.mesh.rotation.z = Math.PI * 0.5;
+        this.mesh.position.copy(this.position);
 
-        this.mesh = new THREE.Points(this.geometry, this.material);
         this.scene.add(this.mesh);
+
     }
+
+/*    resize() {
+    }*/
 
     update() {
-        // get an average advance value
-        const advance = this.time.delta / 1000;
-        // update time on sun
-        this.material.uniforms.uTime.value += advance;   
+        this.mesh.position.z -= this.speed;
+        this.angle += this.rotationSpeed;
+        this.radius -= this.rotationSpeed * 0.5;
+        this.mesh.position.x = Math.cos(this.angle * this.radius);
+        this.mesh.position.y = Math.sin(this.angle * this.radius);
+        
+        this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.averageFrequency[4] / 64);
+
+        if (this.mesh.position.z < - 60) {
+            this.createRandValues();
+            this.appyRandValues();
+        }
+
     }
+    
+
 }

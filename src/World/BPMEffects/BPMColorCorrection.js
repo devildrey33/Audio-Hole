@@ -5,15 +5,11 @@ import gsap from "gsap";
 export default class BPMColorCorrection {
 
     constructor({
-        BPMStart = 10,
-        BPMEnd   = 12, // MUST BE GREATER THAN START
         Pow = new THREE.Vector3(3.0, 3.0, 3.0),
         Mul = new THREE.Vector3(1.0, 1.0, 1.0),
         Add = new THREE.Vector3(.05, .05, .05)
     }) {
         this.experience = new Experience();
-        this.bpmStart   = BPMStart;
-        this.bpmEnd     = BPMEnd;
         this.powDest    = Pow;
         this.mulDest    = Mul;
         this.addDest    = Add;
@@ -22,7 +18,7 @@ export default class BPMColorCorrection {
         this.mulOrigin  = this.colorCorrectionEffect.uniforms.get("powMul");
         this.addOrigin  = this.colorCorrectionEffect.uniforms.get("addRGB");
 
-        this.setup();
+//        this.setup();
     }
 
     setup() {

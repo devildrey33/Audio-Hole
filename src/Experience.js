@@ -13,7 +13,6 @@ import World from './World/World.js';
 import Debug from './Utils/Debug.js';
 import Resources from './Utils/Resources.js';
 import sources from "./Config/resourcesToLoad.js"
-import BPMColorCorrection from './World/BPMEffects/BPMColorCorrection.js';
 
 
 let experienceInstance = null;
@@ -31,7 +30,9 @@ export default class Experience {
         // Setup the songs list
         this.songs = songs;
         // select a random song
-        this.song = this.songs[Math.floor(Math.random() * this.songs.length)];
+        this.currentSong = Math.floor(Math.random() * this.songs.length);
+        this.currentSong = 1;
+        this.song = this.songs[this.currentSong];
         this.songLoading = true;
 
         // default options
@@ -142,9 +143,6 @@ export default class Experience {
      */
     onAudioPlay = () => {
         this.htmlElements.audioUI(false); 
-
-        this.Effect = new BPMColorCorrection({ BPMStart : 32, BPMEnd : 48, Add : new THREE.Vector3(0.25, 0.05, 0.05)});
-
     }
 
     onAudioPause = () => { 
@@ -169,8 +167,8 @@ export default class Experience {
         if (this.options.showBPM === true) {
             this.htmlElements.elementTxtBPM.innerHTML = Math.floor(this.song.bpmMS);
         }
-
-
+        
+        this.world.bpmEffects.updateEffects();
     }
 
     onAudioError = () => {

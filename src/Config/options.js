@@ -6,15 +6,15 @@ export default {
     // Debug mode : use #debug at the end of the url
     debug                   : isDebug,
     // Y position. Use 'auto' to center canvas horizontaly to the view port
-    top                     : 0,
+/*    top                     : 0,
     // X position. Use 'auto' to center canvas verticaly to the view port
     left                    : 0,
     // Width in pixels. Use 'auto' to fit all viewport width
     width                   : "auto",           
     // Height in pixels. Use 'auto' to fit all viewport height
-    height                  : "auto",           
+    height                  : "auto",    */       
     // Show framerate inside the butons frame
-    showFPS                 : isDebug,
+    showFPS                 : true,
     // Show current beat per minute            
     showBPM                 : isDebug,
     // Show full screen buton in the buttons frame

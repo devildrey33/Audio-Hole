@@ -1,8 +1,8 @@
 import Experience from "../Experience";
 import * as THREE from 'three'
 
-import BarsVertexShader from "../Shaders/Bars/BarsVertex.glsl"
-import BarsFragmentShader from "../Shaders/Bars/BarsFragment.glsl"
+import HMLBarsVertexShader from "../Shaders/HMLBars/HMLBarsVertex.glsl"
+import HMLBarsFragmentShader from "../Shaders/HMLBars/HMLBarsFragment.glsl"
 
 export default class Bars {
     constructor(world) {
@@ -26,8 +26,8 @@ export default class Bars {
                 uSpeed         : { value : this.experience.options.barsSpeed },
                 uTime          : { value : 0 }
             },
-            vertexShader    : BarsVertexShader,
-            fragmentShader  : BarsFragmentShader,
+            vertexShader    : HMLBarsVertexShader,
+            fragmentShader  : HMLBarsFragmentShader,
             transparent     : true,
             side            : THREE.DoubleSide,
 //            depthWrite      : false

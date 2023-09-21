@@ -29,6 +29,7 @@ export default class HTMLElements {
             for (let i = 0; i < this.songs.length; i++) {
                 if (e.currentTarget.value === this.songs[i].name) {
                     this.experience.song = this.songs[i];
+                    this.experience.currentSong = i;
                     break;
                 }
             }
@@ -287,7 +288,7 @@ export default class HTMLElements {
         }
 
         // Determino el ancho y altura del canvas (fijo o variable)
-        if (this.options.width  === "auto") { this.width  = this.options.width;  }
+        /*if (this.options.width  === "auto") { this.width  = this.options.width;  }
         if (this.options.height === "auto") { this.height = this.options.height; }        
         // Si el canvas es de ancho fijo, añado el css para centrar-lo
         if (this.options.width  !== "auto") { 
@@ -304,7 +305,7 @@ export default class HTMLElements {
         }
         if (this.options.top  === "auto") { 
             this.elementCanvas.style.top    = "calc(50% - (" + this.height + "px / 2))"; 
-        }
+        }*/
 
         // Actualizo las posiciones
 //        this.eventResize();

@@ -153,17 +153,7 @@ export default class AudioAnalizer {
         });                
         // Update current time
         this.song.addEventListener('timeupdate'  , () => { 
-            this.audioOptions.onTimeUpdate(this.song.currentTime);
-            // Calculate current beats per minute NOT ACURATE
-/*            if (this.bpm !== 0) {
-                const mspb = 60000 / this.bpm;
-                let currentBpm = Math.floor((this.song.currentTime * 1000) / mspb);
-                if (currentBpm !== this.currentBpm) {
-                    this.currentBpm = currentBpm;
-                    this.onBpmChange(this.currentBpm);
-                }
-            }*/ 
-            
+            this.audioOptions.onTimeUpdate(this.song.currentTime);            
         });
         
         
