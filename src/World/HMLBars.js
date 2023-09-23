@@ -5,7 +5,7 @@ import HMLBarsVertexShader from "../Shaders/HMLBars/HMLBarsVertex.glsl"
 import HMLBarsFragmentShader from "../Shaders/HMLBars/HMLBarsFragment.glsl"
 
 export default class Bars {
-    constructor(world) {
+    constructor() {
         this.experience           = new Experience();
         this.scene                = this.experience.scene;
         this.audioAnalizer        = this.experience.audioAnalizer;
@@ -56,7 +56,28 @@ export default class Bars {
         
         this.mesh.scale.y  = 0.5 + (1.0 + Math.cos(this.time.current / 3000))  * (this.material.uniforms.uAudioValue.value * 0.5);
         this.mesh2.scale.y = this.mesh.scale.y;
+    }
 
+    RecalculateAnimations(timeline) {
+        const bpmMS = this.experience.song.bpmMS;
+        let startMS = (0 * bpmMS) / 1000;
+        let endMS   = ((2 * bpmMS) / 1000) - startMS;
+        
+        timeline.to(
+            [ 0, 0 ], {
+                ease     : "linear",
+                duration : bpmMS / 1000,
+                data     : this,
+                endArray : [ 1, 1 ],
+                yoyo     : true,
+                repeat   : -1,
+                onUpdate() { 
+                    this.vars.data.mesh.position.x = 500 + (this.targets()[0][0] * this.vars.data.audioAnalizer.averageFrequency[0]);
+                    this.vars.data.mesh2.position.x = -500 + -(this.targets()[0][1] * this.vars.data.audioAnalizer.averageFrequency[0])
+                }
+            },
+            0
+        );
     }
 
 }

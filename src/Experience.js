@@ -168,7 +168,8 @@ export default class Experience {
             this.htmlElements.elementTxtBPM.innerHTML = Math.floor(this.song.bpmMS);
         }
         
-        this.world.bpmEffects.updateEffects();
+
+        this.world.RecalculateAnimations();
     }
 
     onAudioError = () => {

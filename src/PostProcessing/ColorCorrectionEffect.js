@@ -25,8 +25,6 @@ export default class ColorCorrectionEffect extends Effect {
 				}*/
 			}
 		)
-
-		console.log(this.uniforms);
 	}
 
 };

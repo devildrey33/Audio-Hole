@@ -102,7 +102,7 @@ vec3 getColor(float time) {
 
 // Make a circle with the frequency data
 vec4 circleFreq(vec4 currentColor, vec2 center) {
-    const float radiusFreq = 0.3;
+    const float radiusFreq = 0.325;
 
     vec2 pos = vec2(0.55, 0.5);
     float dist = length(vUv - pos);

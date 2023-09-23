@@ -73,7 +73,7 @@ export default class Spirals {
         // update time on spiral
         this.material.uniforms.uTime.value += advance;   
         // Set osciloscope line thickness applying the low sound average frequency
-        this.material.uniforms.uThicknessSin.value = 0.01 + ((this.audioAnalizer.averageFrequency[2] / 255) * 0.05);
+//        this.material.uniforms.uThicknessSin.value = 0.01 + ((this.audioAnalizer.averageFrequency[2] / 255) * 0.05);
 
     }
 }

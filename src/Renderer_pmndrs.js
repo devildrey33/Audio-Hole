@@ -89,7 +89,7 @@ export default class Renderer {
         this.colorCorrectionEffect.uniforms.get("addRGB").value = this.experience.options.colorCorrectionAddRGB;
         this.colorCorrectionPass = new EffectPass(this.camera.instance, this.colorCorrectionEffect);
         this.effectComposer.addPass(this.colorCorrectionPass);
-        console.log(this.colorCorrectionEffect, this.colorCorrectionPass);
+//        console.log(this.colorCorrectionEffect, this.colorCorrectionPass);
 
 //        this.colorCorrectionEffect.uniforms.powRGB.value = new THREE.Vector3(2, 2, 3);
 

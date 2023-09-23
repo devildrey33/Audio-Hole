@@ -12,7 +12,7 @@ export default {
     // Width in pixels. Use 'auto' to fit all viewport width
     width                   : "auto",           
     // Height in pixels. Use 'auto' to fit all viewport height
-    height                  : "auto",    */       
+    height                  : "auto",       */
     // Show framerate inside the butons frame
     showFPS                 : true,
     // Show current beat per minute            
@@ -45,7 +45,7 @@ export default {
     spiralThickness                 : 0.05,
     spiralFrequencySin              : 0.5,
     spiralSpeedSin                  : 0.75,
-    spiralThicknessSin              : 0.001,
+    spiralThicknessSin              : 0.04,
 
     // Sun
     sunAudioStrengthFreq            : 1.0,

@@ -225,6 +225,10 @@ export default class Debug {
         this.spiralOsciloscopeUI.add(this.experience.options, 'spiralSpeedSin').min(0).max(4).step(0.01).name("Speed").onChange(() => {
             this.spirals.material.uniforms.uSpeedSin.value = this.experience.options.spiralSpeedSin;
         });
+        this.spiralOsciloscopeUI.add(this.experience.options, 'spiralThicknessSin').min(0.01).max(0.99).step(0.001).name("Thickness").onChange(() => {
+            this.spirals.material.uniforms.uThicknessSin.value = this.experience.options.spiralThicknessSin;
+        });
+
 /*        this.spiralOsciloscopeUI.add(this.experience.options, 'spiralThicknessSin').min(0).max(0.5).step(0.001).name("Thickness").onChange(() => {
             this.spirals.material.uniforms.uThicknessSin.value = this.experience.options.spiralThicknessSin;
         });*/

@@ -120,6 +120,10 @@ export default class HTMLElements {
             strHTML += '<canvas id="Experience' + this.id + '_Canvas" class="Experience_Canvas"></canvas>';
             // Añado la etiqueta para el marco que indica que se está cargando
             strHTML += '<div class="Experience_Loading Experience_Panel"><span>Loading...</span></div>';
+            if (this.options.showBPM === true) {
+                strHTML += `<div class="Experience_DebugEffects"> </div>`; 
+            }            
+            
             // Añado la etiqueta para el marco de los controles
             strHTML += '<div class="Experience_Controls">';
             // Show FPS
@@ -284,11 +288,13 @@ export default class HTMLElements {
                 this.elementAudioLevelM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelM");
                 this.elementAudioLevelL = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelL");
                 this.elementAudioLevelT = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelT");
+
+                this.elementDebugEffects = document.querySelector("#" + this.elementExperience.id + " > .Experience_DebugEffects");
             }
         }
 
         // Determino el ancho y altura del canvas (fijo o variable)
-        /*if (this.options.width  === "auto") { this.width  = this.options.width;  }
+/*        if (this.options.width  === "auto") { this.width  = this.options.width;  }
         if (this.options.height === "auto") { this.height = this.options.height; }        
         // Si el canvas es de ancho fijo, añado el css para centrar-lo
         if (this.options.width  !== "auto") { 

@@ -21,8 +21,8 @@ export default class Sizes extends EventEmitter {
 
     eventResize() {
         // Calculo el nuevo ancho y la nueva altura (si no son fijas) //this.elementOCanvas.offsetWidth
-        if (this.options.width  === "auto") { this.width  = window.innerWidth;  }
-        if (this.options.height === "auto") { this.height = window.innerHeight; }
+        this.width  = window.innerWidth; 
+        this.height = window.innerHeight;
 
         this.pixelRatio = Math.min(window.devicePixelRatio, 2);
         this.trigger('resize');

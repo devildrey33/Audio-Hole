@@ -6,11 +6,12 @@ import HMLOsciloscopeFragmentShader from "../Shaders/HMLOsciloscope/HMLOscilosco
 
 export default class HMLOsciloscope {
 
-    constructor() {
+    constructor(timeline) {
         this.experience           = new Experience();
         this.scene                = this.experience.scene;
         this.audioAnalizer        = this.experience.audioAnalizer;
         this.time                 = this.experience.time;
+        this.timeline             = timeline;
 
         this.setup();
     }
@@ -65,5 +66,28 @@ export default class HMLOsciloscope {
 //        this.mesh.scale.y  =  0.5 + (1.0 + Math.sin(this.time.current / 3000))* 2 * (this.material.uniforms.uAudioValue.value * 0.5);
 //        this.mesh2.scale.y = this.mesh.scale.y;
         
+    }
+
+    
+    RecalculateAnimations(timeline) {
+        const bpmMS = this.experience.song.bpmMS;
+        let startMS = (0 * bpmMS) / 1000;
+        let endMS   = ((2 * bpmMS) / 1000) - startMS;
+        
+        timeline.to(
+            [ 1, 1 ], {
+                ease     : "linear",
+                duration : bpmMS / 1000,
+                data     : this,
+                endArray : [ 0, 0 ],
+                yoyo     : true,
+                repeat   : -1,
+                onUpdate() { 
+                    this.vars.data.mesh.position.y = 750 + (this.targets()[0][0] * this.vars.data.audioAnalizer.averageFrequency[0] * 2);
+                    this.vars.data.mesh2.position.y = -750 + -(this.targets()[0][1] * this.vars.data.audioAnalizer.averageFrequency[0] * 2)
+                }
+            },
+            0
+        );
     }
 }

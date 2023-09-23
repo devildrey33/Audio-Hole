@@ -6,6 +6,8 @@ import RaysToHole from "./RaysToHole.js";
 import HMLBars from './HMLBars.js';
 import HMLOsciloscope from './HMLOsciloscope.js';
 import BPMEffects from './BPMEffects/BPMEffects.js';
+import gsap from 'gsap';
+import DebugEffects from '../Utils/DebugEffects.js';
 
 //import VoronoiBackground from './VoronoiBackground.js';
 
@@ -29,19 +31,27 @@ export default class World {
 
 
     setup() {
+        // Create a gsap timeline
+        gsap.ticker.remove(gsap.updateRoot);
+        this.timeline = gsap.timeline();
+
+
         this.spirals = new Spirals(this);
         this.sun     = new Sun(this);
         // Create empty temporal function to update rays (because whe need his texture)
 //        this.rays    = { update : () => { } }
 //        this.osciloscpe = new Arrowciloscope(new THREE.Color(200, 100, 0), 1, 0.1);
         this.raysToHole = new RaysToHole();
-
 //        this.bars = new Bars3D(this);
-        this.hmlBars = new HMLBars(this);
+        this.hmlBars = new HMLBars(this.timeline);
 
-        this.hmlOsciloscope = new HMLOsciloscope();
+        this.hmlOsciloscope = new HMLOsciloscope(this.timeline);
 
-        this.bpmEffects     = new BPMEffects();
+        this.bpmEffects     = new BPMEffects(this.timeline);
+
+        if (this.experience.options.showBPM === true) {
+            this.debugEffects = new DebugEffects();
+        }
 
 
 //        this.voronoiBackground = new VoronoiBackground();
@@ -54,7 +64,10 @@ export default class World {
 
     update() {
         //if (this.ready === true) {
-            this.bpmEffects.update();
+            
+            this.timeline.time(this.experience.audioAnalizer.song.currentTime);
+//            console.log(this.experience.audioAnalizer.song.currentTime, this.timeline.time());
+//            this.bpmEffects.update();
 
             this.spirals.update();
             this.sun.update();
@@ -66,5 +79,13 @@ export default class World {
 //        }
     }
 
+    // Recalculate animations
+    RecalculateAnimations() {
+        this.timeline.kill();
+        this.timeline = gsap.timeline();
 
+        this.bpmEffects.RecalculateAnimations(this.timeline);  
+//        this.hmlBars.RecalculateAnimations(this.timeline);   
+//        this.hmlOsciloscope.RecalculateAnimations(this.timeline);
+    }
 }

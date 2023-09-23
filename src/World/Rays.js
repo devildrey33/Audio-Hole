@@ -4,7 +4,7 @@ import RaysVertexShader from "../Shaders/Rays/RaysVertex.glsl"
 import RaysFragmentShader from "../Shaders/Rays/RaysFragment.glsl"
 
 
-export default class Arrowciloscope {
+export default class Rays {
 /*    colors = [
         new THREE.Color(139, 0, 0),
         new THREE.Color(255, 140, 0),
