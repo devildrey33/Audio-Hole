@@ -19,10 +19,10 @@ export default class Debug {
 //        this.setupBloom();
 
         this.setupPostProcessingPmndrs();
-        this.setupBloomPmndrs(true);
+        this.setupBloomPmndrs();
         this.setupGodRaysPmndrs();
         this.setupShockWavePmndrs();
-        this.setupColorCorrectionPmndrs(true);
+        this.setupColorCorrectionPmndrs();
     }
 
     setupPostProcessing(open = false) {

@@ -21,9 +21,13 @@ export class DebugEffect {
     }
 
     createHTML() {
-        let strHTML = `<div class='Experience_DebugEffect' 
-                            id="DebugEffect${this.experience.idDebugEffect}" 
-                        >
+
+        this.element = document.createElement("div");
+        this.element.className = "Experience_DebugEffect";
+        this.element.id = `DebugEffect${this.experience.idDebugEffect}`;
+
+
+        let strHTML = `
                             <div>
                                 ${this.name}
                             </div>
@@ -36,9 +40,11 @@ export class DebugEffect {
                             <div>
                                 ${this.end}
                             </div>
-                        
-                        </div>`;
-        this.experience.htmlElements.elementDebugEffects.innerHTML = strHTML + this.experience.htmlElements.elementDebugEffects.innerHTML;
+                        `;
+        this.element.innerHTML = strHTML;
+
+//        this.experience.htmlElements.elementDebugEffects.innerHTML = strHTML + this.experience.htmlElements.elementDebugEffects.innerHTML;
+        this.experience.htmlElements.elementDebugEffects.appendChild(this.element);
         this.element = document.getElementById(`DebugEffect${this.experience.idDebugEffect}`);
     }
 }
