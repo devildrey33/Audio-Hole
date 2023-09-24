@@ -20,8 +20,10 @@ export default class Time extends EventEmitter {
 
         window.requestAnimationFrame(() => {
             this.tick();
-        })
+        });
+
     }
+
 
     // Function to measure Frames Per Second
     calculateFPS() {

@@ -20,13 +20,17 @@ export default class BPMEffect {
     onStart(This) {
         This.debugEffect = new DebugEffect(This.name, This.start, This.end, This.params);
         This.element = This.debugEffect.element;
-        console.log("Start", This.element)
+//        console.log("Start", This.element)
     }
 
     onComplete(This) {
-        console.log("complete", This.element)
-        if (typeof(This.element) !== "undefined") This.element.remove();
-        console.log("complete removed", This.element)
+//        console.log("complete", This.element)
+        if (typeof(This.element) !== "undefined") {
+            This.element.setAttribute("visible", "false");
+            
+            setTimeout(() => { This.element.remove(); }, 500);
+        } 
+//        console.log("complete removed", This.element)
     }
 
     onUpdateProgress(current, total) {

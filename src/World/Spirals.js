@@ -33,7 +33,8 @@ export default class Spirals {
                 uThickness         : { value : this.experience.options.spiralThickness },
                 uFrequencySin      : { value : this.experience.options.spiralFrequencySin },
                 uSpeedSin          : { value : this.experience.options.spiralSpeedSin },
-                uThicknessSin      : { value : this.experience.options.spiralThicknessSin }
+                uThicknessSin      : { value : this.experience.options.spiralThicknessSin },
+                uColorSin          : { value : this.experience.options.spiralColorSin }
             },
             vertexShader    : SpiralsVertexShader,
             fragmentShader  : SpiralsFragmentShader,

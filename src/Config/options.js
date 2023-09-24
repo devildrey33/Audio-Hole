@@ -46,6 +46,7 @@ export default {
     spiralFrequencySin              : 0.5,
     spiralSpeedSin                  : 0.75,
     spiralThicknessSin              : 0.04,
+    spiralColorSin                  : new THREE.Vector3(1, 1, 1),
 
     // Sun
     sunAudioStrengthFreq            : 1.0,
@@ -109,8 +110,11 @@ export default {
     shockWaveAmplitude              : 20,
 
     // Color Correction Pmndrs custom (postprocessing)
-    colorCorrectionPowRGB           : new THREE.Vector3(3.0, 3.0, 8.0),
+    colorCorrectionPowRGB           : new THREE.Vector3(3.0, 3.0, 3.0),
+    colorCorrectionMulRGB           : new THREE.Vector3(2.0, 2.0, 2.0),
+    colorCorrectionAddRGB           : new THREE.Vector3(.05, .05, .05)
+/*    colorCorrectionPowRGB           : new THREE.Vector3(3.0, 3.0, 8.0),
     colorCorrectionMulRGB           : new THREE.Vector3(2.0, 2.0, 15.0),
-    colorCorrectionAddRGB           : new THREE.Vector3(.05, .05, .5)
+    colorCorrectionAddRGB           : new THREE.Vector3(.05, .05, .5)*/
 };
 

@@ -11,6 +11,7 @@ uniform float       uThickness;
 uniform float       uFrequencySin; // 0.1 are 10 lines, 0.01 are 100 lines
 uniform float       uSpeedSin;
 uniform float       uThicknessSin;
+uniform vec3        uColorSin;
 
 uniform float       uTime;
 
@@ -61,7 +62,7 @@ vec4 drawAudio(vec2 pos) {
 
     // Paint the spiral osciloscope
     if (pSin < (uFrequencySin * uThicknessSin)) {        
-        return vec4(1.0, 1.0, 1.0, uAudioValue * ((1.0 - pos.y) * .5));
+        return vec4(uColorSin, uAudioValue * ((1.0 - pos.y) * .5));
         //return vec4(hsl2rgb(vec3(uTime * 0.331, 1, pos.y * 0.75 )), pSin * 10.0) * 1.5;
     }
     // Paint the spiral

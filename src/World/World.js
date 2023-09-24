@@ -7,6 +7,7 @@ import HMLBars from './HMLBars.js';
 import HMLOsciloscope from './HMLOsciloscope.js';
 import BPMEffects from './BPMEffects/BPMEffects.js';
 import gsap from 'gsap';
+import { RoughEase } from "gsap/EasePack";
 import DebugEffects from '../Utils/DebugEffects.js';
 
 //import VoronoiBackground from './VoronoiBackground.js';
@@ -31,6 +32,8 @@ export default class World {
 
 
     setup() {
+        // Setup gsap plugins
+        gsap.registerPlugin(RoughEase);
         // Create a gsap timeline
         gsap.ticker.remove(gsap.updateRoot);
         this.timeline = gsap.timeline();

@@ -61,7 +61,6 @@ export default class Experience {
             allowDropSong    : this.options.songsDragDrop,
             volume           : this.options.audioVolume
         });
-        this.audioAnalizer.loadSong(this.song.path, this.song.bpm);
         // Set the canvas element
         this.canvas         = this.htmlElements.elementCanvas;
 
@@ -90,6 +89,9 @@ export default class Experience {
         }
 
         this.beats = 0;
+        
+        this.audioAnalizer.loadSong(this.song.path, this.song.bpm);
+
     }
 
     /**

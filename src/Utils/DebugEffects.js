@@ -44,8 +44,14 @@ export class DebugEffect {
         this.element.innerHTML = strHTML;
 
 //        this.experience.htmlElements.elementDebugEffects.innerHTML = strHTML + this.experience.htmlElements.elementDebugEffects.innerHTML;
-        this.experience.htmlElements.elementDebugEffects.appendChild(this.element);
+        if (this.experience.htmlElements.elementDebugEffects.firstChild === null) {
+            this.experience.htmlElements.elementDebugEffects.appendChild(this.element);
+        }
+        else {
+            this.experience.htmlElements.elementDebugEffects.insertBefore(this.element, this.experience.htmlElements.elementDebugEffects.firstChild);
+        }
         this.element = document.getElementById(`DebugEffect${this.experience.idDebugEffect}`);
+        this.element.setAttribute("visible", "true");
     }
 }
 

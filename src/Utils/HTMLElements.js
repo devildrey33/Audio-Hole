@@ -81,6 +81,18 @@ export default class HTMLElements {
             }
         }); 
 
+        // Update bpms
+        if (this.experience.options.debug === true && this.experience.options.showBPM === true) {
+            this.elementAudioTime.addEventListener('input', (e) => { 
+                const mspb = 60000 / this.experience.audioAnalizer.bpm;
+                this.experience.audioAnalizer.currentBpm = Math.floor((e.target.value * 1000) / mspb);
+                this.experience.onAudioBpmChange(this.experience.audioAnalizer.currentBpm);
+                // If song is not playing update the current time 
+                if (this.experience.audioAnalizer.isPlaying === false) {
+                    this.experience.audioAnalizer.song.currentTime = this.elementAudioTime.value;
+                }
+            });
+        }
     }
 
     audioUI(playing) {

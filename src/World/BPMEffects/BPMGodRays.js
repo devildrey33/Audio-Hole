@@ -4,8 +4,10 @@ import BPMEffect from "./BPMEffect";
 //import { BPMEffect } from "./BPMEffects.js"
 
 export default class BPMGodRays extends BPMEffect {
-    constructor({ density = 0.9, weigth = 0.3 }) {
+    constructor({ density = 0.9, weigth = 0.3, ease = "none", yoyo = true }) {
         super();
+        this.ease = ease;
+        this.yoyo = yoyo;
         this.density = density;
         this.weigth  = weigth;
         this.name    = `BPMGodRays`;
@@ -15,21 +17,19 @@ export default class BPMGodRays extends BPMEffect {
     setupAnimation(tl, start, end) {
         this.start = start;
         this.end   = end;
-//        this.experience = new Experience();
+        
         this.godRaysEffect = this.experience.renderer.godRaysEffect;
         const bpmMS = this.experience.song.bpmMS;
         let startMS = (start * bpmMS) / 1000;
         let endMS   = ((end * bpmMS) / 1000) - startMS;
-//        console.log(startMS, endMS);
-        //this.timeline = gsap.timeline({ delay : startMS });
         tl.to(
             [ this.godRaysEffect.godRaysMaterial.density, this.godRaysEffect.godRaysMaterial.weight ], 
             { 
-//                delay    : startMS,
+                ease             : this.ease,
+                repeat           : (this.yoyo === true) ? 1 : 0,
+                yoyo             : this.yoyo,
                 duration   : endMS,
                 endArray   : [ this.density, this.weigth ],
-                yoyo       : true,
-                repeat     : 1,
                 onUpdate   : this.onUpdate,
                 onUpdateParams : [ this ],
                 onStart    : this.onStart,
@@ -39,8 +39,8 @@ export default class BPMGodRays extends BPMEffect {
             },
             startMS
         )
-//        console.log(tween);
     }
+
 
     onUpdate(This) {
 

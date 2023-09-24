@@ -1,53 +1,101 @@
 import Experience from "../../Experience.js";
 import * as THREE from 'three'
 import gsap from "gsap";
+import BPMEffect from "./BPMEffect.js";
 
-export default class BPMColorCorrection {
+export default class BPMColorCorrection extends BPMEffect {
 
-    constructor({
-        Pow = new THREE.Vector3(3.0, 3.0, 3.0),
-        Mul = new THREE.Vector3(1.0, 1.0, 1.0),
-        Add = new THREE.Vector3(.05, .05, .05)
-    }) {
-        this.experience = new Experience();
-        this.powDest    = Pow;
-        this.mulDest    = Mul;
-        this.addDest    = Add;
+    constructor({channel = "R", pow = 3, mul = 2, add = 0.05, ease = "none", yoyo = false }) {
+        super();
+        
+        this.ease = ease;
+        this.yoyo = yoyo;
+
+        this.name = "ColorCorrection";
+        this.params = `(${channel}, ${pow}, ${mul}, ${add})`;
+
+        this.channel = channel;
+        this.dest = [pow, mul, add];
+
+//        this.setupAnimation();
+    }
+
+
+    setupAnimation(tl, start, end) {
+        this.start = start;
+        this.end   = end;
+
         this.colorCorrectionEffect = this.experience.renderer.colorCorrectionEffect;
-        this.powOrigin  = this.colorCorrectionEffect.uniforms.get("powRGB");
-        this.mulOrigin  = this.colorCorrectionEffect.uniforms.get("powMul");
-        this.addOrigin  = this.colorCorrectionEffect.uniforms.get("addRGB");
+        this.powOrigin  = this.colorCorrectionEffect.uniforms.get("powRGB").value;
+        this.mulOrigin  = this.colorCorrectionEffect.uniforms.get("mulRGB").value;
+        this.addOrigin  = this.colorCorrectionEffect.uniforms.get("addRGB").value;
 
-//        this.setup();
+        const bpmMS = this.experience.song.bpmMS;
+        let startMS = (start * bpmMS) / 1000;
+        let endMS   = ((end * bpmMS) / 1000) - startMS;
+
+        switch (this.channel) {
+            case "r" :
+            case "R" : 
+            default :
+                this.origin = [ this.powOrigin.x , this.mulOrigin.x, this.addOrigin.x]; 
+                this.onUpdate = this.onUpdateR;
+                break;
+            case "g" :
+            case "G" : 
+                this.origin = [ this.powOrigin.y , this.mulOrigin.y, this.addOrigin.y]; 
+                this.onUpdate = this.onUpdateG;
+                break;
+            case "b" :
+            case "B" : 
+                this.origin = [ this.powOrigin.z , this.mulOrigin.z, this.addOrigin.z]; 
+                this.onUpdate = this.onUpdateB;
+                break;
+        }
+
+
+        tl.to(
+            this.origin, 
+            { 
+                ease             : this.ease,
+                repeat           : (this.yoyo === true) ? 1 : 0,
+                yoyo             : this.yoyo,
+                duration         : endMS,
+                endArray         : this.dest,
+                onUpdate         : this.onUpdate,
+                onUpdateParams   : [ this ],
+                onStart          : this.onStart,
+                onStartParams    : [ this ],
+                onComplete       : this.onComplete,
+                onCompleteParams : [ this ],
+            },
+            startMS
+        )
+//        console.log(tween);
     }
 
-    setup() {
+    onUpdateR(This) {
+        This.colorCorrectionEffect.uniforms.get("powRGB").value.x = this.targets()[0][0];
+        This.colorCorrectionEffect.uniforms.get("mulRGB").value.x = this.targets()[0][1];
+        This.colorCorrectionEffect.uniforms.get("addRGB").value.x = this.targets()[0][2];
 
-        //unhooks the GSAP ticker
-//        gsap.ticker.remove(gsap.updateRoot);
+        This.onUpdateProgress(this._tTime, this._tDur);        
+    }
 
-/*        this.pow = this.powOrigin;
-        this.mul = this.mulOrigin;
-        this.add = this.addOrigin;*/
-        let duration = (this.bpmEnd - this.bpmStart) * this.experience.song.bpmMS;
-        let ease = "elastic";
-        gsap.to(
-            [ this.powOrigin, this.mulOrigin, this.addOrigin ], 
-/*            [ // From
-                { x : this.powOrigin.x , y : this.powOrigin.y, z : this.powOrigin.z },
-                { x : this.mulOrigin.x , y : this.mulOrigin.y, z : this.mulOrigin.z },
-                { x : this.addOrigin.x , y : this.addOrigin.y, z : this.addOrigin.z }
-            ],*/
-            [ // To
-                { x : this.powDest.x , y : this.powDest.y, z : this.powDest.z, duration : duration, ease },
-                { x : this.mulDest.x , y : this.mulDest.y, z : this.mulDest.z, duration : duration, ease },
-                { x : this.addDest.x , y : this.addDest.y, z : this.addDest.z, duration : duration, ease }
-            ]
-        );
+    onUpdateG(This) {
+        This.colorCorrectionEffect.uniforms.get("powRGB").value.y = this.targets()[0][0];
+        This.colorCorrectionEffect.uniforms.get("mulRGB").value.y = this.targets()[0][1];
+        This.colorCorrectionEffect.uniforms.get("addRGB").value.y = this.targets()[0][2];
+
+        This.onUpdateProgress(this._tTime, this._tDur);        
     }
-    
-    update(delta) {
-        //sets the root time to 20 seconds manually
-//        gsap.updateRoot(delta);
+
+    onUpdateB(This) {
+        This.colorCorrectionEffect.uniforms.get("powRGB").value.z = this.targets()[0][0];
+        This.colorCorrectionEffect.uniforms.get("mulRGB").value.z = this.targets()[0][1];
+        This.colorCorrectionEffect.uniforms.get("addRGB").value.z = this.targets()[0][2];
+
+        This.onUpdateProgress(this._tTime, this._tDur);        
     }
+
 }
