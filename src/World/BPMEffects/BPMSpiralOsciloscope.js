@@ -7,7 +7,7 @@ export default class BPMSpiralOsciloscope extends BPMEffect {
         super();
         this.dest = [ audioStrength ,audioZoom, thickness ];
         
-        this.name = "BPMSpiralOsciloscope";
+        this.name = "SpiralOsciloscope";
         this.params = `(${audioStrength}, ${audioZoom}, ${thickness})`;
 
         this.ease = ease;
@@ -29,7 +29,7 @@ export default class BPMSpiralOsciloscope extends BPMEffect {
         tl.to(
             this.origin, 
             { 
-//                delay    : startMS,
+                id               : this.id,
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,

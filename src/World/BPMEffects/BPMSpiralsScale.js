@@ -7,7 +7,7 @@ export default class BPMSpiralsScale extends BPMEffect {
         super();
         this.dest = [ scaleX ,scaleY, scaleZ ];
         
-        this.name = "BPMSpiralsScale";
+        this.name = "SpiralsScale";
         this.params = `(${scaleX}, ${scaleY}, ${scaleZ})`;
 
         this.ease = ease;
@@ -29,7 +29,7 @@ export default class BPMSpiralsScale extends BPMEffect {
         tl.to(
             this.origin, 
             { 
-//                delay    : startMS,
+                id               : this.id,
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,

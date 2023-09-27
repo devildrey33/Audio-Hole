@@ -2,12 +2,15 @@ import Experience from "../../Experience.js";
 import { DebugEffect } from "../../Utils/DebugEffects.js";
 
 export default class BPMEffect {
+
     constructor() {
         this.experience = new Experience();
         this.name  = "BPMEffect";
         this.params = "(0, 0)";
         this.start = 0;
-        this.end   = 0;
+        this.end   = 0;   
+        if (typeof (this.experience.effectsId) === "undefined") this.experience.effectsId = 0;
+        this.id = `id${this.experience.effectsId ++}`; 
 
         // disable debug functions
         if (this.experience.options.debug !== true) {

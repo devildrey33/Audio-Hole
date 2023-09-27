@@ -9,7 +9,7 @@ export default class BPMSpiralsPosition extends BPMEffect {
         super();
         this.dest = [ positionX ,positionY, positionZ ];
         
-        this.name = "BPMSpiralsPosition";
+        this.name = "SpiralsPosition";
         this.params = `(${positionX}, ${positionY}, ${positionZ})`;
 
         this.ease = ease;
@@ -31,7 +31,7 @@ export default class BPMSpiralsPosition extends BPMEffect {
         tl.to(
             this.origin, 
             { 
-//                delay    : startMS,
+                id               : this.id,
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,

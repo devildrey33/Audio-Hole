@@ -57,6 +57,7 @@ export default class BPMColorCorrection extends BPMEffect {
         tl.to(
             this.origin, 
             { 
+                id               : this.id,
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,

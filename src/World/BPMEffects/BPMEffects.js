@@ -9,8 +9,6 @@ import BPMSpiralsPosition from "./BPMSpiralsPosition.js";
 import BPMSpiralBars from "./BPMSpiralBars.js";
 import BPMSpiralOsciloscope from "./BPMSpiralOsciloscope.js";
 
-
-
 const easeRough      = "rough({ template: none.out, strength: 1, points: 20, taper: none, randomize: true, clamp: false})";
 const easeDistorsion = "rough({ strength: 1, points: 20, template: none.out, taper: in, randomize: false, clamp: true })";
 
@@ -137,7 +135,49 @@ export default class BPMEffects {
         // 08 - Alone
         [],
         // 09 - Lost
-        [],
+        [
+            { 
+                start : 1.5, end : 2,
+                effect : new BPMSpiralsScale({ scaleX : 2, scaleZ: 0.5, ease : "bounce" })
+            },
+            { 
+                start : 9, end : 9.5,
+                effect : new BPMSpiralsScale({ scaleX : 0.125, scaleZ: 2, ease : "bounce" })
+            },
+            { 
+                start : 17, end : 17.5,
+                effect : new BPMSpiralsScale({ scaleX : 2, scaleZ: 0.25, ease : "bounce" })
+            },
+            { 
+                start : 24.5, end : 25,
+                effect : new BPMSpiralsScale({ scaleX : 0.125, scaleZ: 2, ease : "bounce" })
+            },
+            { 
+                start : 32, end : 32.5,
+                effect : new BPMSpiralsScale({ scaleX : 2, scaleZ: 0.25, ease : "bounce" })
+            },
+            { 
+                start : 40, end : 40.5,
+                effect : new BPMSpiralsScale({ scaleX : 0.25, scaleZ: 2, ease : "bounce" })
+            },
+            { 
+                start : 48, end : 48.5,
+                effect : new BPMSpiralsScale({ scaleX : 2, scaleZ: 0.25, ease : "bounce" })
+            },
+            { 
+                start : 56, end : 56.5,
+                effect : new BPMSpiralsScale({ scaleX : 0.25, scaleZ: 2, ease : "bounce" })
+            },
+            { 
+                start : 61, end : 66,
+                effect : new BPMBloom({ intensity : 1.4, radius : 1.32, yoyo : true })
+            },
+            { 
+                start : 72, end : 84.5,
+                effect : new BPMBloom({ intensity : 1.45, radius : 1.1, yoyo : true })
+            },
+
+        ],
         // 10 -
         [],
     ]

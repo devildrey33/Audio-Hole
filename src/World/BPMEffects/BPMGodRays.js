@@ -8,9 +8,8 @@ export default class BPMGodRays extends BPMEffect {
         super();
         this.ease = ease;
         this.yoyo = yoyo;
-        this.density = density;
-        this.weigth  = weigth;
-        this.name    = `BPMGodRays`;
+        this.dest =  [ density,  weigth ];
+        this.name    = `GodRays`;
         this.params  = `(${density}, ${weigth})`;
     }
 
@@ -22,19 +21,21 @@ export default class BPMGodRays extends BPMEffect {
         const bpmMS = this.experience.song.bpmMS;
         let startMS = (start * bpmMS) / 1000;
         let endMS   = ((end * bpmMS) / 1000) - startMS;
+        this.origin = [ this.godRaysEffect.godRaysMaterial.density, this.godRaysEffect.godRaysMaterial.weight ];
         tl.to(
-            [ this.godRaysEffect.godRaysMaterial.density, this.godRaysEffect.godRaysMaterial.weight ], 
+            this.origin, 
             { 
+                id               : this.id,
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,
-                duration   : endMS,
-                endArray   : [ this.density, this.weigth ],
-                onUpdate   : this.onUpdate,
-                onUpdateParams : [ this ],
-                onStart    : this.onStart,
-                onStartParams : [ this ],
-                onComplete : this.onComplete,
+                duration         : endMS,
+                endArray         : this.dest,
+                onUpdate         : this.onUpdate,
+                onUpdateParams   : [ this ],
+                onStart          : this.onStart,
+                onStartParams    : [ this ],
+                onComplete       : this.onComplete,
                 onCompleteParams : [ this ],
             },
             startMS
