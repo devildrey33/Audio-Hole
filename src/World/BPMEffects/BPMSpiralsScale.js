@@ -1,9 +1,9 @@
 import BPMEffect from "./BPMEffect.js";
 
 
-
+/* Use always with yoyo, or make scales origin and dest */
 export default class BPMSpiralsScale extends BPMEffect {
-    constructor({scaleX = 1, scaleY = 1, scaleZ = 1, ease = "none", yoyo = true}) {
+    constructor({scaleX = 1, scaleY = 1, scaleZ = 1, ease = "bounce", yoyo = true}) {
         super();
         this.dest = [ scaleX ,scaleY, scaleZ ];
         

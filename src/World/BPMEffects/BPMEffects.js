@@ -24,7 +24,7 @@ export default class BPMEffects {
         [ 
             {   // Slow color correction to blue
                 start : 1, end : 30,
-                effect : new BPMColorCorrection({ channel : "b", pow : 8, mul : 15, add : 0.5 })
+                effect : new BPMColorCorrection({ destPow : [3, 3, 8], destMul : [2, 2, 15], destAdd : [0.05, 0.05, 0.5] })
             },
             {   // batery
                 start : 8.5, end : 9.0,
@@ -36,7 +36,7 @@ export default class BPMEffects {
             },
             {   // bass changing rithm
                 start : 24.75, end : 25.25,
-                effect : new BPMSpiralsScale({ scaleX : 1.5, ease : "bounce" })
+                effect : new BPMSpiralsScale({ scaleX : 3.5, ease : "bounce" })
             },
 /*            {
                 start : 30, end : 32,
@@ -52,7 +52,7 @@ export default class BPMEffects {
             },
             {   // 
                 start : 73, end : 77, 
-                effect : new BPMBloom({ intensity : 0.8, radius : 1.65, yoyo : true })
+                effect : new BPMBloom({ destIntensity : 0.8, destRadius : 1.65, yoyo : true })
             },
             {   // 
                 start : 74, end : 76, 
@@ -60,15 +60,19 @@ export default class BPMEffects {
             },
             {   // 
                 start : 89, end : 93, 
-                effect : new BPMBloom({ intensity : 1.48, radius : 1.15, yoyo : true })
+                effect : new BPMBloom({ destIntensity : 1.48, destRadius : 1.15, yoyo : true })
             },            
             {   // 
                 start : 90, end : 92, 
                 effect : new BPMGodRays({ density : 1.48, weigth : 0.55 })
             },
             {
-                start : 114,  end : 115,
-                effect : new BPMColorCorrection({ channel : "r", pow : 8, mul : 15, add : 0.7, yoyo : true })
+                start : 113.5,  end : 115,
+                effect : new BPMColorCorrection({
+                    originPow : [3, 3, 8], originMul : [2, 2, 15] , originAdd : [0.05, 0.05, 0.5], 
+                    destPow   : [8, 3, 8], destMul   : [15, 2, 15], destAdd   : [0.6, 0.05, 0.5],
+                    yoyo : true 
+                })
             },
             {
                 start : 114,  end : 115,
@@ -117,7 +121,10 @@ export default class BPMEffects {
             },
             { // invert first blue color correction to black
                 start : 560,  end : 561 ,
-                effect : new BPMColorCorrection({ channel : "b", pow : 3, mul : 2, add : 0.05 })
+                effect : new BPMColorCorrection({ 
+                    originPow : [3, 3, 8], originMul : [2, 2, 15], originAdd : [0.05, 0.05, 0.5], 
+                    destPow   : [3, 3, 3], destMul   : [2, 2, 2] , destAdd   : [0.05, 0.05, 0.05] 
+                })
             }
         ],
         // 02 - Batle trance
@@ -153,7 +160,7 @@ export default class BPMEffects {
                 effect : new BPMSpiralsScale({ scaleX : 0.125, scaleZ: 2, ease : "bounce" })
             },
             { 
-                start : 32, end : 32.5,
+                start : 32.5, end : 33,
                 effect : new BPMSpiralsScale({ scaleX : 2, scaleZ: 0.25, ease : "bounce" })
             },
             { 
@@ -170,11 +177,11 @@ export default class BPMEffects {
             },
             { 
                 start : 61, end : 66,
-                effect : new BPMBloom({ intensity : 1.4, radius : 1.32, yoyo : true })
+                effect : new BPMBloom({ destIntensity : 1.4, destRadius : 1.32 })
             },
             { 
                 start : 72, end : 84.5,
-                effect : new BPMBloom({ intensity : 1.45, radius : 1.1, yoyo : true })
+                effect : new BPMBloom({ originIntensity : 1.4, originRadius : 1.32, destIntensity : 1.45, destRadius : -1.1 })
             },
 
         ],

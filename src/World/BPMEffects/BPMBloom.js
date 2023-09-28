@@ -2,13 +2,14 @@ import Experience from "../../Experience";
 import BPMEffect from "./BPMEffect";
 
 export default class BPMBloom extends BPMEffect {
-    constructor({ intensity = 0.8, radius = 0.98, ease = "none", yoyo = false }) {
+    constructor({ originIntensity = 0.8, originRadius = 0.98, destIntensity = 0.8, destRadius = 0.98, ease = "none", yoyo = false }) {
         super();
         this.ease   = ease;
         this.yoyo   = yoyo;
         this.name   = `Bloom`;
-        this.params = `(${intensity}, ${radius})`; 
-        this.dest   = [ intensity, radius ];
+        this.params = `(${destIntensity}, ${destRadius})`; 
+        this.origin = [ originIntensity, originRadius ];
+        this.dest   = [ destIntensity, destRadius ];
     }
 
     setupAnimation(tl, start, end) {
@@ -18,7 +19,6 @@ export default class BPMBloom extends BPMEffect {
         const bpmMS = this.experience.song.bpmMS;
         let startMS = (start * bpmMS) / 1000;
         let endMS   = ((end * bpmMS) / 1000) - startMS;
-        this.origin = { i : this.bloomEffect.intensity, r : this.bloomEffect.mipmapBlurPass.radius };
         
         /*tl.fromTo(
             this.origin, 
@@ -69,7 +69,7 @@ export default class BPMBloom extends BPMEffect {
 
     onStartBloom(This) {
 //        This.tween.updateTo({ });
-        This.origin = [This.bloomEffect.intensity, This.bloomEffect.mipmapBlurPass.radius];
+//        This.origin = [This.bloomEffect.intensity, This.bloomEffect.mipmapBlurPass.radius];
         This.onStart(This);
         console.log("sb", this._targets[0], This.bloomEffect.intensity, This.bloomEffect.mipmapBlurPass.radius);
     }
