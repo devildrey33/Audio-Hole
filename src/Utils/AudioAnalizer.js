@@ -74,17 +74,17 @@ export default class AudioAnalizer {
         }
 
         // Audio textures
-        this.bufferCanvasSquare         = new BufferCanvas(this.square, this.square);
+/*        this.bufferCanvasSquare         = new BufferCanvas(this.square, this.square);
         this.bufferCanvasSquare.texture = new THREE.CanvasTexture(this.bufferCanvasSquare.canvas);
-        this.imageDataSquare            = this.bufferCanvasSquare.context.createImageData(this.square, this.square);
+        this.imageDataSquare            = this.bufferCanvasSquare.context.createImageData(this.square, this.square);*/
         this.bufferCanvasLinear         = new BufferCanvas(1024, 1);
         this.bufferCanvasLinear.texture = new THREE.CanvasTexture(this.bufferCanvasLinear.canvas);
         this.imageDataLinear            = this.bufferCanvasLinear.context.createImageData(1024, 1);
 
 
-        this.bufferCanvasSquare.texture.generateMipMaps = false;
+/*        this.bufferCanvasSquare.texture.generateMipMaps = false;
         this.bufferCanvasSquare.texture.minFilter = THREE.NearestFilter;
-        this.bufferCanvasSquare.texture.magFilter = THREE.NearestFilter;
+        this.bufferCanvasSquare.texture.magFilter = THREE.NearestFilter;*/
 
         this.bufferCanvasLinear.texture.generateMipMaps = false;
         this.bufferCanvasLinear.texture.minFilter = THREE.NearestFilter;
@@ -249,6 +249,7 @@ export default class AudioAnalizer {
         this.song.currentTime = newTime;
     }
 
+
     getAverageFrequency() {
         // greus  de 0hz a 256hz
         // mitjos de 257hz a 2000hz
@@ -292,11 +293,11 @@ export default class AudioAnalizer {
                 // position for a 4098 array
                 pos = pos * 4;
 
-                // fill the 32*32 image
+/*                // fill the 32*32 image
                 this.imageDataSquare.data[pos]     = rValue;
                 this.imageDataSquare.data[pos + 1] = gValue;
                 this.imageDataSquare.data[pos + 2] = bValue;
-                this.imageDataSquare.data[pos + 3] = 255;
+                this.imageDataSquare.data[pos + 3] = 255;*/
                 // fill the 1024*1 image
                 this.imageDataLinear.data[pos]     = rValue;
                 this.imageDataLinear.data[pos + 1] = gValue;
@@ -304,8 +305,8 @@ export default class AudioAnalizer {
                 this.imageDataLinear.data[pos + 3] = 255;
             }
         }
-        this.bufferCanvasSquare.context.putImageData(this.imageDataSquare, 0, 0, 0, 0, 32, 32);
-        this.bufferCanvasSquare.texture.needsUpdate = true;
+/*        this.bufferCanvasSquare.context.putImageData(this.imageDataSquare, 0, 0, 0, 0, 32, 32);
+        this.bufferCanvasSquare.texture.needsUpdate = true;*/
 
         this.bufferCanvasLinear.context.putImageData(this.imageDataLinear, 0, 0, 0, 0, 1024, 1);
         this.bufferCanvasLinear.texture.needsUpdate = true;
