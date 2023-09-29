@@ -1,11 +1,12 @@
+
 import * as THREE from "three"
 import BufferCanvas from "./BufferCanvas.js";
 //import Experience from "../Experience.js";
 
 
-/* Audio analizer */
-export default class AudioAnalizer {
-    constructor(audioOptions) {
+/* Audio analizer for one channel */
+export default class AudioChannel {
+    constructor(audioOptions, first = false) {
         const audioDefaultOptions = {
             // Default callbacks
             onPlay            : () => {}, // Playing the song
@@ -16,12 +17,13 @@ export default class AudioAnalizer {
             onError           : () => {}, // Error...
             onCanPlay         : () => {}, // Song is ready to play
             onLoading         : () => {}, // Starting to load the song
-            onBpmChange       : () => {}, // Current beat per minute is updated
             // Default values
-            allowDropSong     : true,
-            volume            : 0.5       // 
+            volume            : 0.5,      // 
+            fftSize           : 1024      // fast fourier transform size (1024 gives 512 frequency bars)
         }
         
+        this.fistChannel = first;
+
         this.audioOptions = { ...audioDefaultOptions, ...audioOptions };
 
         // Song loaded flag
@@ -36,23 +38,11 @@ export default class AudioAnalizer {
         this.averageFrequency = [ 0, 0, 0, 0, 0 ];
         // Paint the audio textures to have safe values 
         this.paintAudioTexture();
-        // Time to calculate beats per minute
-        this.bpmTime = 0;
-        // Beats per minute, if its 0 its not calculated
-        this.bpm = 0;        
         
         this.isPlaying = false;
-
-        this.currentBpm = 0;
     }
-
-    setupDragDropEvents() {
-        // Drag & drop events
-        document.body.addEventListener("dragenter", (e) => { this.eventDragEnter(e) });
-        document.body.addEventListener("dragover" , (e) => { this.eventDragOver(e)  });
-        document.body.addEventListener("drop"     , (e) => { this.eventDrop(e)      });
-    }
-    
+ 
+   
     volume(vol) {
         if (typeof vol !== "undefined") this.currentVolume = vol;
 
@@ -62,14 +52,13 @@ export default class AudioAnalizer {
     }
 
     setupTextures() {
-        this.fftSize         = 1024;
-        this.maxData         = this.fftSize * 0.5;
+        this.maxData = this.audioOptions.fftSize * 0.5;
 
         // Arrays for analizer data (bars and osciloscope)
         this.analizerData    = new Uint8Array(this.maxData);
         this.analizerDataSin = new Uint8Array(this.maxData);
         for (let i = 0; i < this.maxData; i++) {
-            this.analizerData[i] = 0;
+            this.analizerData[i]    = 0;
             this.analizerDataSin[i] = 128;
         }
 
@@ -79,8 +68,8 @@ export default class AudioAnalizer {
         this.imageDataLinear            = this.bufferCanvasLinear.context.createImageData(this.maxData, 1);
 
         this.bufferCanvasLinear.texture.generateMipMaps = false;
-        this.bufferCanvasLinear.texture.minFilter = THREE.NearestFilter;
-        this.bufferCanvasLinear.texture.magFilter = THREE.NearestFilter;                
+        this.bufferCanvasLinear.texture.minFilter       = THREE.NearestFilter;
+        this.bufferCanvasLinear.texture.magFilter       = THREE.NearestFilter;                
     }
 
     setupAudio() {
@@ -90,36 +79,17 @@ export default class AudioAnalizer {
         this.context                          = new AudioContext();             // Create context
         this.gainNode                         = this.context.createGain();      // Setup gain
         this.analizer                         = this.context.createAnalyser();  // Setup analizer
-        this.analizer.fftSize                 = this.fftSize;                   // fftSize
+        this.analizer.fftSize                 = this.audioOptions.fftSize;      // fftSize
         this.analizer.smoothingTimeConstant   = 0.8;                            // Smoothing Time
     }
 
-    eventDragEnter(e) {
-        return false;
-    }
-
-    eventDragOver(e) {
-        return e.preventDefault();
-    }
-
-    eventDrop(e) {
-        this.loadSongDrop(e.dataTransfer.files);
-        e.stopPropagation();  
-        e.preventDefault();             
-    }    
-
-
-    loadSong(path, bpm = 0) {
+    loadSong(path) {
         if (typeof this.song !== "undefined") {
             this.song.pause();
             this.songLoaded = false;
             this.isPlaying = false;
             this.audioOptions.onLoading();
         }
-        // Reset time to calculate beats per minute
-        this.bpmTime = 0;
-        this.bpm = bpm;
-        this.currentBpm = 0;
          
         this.song                = new Audio();
         this.song.controls       = true;
@@ -130,46 +100,40 @@ export default class AudioAnalizer {
             this.audioOptions.onCanPlay();
         });
         this.song.addEventListener('error',   () => { 
-            this.currentBpm = 0;
             this.isPlaying = false;
             this.audioOptions.onError();
         });
         this.song.addEventListener('ended'  , () => { 
-            this.currentBpm = 0;
             this.isPlaying = false;
             this.audioOptions.onEnded();
-        });                
-        // Update max time
-        this.song.addEventListener('durationchange'  , () => { 
-            this.audioOptions.onDurationChange(this.song.duration);
-        });                
-        // Update current time
-        this.song.addEventListener('timeupdate'  , () => { 
-            this.audioOptions.onTimeUpdate(this.song.currentTime);            
         });
+        // ONLY WANT ONE CHANNEL UPDATING
+        if (this.fistChannel === true) {
+            // Update max time
+            this.song.addEventListener('durationchange'  , () => { 
+                this.audioOptions.onDurationChange(this.song.duration);
+            });                
+            // Update current time
+            this.song.addEventListener('timeupdate'  , () => { 
+                this.audioOptions.onTimeUpdate(this.song.currentTime);            
+            });
+            // Play and pause events only on the first channel
+            this.song.addEventListener('play'  , () => { 
+                this.audioOptions.onPlay();
+            });        
+            this.song.addEventListener('pause' , () => { 
+                this.audioOptions.onPause();
+            });        
+        }
         
-        
-        this.song.addEventListener('play'  , () => { 
-            this.audioOptions.onPlay();
-        });        
-        this.song.addEventListener('pause' , () => { 
-            this.audioOptions.onPause();
-         });        
-    }
-
-
-
-    loadSongDrop(files) {
-//        this.experience.htmlElements.audioUI(false);
-        this.loadSong(URL.createObjectURL(files[0]));
     }
 
 
     // Función que detecta si está en play o en pausa, y asigna el estado contrario
-    playPause(path, bpm) {
+    playPause(path) {
         if (typeof this.context === "undefined") {
             this.setupAudio();
-            this.loadSong(path, bpm);
+            this.loadSong(path);
         }
 
         this.context.resume();
@@ -218,23 +182,8 @@ export default class AudioAnalizer {
 
         // Get average frequency
         this.averageFrequency = this.getAverageFrequency();
-
-        // Calculate current beats per minute 
-        this.calculateCurrentBeat(delta);
     }
 
-
-    calculateCurrentBeat(delta) {
-        if (this.isPlaying === true && this.bpm !== 0) {
-            this.bpmTime += delta;
-            const mspb = 60000 / this.bpm;
-            if (this.bpmTime > mspb) {
-                this.currentBpm ++;
-                this.bpmTime -= mspb;
-                this.audioOptions.onBpmChange(this.currentBpm);
-            }
-        }
-    }
 
     setTime(newTime) {
         if (typeof this.song === "undefined") return;
@@ -246,7 +195,7 @@ export default class AudioAnalizer {
         // greus  de 0hz a 256hz
         // mitjos de 257hz a 2000hz
         // aguts  de 2001hz a 16000hz
-        let hzBar       = this.context.sampleRate / this.fftSize;
+        let hzBar       = this.context.sampleRate / this.audioOptions.fftSize;
 //        console.log(this.context.sampleRate)
         const divisions = [ 256, 2000, 16000, 50000 ];
         let total       = [ 0, 0, 0, 0, 0 ];// Graves, Medios, Agudos, Agudos inaudibles, Media de todo
@@ -283,11 +232,6 @@ export default class AudioAnalizer {
     }
 
 
-    destroy() {
-        this.document.body.removeEventListener("dragenter", this.eventDragEnter);
-        this.document.body.removeEventListener("dragover" , this.eventDragOver);
-        this.document.body.removeEventListener("drop"     , this.eventDrop);
-    }    
 }
 
 
