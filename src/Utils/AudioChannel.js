@@ -19,17 +19,18 @@ export default class AudioChannel {
             onLoading         : () => {}, // Starting to load the song
             // Default values
             volume            : 0.5,      // 
-            fftSize           : 1024      // fast fourier transform size (1024 gives 512 frequency bars)
+            fftSize           : 1024,     // fast fourier transform size (1024 gives 512 frequency bars)
+//            saveAudioData     : false
         }
         
         this.fistChannel = first;
 
         this.audioOptions = { ...audioDefaultOptions, ...audioOptions };
+        // Set secondary channels volume to 0
+        if (first === false) this.audioOptions.volume = 0;
 
         // Song loaded flag
         this.songLoaded = false;
-        // Setup the drag & drop events
-        if (this.audioOptions.allowDropSong) this.setupDragDropEvents();
         // Set the default volume
         this.currentVolume = this.audioOptions.volume;
         // Initialize memory for audio textures
@@ -40,6 +41,8 @@ export default class AudioChannel {
         this.paintAudioTexture();
         
         this.isPlaying = false;
+
+        this.audioData = [];
     }
  
    
@@ -105,6 +108,7 @@ export default class AudioChannel {
         });
         this.song.addEventListener('ended'  , () => { 
             this.isPlaying = false;
+            console.log(this.audioData);
             this.audioOptions.onEnded();
         });
         // ONLY WANT ONE CHANNEL UPDATING
@@ -175,13 +179,20 @@ export default class AudioChannel {
 
         // Get wave frequancy buffers        
         this.analizer.getByteFrequencyData(this.analizerData);
-        this.analizer.getByteTimeDomainData(this.analizerDataSin);        
+        this.analizer.getByteTimeDomainData(this.analizerDataSin);
         
         // Paint audio texture ussing analizerData
         this.paintAudioTexture();
 
         // Get average frequency
         this.averageFrequency = this.getAverageFrequency();
+
+/*        if (this.isPlaying === true && this.audioOptions.saveAudioData === true)
+            this.audioData.push({
+                data     : this.analizerDataSin, 
+                average  : this.averageFrequency, 
+                time     : this.song.currentTime 
+            });*/
     }
 
 

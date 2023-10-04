@@ -64,20 +64,20 @@ export default class BPMBloom extends BPMEffect {
         )
 
         this.tween = tl.getById(this.id);
-        console.log(this.tween)
+//        console.log(this.tween)
     }
 
     onStartBloom(This) {
 //        This.tween.updateTo({ });
 //        This.origin = [This.bloomEffect.intensity, This.bloomEffect.mipmapBlurPass.radius];
         This.onStart(This);
-        console.log("sb", this._targets[0], This.bloomEffect.intensity, This.bloomEffect.mipmapBlurPass.radius);
+//        console.log("sb", this._targets[0], This.bloomEffect.intensity, This.bloomEffect.mipmapBlurPass.radius);
     }
 
     onUpdate(This) {
         This.bloomEffect.intensity             = this.targets()[0][0];
         This.bloomEffect.mipmapBlurPass.radius = this.targets()[0][1];
-        console.log(This.bloomEffect.intensity, This.bloomEffect.mipmapBlurPass.radius);
+//        console.log(This.bloomEffect.intensity, This.bloomEffect.mipmapBlurPass.radius);
         This.onUpdateProgress(this._tTime, this._tDur);        
     }
 }

@@ -1,4 +1,5 @@
-uniform sampler2D   uAudioTexture;
+uniform sampler2D   uAudioTexture;  // drums
+uniform sampler2D   uAudioTexture2; // voice
 uniform float       uAudioStrength;
 uniform float       uAudioZoom;
 uniform float       uAudioStrengthSin;
@@ -16,6 +17,7 @@ uniform vec3        uColorSin;
 uniform float       uTime;
 
 uniform float       uAudioValue;
+uniform float       uAudioValue2;
 
 varying vec2        vUv; 
 
@@ -52,7 +54,7 @@ vec4 drawAudio(vec2 pos) {
     float p = mod(nPos.y, uFrequency);
 
     // Get audio osciloscpe value
-    float audioValueSin = (((texture2D(uAudioTexture, vec2(audioXSin / uAudioZoomSin, 0.0)).g - 0.5) * 0.55) * uAudioStrengthSin) * uFrequencySin;
+    float audioValueSin = (((texture2D(uAudioTexture2, vec2(audioXSin / uAudioZoomSin, 0.0)).g - 0.5) * 0.55) * uAudioStrengthSin) * uFrequencySin;
 
     // Oscyloscope spiral
     vec2 nPosSin = vec2(pos.x, pos.y + (pos.x * uFrequencySin) - mod(uTime * uSpeedSin, 1.0) + audioValueSin);
@@ -62,7 +64,7 @@ vec4 drawAudio(vec2 pos) {
 
     // Paint the spiral osciloscope
     if (pSin < (uFrequencySin * uThicknessSin)) {        
-        return vec4(uColorSin, uAudioValue * ((1.0 - pos.y) * .5));
+        return vec4(uColorSin, ((uAudioValue + uAudioValue2) * 0.5) * ((1.0 - pos.y) * .5));
         //return vec4(hsl2rgb(vec3(uTime * 0.331, 1, pos.y * 0.75 )), pSin * 10.0) * 1.5;
     }
     // Paint the spiral

@@ -21,7 +21,7 @@ export default class HMLOsciloscope {
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
-                uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
+                uAudioTexture  : { value : this.audioAnalizer.channelVocal.bufferCanvasLinear.texture },
                 uAudioStrength : { value : this.experience.options.hmsOsciloscopeAudioStrength },
                 uAudioValue    : { value : new THREE.Vector4(0.0, 0.0, 0.0, 0.0) },
                 uSpeed         : { value : this.experience.options.hmsOsciloscopeSpeed },
@@ -56,10 +56,10 @@ export default class HMLOsciloscope {
         this.material.uniforms.uTime.value += this.time.delta / 100;
 
         this.material.uniforms.uAudioValue.value = new THREE.Vector4(
-            this.audioAnalizer.averageFrequency[0] / 196, 
-            this.audioAnalizer.averageFrequency[1] / 196,
-            this.audioAnalizer.averageFrequency[2] / 196,
-            this.audioAnalizer.averageFrequency[4] / 196
+            this.audioAnalizer.channelVocal.averageFrequency[0] / 196, 
+            this.audioAnalizer.channelVocal.averageFrequency[1] / 196,
+            this.audioAnalizer.channelVocal.averageFrequency[2] / 196,
+            this.audioAnalizer.channelVocal.averageFrequency[4] / 196
         );
 //        this.material.uniforms.uAudioValue.value = (this.audioAnalizer.averageFrequency[4] / 64);
 

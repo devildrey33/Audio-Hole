@@ -21,12 +21,14 @@ export default class Spirals {
 //        console.log(this.experience.debugOptions.perlinSunColorFrequency);
         this.material = new THREE.ShaderMaterial({
             uniforms : {
-                uAudioTexture      : { value : this.audioAnalizer.bufferCanvasLinear.texture },
+                uAudioTexture      : { value : this.audioAnalizer.channelSong.bufferCanvasLinear.texture },
+                uAudioTexture2     : { value : this.audioAnalizer.channelVocal.bufferCanvasLinear.texture },
                 uAudioStrength     : { value : this.experience.options.spiralAudioStrength },
                 uAudioZoom         : { value : this.experience.options.spiralAudioZoom },
                 uAudioStrengthSin  : { value : this.experience.options.spiralAudioStrengthSin },
                 uAudioZoomSin      : { value : this.experience.options.spiralAudioZoomSin },
                 uAudioValue        : { value : 0 },
+                uAudioValue2       : { value : 0 },
                 uTime              : { value : 0 },
                 uFrequency         : { value : this.experience.options.spiralFrequency },
                 uSpeed             : { value : this.experience.options.spiralSpeed },
@@ -69,7 +71,8 @@ export default class Spirals {
         // update rotation on the cilynder
         this.mesh.rotation.y += advance;
         // update audio value on spiral
-        this.material.uniforms.uAudioValue.value = 0.01 +  (this.audioAnalizer.averageFrequency[4] / 64);
+        this.material.uniforms.uAudioValue.value = 0.01 +  (this.audioAnalizer.channelSong.averageFrequency[4] / 64);
+        this.material.uniforms.uAudioValue2.value = 0.01 +  (this.audioAnalizer.channelVocal.averageFrequency[1] / 64);
 //        this.material.uniforms.uAudioValue.value = 1.0;
         // update time on spiral
         this.material.uniforms.uTime.value += advance;   

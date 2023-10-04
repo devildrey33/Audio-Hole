@@ -47,11 +47,104 @@ export default class HTMLElements {
                 this.elementAudioPlay.innerHTML = "Pause";
             }
         });*/
-        // Audio volume slider element
+        // Audio main volume slider element
         this.elementAudioVolume.addEventListener('input', (e) => { 
-            this.experience.audioAnalizer.currentVolume = e.currentTarget.value;
-            this.experience.audioAnalizer.gainNode.gain.value = e.currentTarget.value;
+            if (this.experience.debug === false) {
+                this.experience.audioAnalizer.volume(e.currentTarget.value);
+            }
+            else {
+                this.experience.audioAnalizer.volume(e.currentTarget.value, true);
+                this.elementAudioVolumeSong.value = 0;
+                this.elementAudioVolumeBass.value = e.currentTarget.value;
+                this.elementAudioVolumeDrum.value = e.currentTarget.value;
+                this.elementAudioVolumeOther.value = e.currentTarget.value;
+                this.elementAudioVolumeVoice.value = e.currentTarget.value;
+                this.elementAudioVolumePiano.value = e.currentTarget.value;
+            }
+            
         }); 
+        if (this.experience.options.debug === true) {
+            // Song volume
+            this.elementAudioVolumeSong.addEventListener('input', (e) => { 
+                this.experience.audioAnalizer.channelSong.volume(e.currentTarget.value);
+            }); 
+            // Bass volume
+            this.elementAudioVolumeBass.addEventListener('input', (e) => { 
+                this.experience.audioAnalizer.channelBass.volume(e.currentTarget.value);
+            }); 
+            // Drum volume
+            this.elementAudioVolumeDrum.addEventListener('input', (e) => { 
+                this.experience.audioAnalizer.channelDrum.volume(e.currentTarget.value);
+            }); 
+            // Other volume
+            this.elementAudioVolumeOther.addEventListener('input', (e) => { 
+                this.experience.audioAnalizer.channelOther.volume(e.currentTarget.value);
+            }); 
+            // Voice volume
+            this.elementAudioVolumeVoice.addEventListener('input', (e) => { 
+                this.experience.audioAnalizer.channelVocal.volume(e.currentTarget.value);
+            }); 
+            // Piano volume
+            this.elementAudioVolumePiano.addEventListener('input', (e) => { 
+                this.experience.audioAnalizer.channelPiano.volume(e.currentTarget.value);
+            }); 
+            // Speed ratio
+            this.elementAudioSpeed.addEventListener('input', (e) => { 
+                this.experience.audioAnalizer.speed(e.currentTarget.value);
+            }); 
+            // Mute song
+            this.elementMuteSong.addEventListener('click', () => { 
+                if (this.experience.audioAnalizer.channelSong.currentVolume === 0)
+                    this.experience.audioAnalizer.channelSong.volume(this.experience.audioAnalizer.currentVolume);
+                else 
+                    this.experience.audioAnalizer.channelSong.volume(0);
+                this.elementAudioVolumeSong.value = this.experience.audioAnalizer.channelSong.currentVolume;
+            }); 
+            // Mute bass
+            this.elementMuteBass.addEventListener('click', () => { 
+                if (this.experience.audioAnalizer.channelBass.currentVolume === 0)
+                    this.experience.audioAnalizer.channelBass.volume(this.experience.audioAnalizer.currentVolume);
+                else 
+                    this.experience.audioAnalizer.channelBass.volume(0);
+                this.elementAudioVolumeBass.value = this.experience.audioAnalizer.channelBass.currentVolume;
+            }); 
+            // Mute drum
+            this.elementMuteDrum.addEventListener('click', () => { 
+                if (this.experience.audioAnalizer.channelDrum.currentVolume === 0)
+                    this.experience.audioAnalizer.channelDrum.volume(this.experience.audioAnalizer.currentVolume);
+                else 
+                    this.experience.audioAnalizer.channelDrum.volume(0);
+                this.elementAudioVolumeDrum.value = this.experience.audioAnalizer.channelDrum.currentVolume;
+            }); 
+            // Mute Other
+            this.elementMuteOther.addEventListener('click', () => { 
+                if (this.experience.audioAnalizer.channelOther.currentVolume === 0)
+                    this.experience.audioAnalizer.channelOther.volume(this.experience.audioAnalizer.currentVolume);
+                else 
+                    this.experience.audioAnalizer.channelOther.volume(0);
+                this.elementAudioVolumeOther.value = this.experience.audioAnalizer.channelOther.currentVolume;
+            }); 
+            // Mute Voice
+            this.elementMuteVoice.addEventListener('click', () => { 
+                if (this.experience.audioAnalizer.channelVoice.currentVolume === 0)
+                    this.experience.audioAnalizer.channelVoice.volume(this.experience.audioAnalizer.currentVolume);
+                else 
+                    this.experience.audioAnalizer.channelVoice.volume(0);
+                    this.elementAudioVolumeVoice.value = this.experience.audioAnalizer.channelVoice.currentVolume;
+            }); 
+            // Mute Piano
+            this.elementMutePiano.addEventListener('click', () => { 
+                if (this.experience.audioAnalizer.channelPiano.currentVolume === 0)
+                    this.experience.audioAnalizer.channelPiano.volume(this.experience.audioAnalizer.currentVolume);
+                else 
+                    this.experience.audioAnalizer.channelPiano.volume(0);
+                this.elementAudioVolumePiano.value = this.experience.audioAnalizer.channelPiano.currentVolume;
+            }); 
+            // default speed
+            this.elementDefaultSpeed = document.getElementById("defaultSpeed");
+        }
+
+
         // Audio time slider element mousedown
         this.elementAudioTime.addEventListener('mousedown', (e) => { 
             this.dragTime = true;
@@ -71,12 +164,12 @@ export default class HTMLElements {
 
         // Update current time
         this.elementAudioTime.addEventListener('change', (e) => { 
-            this.experience.audioAnalizer.song.currentTime = this.elementAudioTime.value;
+            this.experience.audioAnalizer.setTime(this.elementAudioTime.value);
             // Update current beat per minute acording to the new time
             if (this.experience.audioAnalizer.bpm !== 0) {
                 // Update current beat per minute
                 const mspb = 60000 / this.experience.audioAnalizer.bpm;
-                this.experience.audioAnalizer.currentBpm = Math.floor((this.experience.audioAnalizer.song.currentTime * 1000) / mspb);
+                this.experience.audioAnalizer.currentBpm = Math.floor((this.experience.audioAnalizer.channelSong.song.currentTime * 1000) / mspb);
                 this.experience.onAudioBpmChange(this.experience.audioAnalizer.currentBpm);
             }
         }); 
@@ -89,7 +182,7 @@ export default class HTMLElements {
                 this.experience.onAudioBpmChange(this.experience.audioAnalizer.currentBpm);
                 // If song is not playing update the current time 
                 if (this.experience.audioAnalizer.isPlaying === false) {
-                    this.experience.audioAnalizer.song.currentTime = this.elementAudioTime.value;
+                    this.experience.audioAnalizer.setTime(this.elementAudioTime.value);
                 }
             });
         }
@@ -146,10 +239,26 @@ export default class HTMLElements {
                             "</div>";
 
                 strHTML +=  "<div class='Experience_Panel Experience_Static Experience_AudioLevels' title='Audio levels (High / Medium / Low / Total)'>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelH'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelM'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelL'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelT'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH0'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM0'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL0'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT0'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH1'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM1'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL1'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT1'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH2'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM2'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL2'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT2'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH3'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM3'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL3'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT3'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH4'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM4'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL4'></div>" +
+                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT4'></div>" +
                             "</div>";
             }
             if (this.options.showFPS === true) {
@@ -221,9 +330,41 @@ export default class HTMLElements {
             strHTML +=`</select>
                     <span>volume</span>
                     <div class='Experience_AC_Volume'>
-                        <input type='range' name='volume' min='0' max='1' value='${this.experience.options.audioVolume}' step='0.01'></input>
+                        <input id='volume' type='range' name='volume' min='0' max='1' value='${this.experience.options.audioVolume}' step='0.01'></input>
+                    </div>`
+
+            if (this.experience.options.debug === true) {
+            strHTML +=`<span id='muteSong'>song</span>
+                    <div class='Experience_AC_Volume'>
+                        <input id='volumeSong' type='range' name='song' min='0' max='1' value='${this.experience.options.audioVolume}' step='0.01'></input>
                     </div>
-                </div>
+                    <span id='muteDrum'>drum</span>
+                    <div class='Experience_AC_Volume'>
+                        <input id='volumeDrum' type='range' name='drum' min='0' max='1' value='0' step='0.01'></input>
+                    </div>
+                    <span id='muteBass'>bass</span>
+                    <div class='Experience_AC_Volume'>
+                        <input id='volumeBass' type='range' name='bass' min='0' max='1' value='0' step='0.01'></input>
+                    </div>
+                    <span id='muteOther'>other</span>
+                    <div class='Experience_AC_Volume'>
+                        <input id='volumeOther' type='range' name='other' min='0' max='1' value='0' step='0.01'></input>
+                    </div>
+                    <span id='muteVoice'>voice</span>
+                    <div class='Experience_AC_Volume'>
+                        <input id='volumeVoice' type='range' name='voice' min='0' max='1' value='0' step='0.01'></input>
+                    </div>
+                    <span id='mutePiano'>piano</span>
+                    <div class='Experience_AC_Volume'>
+                        <input id='volumePiano' type='range' name='piano' min='0' max='1' value='0' step='0.01'></input>
+                    </div>
+                    <span id='defaultSpeed'>speed</span>
+                    <div class='Experience_AC_Volume'>
+                        <input id='reproductionSpeed' type='range' name='speed' min='0.01' max='2' value='1' step='0.01'></input>
+                    </div>`
+                }
+
+            strHTML += `</div>
                 <div class='Experience_AC_Time'>
                     <input type='range' step="0.1" value="0"></input>
                 </div>
@@ -259,8 +400,26 @@ export default class HTMLElements {
             this.elementSongInfo = document.querySelector("#" + this.elementExperience.id + " > .Experience_SongInfo");
             this.elementSongInfoName   = document.getElementById("AudioInfo_Name");
             this.elementSongInfoArtist = document.getElementById("AudioInfo_Artist");
-            // Audio volume slider element
-            this.elementAudioVolume = document.querySelector("#" + this.elementExperience.id + " > .Experience_AudioControls  .Experience_AC_Volume input");
+            // Audio volume slider element per channel
+            this.elementAudioVolume = document.getElementById("volume");
+            this.elementAudioVolumeSong = document.getElementById("volumeSong");
+            this.elementAudioVolumeBass = document.getElementById("volumeBass");
+            this.elementAudioVolumeDrum = document.getElementById("volumeDrum");
+            this.elementAudioVolumeOther = document.getElementById("volumeOther");
+            this.elementAudioVolumeVoice = document.getElementById("volumeVoice");
+            this.elementAudioVolumePiano = document.getElementById("volumePiano");
+            // speed
+            this.elementAudioSpeed = document.getElementById("reproductionSpeed");
+            // Mute audio volume channel
+            this.elementMuteSong  = document.getElementById("muteSong");
+            this.elementMuteBass  = document.getElementById("muteBass");
+            this.elementMuteDrum  = document.getElementById("muteDrum");
+            this.elementMuteOther = document.getElementById("muteOther");
+            this.elementMuteVoice = document.getElementById("muteVoice");
+            this.elementMutePiano = document.getElementById("mutePiano");
+            // default speed
+            this.elementDefaultSpeed = document.getElementById("defaultSpeed");
+
             // Audio time slider element
             this.elementAudioTime = document.querySelector("#" + this.elementExperience.id + " > .Experience_AudioControls > .Experience_AC_Time > input");
             // Audio information element
@@ -296,11 +455,27 @@ export default class HTMLElements {
                 this.elementBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Panel > .Experience_BPM");
                 this.elementTxtBPM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_Panel > .Experience_TxtBPM");
                 
-                this.elementAudioLevelH = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelH");
-                this.elementAudioLevelM = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelM");
-                this.elementAudioLevelL = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelL");
-                this.elementAudioLevelT = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls > .Experience_AudioLevels > .Experience_AudioLevelT");
-
+                this.elementAudioLevelH0 = document.getElementById("Experience_AudioLevelH0");
+                this.elementAudioLevelM0 = document.getElementById("Experience_AudioLevelM0");
+                this.elementAudioLevelL0 = document.getElementById("Experience_AudioLevelL0");
+                this.elementAudioLevelT0 = document.getElementById("Experience_AudioLevelT0");
+                this.elementAudioLevelH1 = document.getElementById("Experience_AudioLevelH1");
+                this.elementAudioLevelM1 = document.getElementById("Experience_AudioLevelM1");
+                this.elementAudioLevelL1 = document.getElementById("Experience_AudioLevelL1");
+                this.elementAudioLevelT1 = document.getElementById("Experience_AudioLevelT1");
+                this.elementAudioLevelH2 = document.getElementById("Experience_AudioLevelH2");
+                this.elementAudioLevelM2 = document.getElementById("Experience_AudioLevelM2");
+                this.elementAudioLevelL2 = document.getElementById("Experience_AudioLevelL2");
+                this.elementAudioLevelT2 = document.getElementById("Experience_AudioLevelT2");
+                this.elementAudioLevelH3 = document.getElementById("Experience_AudioLevelH3");
+                this.elementAudioLevelM3 = document.getElementById("Experience_AudioLevelM3");
+                this.elementAudioLevelL3 = document.getElementById("Experience_AudioLevelL3");
+                this.elementAudioLevelT3 = document.getElementById("Experience_AudioLevelT3");
+                this.elementAudioLevelH4 = document.getElementById("Experience_AudioLevelH4");
+                this.elementAudioLevelM4 = document.getElementById("Experience_AudioLevelM4");
+                this.elementAudioLevelL4 = document.getElementById("Experience_AudioLevelL4");
+                this.elementAudioLevelT4 = document.getElementById("Experience_AudioLevelT4");
+                
                 this.elementDebugEffects = document.querySelector("#" + this.elementExperience.id + " > .Experience_DebugEffects");
             }
         }

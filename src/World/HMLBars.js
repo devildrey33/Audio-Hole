@@ -19,7 +19,8 @@ export default class Bars {
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
-                uAudioTexture  : { value : this.audioAnalizer.bufferCanvasLinear.texture },
+                uAudioTexture  : { value : this.audioAnalizer.channelOther.bufferCanvasLinear.texture },
+                uAudioTexture2 : { value : this.audioAnalizer.channelPiano.bufferCanvasLinear.texture },
                 uAudioStrength : { value : this.experience.options.barsAudioStrength },
                 uAudioZoom     : { value : this.experience.options.barsAudioZoom },
                 uAudioValue    : { value : 0 },
@@ -51,7 +52,7 @@ export default class Bars {
     update() {        
         this.material.uniforms.uTime.value += this.time.delta / 100;
 
-        this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.averageFrequency[2] / 64);
+        this.material.uniforms.uAudioValue.value = 0.01 + (((this.audioAnalizer.channelOther.averageFrequency[0] / 64) + (this.audioAnalizer.channelPiano.averageFrequency[1] / 64)) * 0.5) ;
 
         
         this.mesh.scale.y  = 0.5 + (1.0 + Math.cos(this.time.current / 3000))  * (this.material.uniforms.uAudioValue.value * 0.5);

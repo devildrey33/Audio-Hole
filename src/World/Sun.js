@@ -20,7 +20,7 @@ export default class Sun {
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
-                uAudioTexture      : { value : this.audioAnalizer.bufferCanvasLinear.texture },
+                uAudioTexture      : { value : this.audioAnalizer.channelVocal.bufferCanvasLinear.texture },
                 uTime              : { value : 0 },
                 uAudioStrengthFreq : { value : this.experience.options.sunAudioStrengthFreq },
                 uAudioStrengthSin  : { value : this.experience.options.sunAudioStrengthSin },

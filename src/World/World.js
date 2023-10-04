@@ -68,7 +68,7 @@ export default class World {
     update() {
         //if (this.ready === true) {
             
-            this.timeline.time(this.experience.audioAnalizer.song.currentTime);
+            this.timeline.time(this.experience.audioAnalizer.channelSong.song.currentTime);
 //            console.log(this.experience.audioAnalizer.song.currentTime, this.timeline.time());
 //            this.bpmEffects.update();
 

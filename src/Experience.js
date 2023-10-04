@@ -4,7 +4,8 @@ import Sizes from "./Utils/Sizes.js";
 import Time from "./Utils/Time.js";
 import HTMLElements from "./Utils/HTMLElements.js";
 import options from "./Config/options.js";
-import AudioAnalizer from "./Utils/AudioAnalizer.js";
+//import AudioAnalizer from "./Utils/AudioAnalizer.js";
+import AudioAnalizerMC from "./Utils/AudioAnalizerMC.js";
 import Camera from './Camera.js';
 //import Renderer from './Renderer.js';
 import Renderer from './Renderer_pmndrs.js';
@@ -31,7 +32,7 @@ export default class Experience {
         this.songs = songs;
         // select a random song
         this.currentSong = Math.floor(Math.random() * this.songs.length);
-        this.currentSong = 9;
+        this.currentSong = 7;
         this.song = this.songs[this.currentSong];
         this.songLoading = true;
 
@@ -48,7 +49,7 @@ export default class Experience {
         this.resources      = new Resources(sources);
         this.loading = true;
 
-        this.audioAnalizer  = new AudioAnalizer({
+        this.audioAnalizer  = new AudioAnalizerMC({
             onPlay           : this.onAudioPlay,
             onPause          : this.onAudioPause,
             onTimeUpdate     : this.onAudioTimeUpdate,
@@ -59,7 +60,8 @@ export default class Experience {
             onLoading        : this.onAudioLoading, 
             onBpmChange      : this.onAudioBpmChange,
             allowDropSong    : this.options.songsDragDrop,
-            volume           : this.options.audioVolume
+            volume           : this.options.audioVolume,
+            fftSize          : this.options.audioFFTSize
         });
         // Set the canvas element
         this.canvas         = this.htmlElements.elementCanvas;
@@ -114,11 +116,36 @@ export default class Experience {
         }
         
         if (this.options.showBPM === true)  {
-            // update Audio levels
-            this.htmlElements.elementAudioLevelH.style.top = (54 - ((this.audioAnalizer.averageFrequency[0] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelM.style.top = (54 - ((this.audioAnalizer.averageFrequency[1] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelL.style.top = (54 - ((this.audioAnalizer.averageFrequency[2] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelT.style.top = (54 - ((this.audioAnalizer.averageFrequency[4] / 255) * 54)) + "px";
+            // Piano
+            const piano = 1;
+            this.htmlElements.elementAudioLevelH0.style.top = ((54 - ((this.audioAnalizer.channelPiano.averageFrequency[0] / 255) * 54* piano))) + "px";
+            this.htmlElements.elementAudioLevelM0.style.top = ((54 - ((this.audioAnalizer.channelPiano.averageFrequency[1] / 255) * 54* piano))) + "px";
+            this.htmlElements.elementAudioLevelL0.style.top = ((54 - ((this.audioAnalizer.channelPiano.averageFrequency[2] / 255) * 54* piano))) + "px";
+            this.htmlElements.elementAudioLevelT0.style.top = ((54 - ((this.audioAnalizer.channelPiano.averageFrequency[4] / 255) * 54* piano))) + "px";
+            // Vocals
+            const vocals = 1;
+            this.htmlElements.elementAudioLevelH1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[0] / 255) * 54 * vocals)) + "px";
+            this.htmlElements.elementAudioLevelM1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[1] / 255) * 54 * vocals)) + "px";
+            this.htmlElements.elementAudioLevelL1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[2] / 255) * 54 * vocals)) + "px";
+            this.htmlElements.elementAudioLevelT1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[4] / 255) * 54 * vocals)) + "px";
+            // Other
+            const other = 1;
+            this.htmlElements.elementAudioLevelH2.style.top = (54 - ((this.audioAnalizer.channelOther.averageFrequency[0] / 255) * 54 * other)) + "px";
+            this.htmlElements.elementAudioLevelM2.style.top = (54 - ((this.audioAnalizer.channelOther.averageFrequency[1] / 255) * 54 * other)) + "px";
+            this.htmlElements.elementAudioLevelL2.style.top = (54 - ((this.audioAnalizer.channelOther.averageFrequency[2] / 255) * 54 * other)) + "px";
+            this.htmlElements.elementAudioLevelT2.style.top = (54 - ((this.audioAnalizer.channelOther.averageFrequency[4] / 255) * 54 * other)) + "px";
+            // Bass
+            const bass = 1;
+            this.htmlElements.elementAudioLevelH3.style.top = (54 - ((this.audioAnalizer.channelBass.averageFrequency[0] / 255) * 54 * bass)) + "px";
+            this.htmlElements.elementAudioLevelM3.style.top = (54 - ((this.audioAnalizer.channelBass.averageFrequency[1] / 255) * 54 * bass)) + "px";
+            this.htmlElements.elementAudioLevelL3.style.top = (54 - ((this.audioAnalizer.channelBass.averageFrequency[2] / 255) * 54 * bass)) + "px";
+            this.htmlElements.elementAudioLevelT3.style.top = (54 - ((this.audioAnalizer.channelBass.averageFrequency[4] / 255) * 54 * bass)) + "px";
+            // Drums
+            const drums = 1;
+            this.htmlElements.elementAudioLevelH4.style.top = (54 - ((this.audioAnalizer.channelDrum.averageFrequency[0] / 255) * 54 * drums)) + "px";
+            this.htmlElements.elementAudioLevelM4.style.top = (54 - ((this.audioAnalizer.channelDrum.averageFrequency[1] / 255) * 54 * drums)) + "px";
+            this.htmlElements.elementAudioLevelL4.style.top = (54 - ((this.audioAnalizer.channelDrum.averageFrequency[2] / 255) * 54 * drums)) + "px";
+            this.htmlElements.elementAudioLevelT4.style.top = (54 - ((this.audioAnalizer.channelDrum.averageFrequency[4] / 255) * 54 * drums)) + "px";
         }
 
         this.world.update();
@@ -195,13 +222,7 @@ export default class Experience {
     }
 
     onAudioBpmChange = (currentBpm) => {
-/*        this.beats ++;
-        if (this.beats === 32) {
-            this.renderer.shockWaveEffect.explode();
-            this.beats = 0;
-        }*/
         if (this.options.showBPM === true) this.htmlElements.elementBPM.innerHTML = currentBpm;
-//        console.log("Bpm : " + this.audioAnalizer.bpm + " Current beat : " + currentBpm);
     }
     /** 
      * This function destroy the whole scene

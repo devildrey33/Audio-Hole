@@ -391,28 +391,30 @@ html, body {
 
 .Experience_AudioLevels {
     display: grid;
-    grid-template-columns: 10px 10px 10px 10px;
+    grid-template-columns: 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px;
     gap: 2px;
     overflow: hidden;
+    width : 240px;
 }
 
 .Experience_AudioLevel {
     position: relative;
     height: 60px;
+    background-color: v;
 }
 
 
-.Experience_AudioLevelH {
-    background-color: red; /* Color de la barra */
+.Experience_AudioLevel:nth-child(4n+0) {
+    background-color: #0000FF; /* Color de la barra */
 }
-.Experience_AudioLevelM {
-    background-color: green; /* Color de la barra */
+.Experience_AudioLevel:nth-child(4n+1) {
+    background-color: #0000BB; /* Color de la barra */
 }
-.Experience_AudioLevelL {
-    background-color: blue; /* Color de la barra */
+.Experience_AudioLevel:nth-child(4n+2) {
+    background-color: #000088; /* Color de la barra */
 }
-.Experience_AudioLevelT {
-    background-color: white; /* Color de la barra */
+.Experience_AudioLevel:nth-child(4n+3) {
+    background-color: #000055; /* Color de la barra */
 }
 
 
@@ -450,6 +452,16 @@ html, body {
 
 .Experience_DebugEffect > div:nth-child(3), .Experience_DebugEffect > div:nth-child(4) {
     text-align: right;
+}
+
+#muteSong, #muteDrum, #muteBass, #muteOther, #muteVoice, #mutePiano, #defaultSpeed {
+    transition:color 0.5s ease-in-out;    
+}
+
+#muteDrum:hover, #muteBass:hover, #muteOther:hover, #muteVoice:hover, #mutePiano:hover, #muteSong:hover, #defaultSpeed:hover {
+    transition:0.3s ease-in-out;    
+    cursor : pointer;
+    color:yellow;
 }
 
 /*.Experience_DebugEffect::before {
