@@ -33,7 +33,7 @@ export default {
     // default audio volume
     audioVolume             : 0.25,
 
-    audioFFTSize            : 1024,
+    audioFFTSize            : 2048,
     // Allow orbit controls (only on debug by default)
     orbitControls           : isDebug,
 

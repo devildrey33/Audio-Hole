@@ -126,11 +126,11 @@ export default class HTMLElements {
             }); 
             // Mute Voice
             this.elementMuteVoice.addEventListener('click', () => { 
-                if (this.experience.audioAnalizer.channelVoice.currentVolume === 0)
-                    this.experience.audioAnalizer.channelVoice.volume(this.experience.audioAnalizer.currentVolume);
+                if (this.experience.audioAnalizer.channelVocal.currentVolume === 0)
+                    this.experience.audioAnalizer.channelVocal.volume(this.experience.audioAnalizer.currentVolume);
                 else 
-                    this.experience.audioAnalizer.channelVoice.volume(0);
-                    this.elementAudioVolumeVoice.value = this.experience.audioAnalizer.channelVoice.currentVolume;
+                    this.experience.audioAnalizer.channelVocal.volume(0);
+                    this.elementAudioVolumeVocal.value = this.experience.audioAnalizer.channelVoice.currentVolume;
             }); 
             // Mute Piano
             this.elementMutePiano.addEventListener('click', () => { 
