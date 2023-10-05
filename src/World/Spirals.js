@@ -61,7 +61,7 @@ export default class Spirals {
 //        this.group = new THREE.Group();
         this.mesh.position.set(0, 0, -32);
 //        this.group.add(this.mesh);
-        this.scene.add(this.mesh);
+        this.world.group.add(this.mesh);
 
     }
 
@@ -71,8 +71,8 @@ export default class Spirals {
         // update rotation on the cilynder
         this.mesh.rotation.y += advance;
         // update audio value on spiral
-        this.material.uniforms.uAudioValue.value = 0.01 +  (this.audioAnalizer.channelSong.averageFrequency[4] / 64);
-        this.material.uniforms.uAudioValue2.value = 0.01 +  (this.audioAnalizer.channelVocal.averageFrequency[1] / 64);
+        this.material.uniforms.uAudioValue.value  = (this.audioAnalizer.channelSong.averageFrequency[4] / 64);
+        this.material.uniforms.uAudioValue2.value = (this.audioAnalizer.channelVocal.averageFrequency[0] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[1] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[2] / 64);
 //        this.material.uniforms.uAudioValue.value = 1.0;
         // update time on spiral
         this.material.uniforms.uTime.value += advance;   

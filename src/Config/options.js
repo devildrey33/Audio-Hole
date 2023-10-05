@@ -38,13 +38,13 @@ export default {
     orbitControls           : isDebug,
 
     // Spirals      
-    spiralAudioStrength             : 0.4,
+    spiralAudioStrength             : 0.8,
     spiralAudioZoom                 : 2.0,
     spiralAudioStrengthSin          : 0.4,
     spiralAudioZoomSin              : 1.0,
     spiralFrequency                 : 0.1,
     spiralSpeed                     : 0.12,
-    spiralThickness                 : 0.05,
+    spiralThickness                 : 0.1,
     spiralFrequencySin              : 0.5,
     spiralSpeedSin                  : 0.75,
     spiralThicknessSin              : 0.04,

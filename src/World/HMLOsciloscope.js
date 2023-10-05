@@ -6,13 +6,13 @@ import HMLOsciloscopeFragmentShader from "../Shaders/HMLOsciloscope/HMLOscilosco
 
 export default class HMLOsciloscope {
 
-    constructor(timeline) {
+    constructor(world, timeline) {
         this.experience           = new Experience();
         this.scene                = this.experience.scene;
         this.audioAnalizer        = this.experience.audioAnalizer;
         this.time                 = this.experience.time;
-        this.timeline             = timeline;
-
+        this.world                = world;
+        this.timeline             = world.timeline;
         this.setup();
     }
 
@@ -47,8 +47,8 @@ export default class HMLOsciloscope {
 //        this.mesh.rotation.z = Math.PI * 0.5;
 //        this.mesh.position.copy(this.position);
 
-        this.scene.add(this.mesh);
-        this.scene.add(this.mesh2);
+        this.world.group.add(this.mesh);
+        this.world.group.add(this.mesh2);
 
     }
 
@@ -68,7 +68,7 @@ export default class HMLOsciloscope {
         
     }
 
-    
+    /*
     RecalculateAnimations(timeline) {
         const bpmMS = this.experience.song.bpmMS;
         let startMS = (0 * bpmMS) / 1000;
@@ -89,5 +89,5 @@ export default class HMLOsciloscope {
             },
             0
         );
-    }
+    }*/
 }

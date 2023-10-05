@@ -130,7 +130,7 @@ export default class HTMLElements {
                     this.experience.audioAnalizer.channelVocal.volume(this.experience.audioAnalizer.currentVolume);
                 else 
                     this.experience.audioAnalizer.channelVocal.volume(0);
-                    this.elementAudioVolumeVocal.value = this.experience.audioAnalizer.channelVoice.currentVolume;
+                    this.elementAudioVolumeVoice.value = this.experience.audioAnalizer.channelVocal.currentVolume;
             }); 
             // Mute Piano
             this.elementMutePiano.addEventListener('click', () => { 

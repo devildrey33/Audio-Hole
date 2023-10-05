@@ -54,7 +54,7 @@ export default class Sun {
         this.sunLight.shadow.camera.right  =  16;
         this.sunLight.position.set(0, 0, -134);      
         this.sunLight.castShadow = true;
-        this.scene.add(this.sunLight)  
+        this.world.group.add(this.sunLight)  
     }
 
     update() {

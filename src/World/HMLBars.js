@@ -4,12 +4,13 @@ import * as THREE from 'three'
 import HMLBarsVertexShader from "../Shaders/HMLBars/HMLBarsVertex.glsl"
 import HMLBarsFragmentShader from "../Shaders/HMLBars/HMLBarsFragment.glsl"
 
-export default class Bars {
-    constructor() {
+export default class HMLBars {
+    constructor(world) {
         this.experience           = new Experience();
         this.scene                = this.experience.scene;
         this.audioAnalizer        = this.experience.audioAnalizer;
         this.time                 = this.experience.time;
+        this.world                = world;
 
         this.setup();
     }
@@ -44,8 +45,8 @@ export default class Bars {
 //        this.mesh.rotation.z = Math.PI * 0.5;
 //        this.mesh.position.copy(this.position);
 
-        this.scene.add(this.mesh);        
-        this.scene.add(this.mesh2);        
+        this.world.group.add(this.mesh);        
+        this.world.group.add(this.mesh2);        
     }
 
 
@@ -58,7 +59,7 @@ export default class Bars {
         this.mesh.scale.y  = 0.5 + (1.0 + Math.cos(this.time.current / 3000))  * (this.material.uniforms.uAudioValue.value * 0.5);
         this.mesh2.scale.y = this.mesh.scale.y;
     }
-
+/*
     RecalculateAnimations(timeline) {
         const bpmMS = this.experience.song.bpmMS;
         let startMS = (0 * bpmMS) / 1000;
@@ -79,6 +80,6 @@ export default class Bars {
             },
             0
         );
-    }
+    }*/
 
 }

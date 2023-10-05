@@ -40,14 +40,14 @@ export default class BPMEffects {
                 start : 30, end : 32,
                 effect : new BPMSpiralsPosition({ positionX : 0.2, ease : easeDistorsion })
             },*/
-/*            {   // first yell
+            {   // first yell
                 start : 33, end : 41, 
-                effect : new BPMGodRays({ density : 2.3, weigth : 0.8 })
+                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2 })
             },
             {   // end first yell and begin of a second mini yell
                 start : 49, end : 51, 
-                effect : new BPMGodRays({ density : 2.6, weigth : 0.9 })
-            },*/
+                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25 })
+            },
             {   // 
                 start : 73, end : 77, 
                 effect : new BPMBloom({ destIntensity : 0.8, destRadius : 1.65, yoyo : true })
