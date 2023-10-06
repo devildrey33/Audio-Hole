@@ -8,7 +8,7 @@ import HMLOsciloscope from './HMLOsciloscope.js';
 import BPMEffects from './BPMEffects/BPMEffects.js';
 import gsap from 'gsap';
 import { RoughEase } from "gsap/EasePack";
-import DebugEffects from '../Utils/DebugEffects.js';
+//import DebugEffects from '../Utils/DebugEffect.js';
 import Background from './Background.js';
 
 //import VoronoiBackground from './VoronoiBackground.js';
@@ -43,39 +43,33 @@ export default class World {
 
 
         this.spirals = new Spirals(this);
+
         this.sun     = new Sun(this);
-        // Create empty temporal function to update rays (because whe need his texture)
-//        this.rays    = { update : () => { } }
-//        this.osciloscpe = new Arrowciloscope(new THREE.Color(200, 100, 0), 1, 0.1);
+
         this.raysToHole = new RaysToHole();
-//        this.bars = new Bars3D(this);
+
         this.hmlBars = new HMLBars(this);
 
         this.hmlOsciloscope = new HMLOsciloscope(this);
 
-        this.bpmEffects     = new BPMEffects(this);
+        this.bpmEffects = new BPMEffects(this);
 
-        if (this.experience.options.showBPM === true) {
-            this.debugEffects = new DebugEffects();
-        }
-
-
-//        this.voronoiBackground = new VoronoiBackground();
+        this.background = new Background(this);
     }
 
     // All resources are loaded
     resourcesLoaded() {
-        this.background = new Background(this);
+        this.background.updateBackground();
         this.ready = true;
-//        this.rays = new Rays();
     }
 
     update() {
-        if (this.ready === true) {
-            this.background.update(this.time.delta);
-        }
+//        if (this.ready === true) {
+//        }
             
         this.timeline.time(this.experience.audioAnalizer.channelSong.song.currentTime);
+
+        this.background.update(this.time.delta);
 
         this.spirals.update();
         this.sun.update();

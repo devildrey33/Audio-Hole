@@ -1,8 +1,7 @@
 import Experience from "../Experience";
 
 
-
-export class DebugEffect {
+export default class DebugEffect {
     
 
     constructor(name, start, end, params) {
@@ -43,7 +42,7 @@ export class DebugEffect {
                         `;
         this.element.innerHTML = strHTML;
 
-//        this.experience.htmlElements.elementDebugEffects.innerHTML = strHTML + this.experience.htmlElements.elementDebugEffects.innerHTML;
+
         if (this.experience.htmlElements.elementDebugEffects.firstChild === null) {
             this.experience.htmlElements.elementDebugEffects.appendChild(this.element);
         }
@@ -55,6 +54,7 @@ export class DebugEffect {
     }
 }
 
+/*
 export default class DebugEffects {
     constructor() {
 //       this.uno = new DebugEffect("test", 0, 0);
@@ -62,5 +62,5 @@ export default class DebugEffects {
 
 
 
-}
+}*/
 

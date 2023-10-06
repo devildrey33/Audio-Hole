@@ -1,7 +1,5 @@
 import * as dat from 'lil-gui'
-import options from '../Config/options.js'
 import Experience from '../Experience.js'
-import { TetrahedralUpscaler } from 'postprocessing';
 
 export default class Debug {
     constructor() {
@@ -21,11 +19,11 @@ export default class Debug {
         this.setupPostProcessingPmndrs();
         this.setupBloomPmndrs();
         this.setupGodRaysPmndrs();
-        this.setupShockWavePmndrs();
+//        this.setupShockWavePmndrs();
         this.setupColorCorrectionPmndrs();
     }
 
-    setupPostProcessing(open = false) {
+    /*setupPostProcessing(open = false) {
         this.postProcessing = this.gui.addFolder("Post processing").open(open);
     }
 
@@ -46,13 +44,13 @@ export default class Debug {
             this.bloom.enabled = this.experience.options.bloomEnabled;
         });
 
-    }
+    }*/
 
     setupPostProcessingPmndrs(open = false) {
         this.postProcessingPmndrs = this.gui.addFolder("Post processing (Pmndrs)").open(open);
     }
 
-    setupShockWavePmndrs(open = false) {
+/*    setupShockWavePmndrs(open = false) {
         if (open === true) this.postProcessingPmndrs.open(true);
         this.shockWavePmndrs = this.experience.renderer.shockWaveEffect;
         this.shockWavePmndrsUI = this.postProcessingPmndrs.addFolder("ShockWave").open(open);
@@ -70,7 +68,7 @@ export default class Debug {
             this.shockWavePmndrs.amplitude = this.experience.options.shockWaveAmplitude;
         });
 
-    }
+    }*/
 
     setupBloomPmndrs(open = false) {
         if (open === true) this.postProcessingPmndrs.open(true);

@@ -42,11 +42,11 @@ export default class BPMEffects {
             },*/
             {   // first yell
                 start : 33, end : 41, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2 })
+                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2, color : new THREE.Color(0,1,0) })
             },
             {   // end first yell and begin of a second mini yell
                 start : 49, end : 51, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25 })
+                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25, color : new THREE.Color(1,0,0) })
             },
             {   // 
                 start : 73, end : 77, 
@@ -58,7 +58,7 @@ export default class BPMEffects {
             },*/
             {   // 
                 start : 89, end : 93, 
-                effect : new BPMBloom({ destIntensity : 1.48, destRadius : 1.15, yoyo : true })
+                effect : new BPMBloom({ destIntensity : 1.48, destRadius : -1.15, yoyo : true })
             },            
 /*            {   // 
                 start : 90, end : 92, 
@@ -73,41 +73,34 @@ export default class BPMEffects {
                 })
             },
             {
-                start : 114,  end : 115,
-                effect : new BPMSpiralsScale({ scaleX : 2.3, scaleZ : 0.75, ease : "" })
+                start : 114,  end : 114.25,
+                effect : new BPMSpiralsScale({ scaleX : 2.3, scaleZ : 0.75, ease : "bounce-inOut" })
             },
             {
                 start : 131, end : 146,
-                effect : new BPMSpiralBars({ thickness : 0.75, audioStrength : 0.75, ease : "bounce-inOut" })
+                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce-inOut" })
             },
             {   // 
                 start : 144, end : 146, 
-                effect : new BPMBloom({ intensity : 1.48, radius : 1.15, yoyo : true })
+                effect : new BPMBloom({ destIntensity : 1.48, destRadius : 1.15, yoyo : true })
             },            
-/*            {   // 
-                start : 145, end : 145.5, 
-                effect : new BPMGodRays({ density : 1.48, weigth : 0.55 })
+            {
+                start : 390, end : 406,
+                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce-inOut" })
             },
-            {   // 
-                start : 146, end : 146.5, 
-                effect : new BPMGodRays({ density : 1.48, weigth : 0.55 })
-            },
-            {   // hey
-                start : 275, end : 275.5, 
-                effect : new BPMGodRays({ density : 1.48, weigth : 1.55 })
-            },
-            {   // hey
-                start : 276, end : 276.5, 
-                effect : new BPMGodRays({ density : 1.48, weigth : 1.55 })
-            },
+
+            {   // Guitar solo (ends 423)
+                start : 390, end : 394, 
+                effect : new BPMBloom({ destIntensity : -3, destRadius : 1.35, yoyo : false })
+            },            
+            {   // Guitar solo (ends 423)
+                start : 419, end : 423, 
+                effect : new BPMBloom({ originIntensity : -3, originRadius : 1.35, yoyo : false })
+            },            
 
             {   // yell
                 start : 454, end : 460, 
-                effect : new BPMGodRays({ density : 2.5, weigth : 0.8 })
-            },*/
-            {   // yell
-                start : 454, end : 460, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2 })
+                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2, color : new THREE.Color(1,0,0) })
             },
 /*            {
                 start : 520,  end : 521 ,

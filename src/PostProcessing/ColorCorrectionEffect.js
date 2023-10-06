@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import ColorCorrectionFragment from "./ColorCorrectionFragment.glsl"
 
 /**
- * trying to implement Color correction in pmndr postprocessing...
+ * Color correction for pmndr postprocessing...
  */
 
 export default class ColorCorrectionEffect extends Effect {

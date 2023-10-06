@@ -102,7 +102,7 @@ vec3 getColor(float time) {
 
 // Make a circle with the frequency data
 vec4 circleFreq(vec4 currentColor, vec2 center) {
-    const float radiusFreq = 0.325;
+/*    const float radiusFreq = 0.325;
 
     vec2 pos = vec2(0.55, 0.5);
     float dist = length(vUv - pos);
@@ -113,7 +113,14 @@ vec4 circleFreq(vec4 currentColor, vec2 center) {
         normAngle = ((rad + PI) / PI);
     } else {
         normAngle = 1.0 - (1.0 + ((rad - PI) / PI));
-    }
+    }*/
+    const float radiusFreq = 0.325;
+
+    vec2 pos = vec2(0.55, 0.5);
+    float dist = length(vUv - pos);
+    float rad = atan(vUv.y - pos.y, vUv.x - pos.x);
+
+    float normAngle = rad < 0.0 ? (rad + PI) / PI : 1.0 - (1.0 + (rad - PI) / PI);
 
     float audioValue = (texture2D(uAudioTexture, vec2(normAngle, 0.0)).r - 0.5) * .25 * uAudioStrengthFreq;
     // Perlin noise
@@ -141,7 +148,7 @@ vec4 circleFreq(vec4 currentColor, vec2 center) {
 // // Make a circle with the time domain data
 vec4 circleSin(vec4 currentColor, vec2 center) {
     // Bounce the radius a little
-    float radiusSin = 0.125 + (sin(uTime) * 0.025);
+/*    float radiusSin = 0.125 + (sin(uTime) * 0.025);
     
     vec2 pos1 = vec2(0.4, 0.5);
     float dist = length(vUv - center);
@@ -152,7 +159,14 @@ vec4 circleSin(vec4 currentColor, vec2 center) {
         normAngle = ((rad + PI) / PI);
     } else {
         normAngle = (1.0 + ((rad - PI) / PI));
-    }
+    }*/
+    float radiusSin = 0.125 + sin(uTime) * 0.025;
+
+    vec2 pos1 = vec2(0.4, 0.5);
+    float dist = length(vUv - center);
+    float rad = atan(vUv.y - center.y, vUv.x - center.x);
+
+    float normAngle = rad < 0.0 ? (rad + PI) / PI : (1.0 + (rad - PI) / PI);    
 
     float audioValue = (texture2D(uAudioTexture, vec2(normAngle, 0.0)).g - 0.5) * .5 * uAudioStrengthSin;
     // Perlin noise

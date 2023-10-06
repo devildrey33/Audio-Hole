@@ -29,7 +29,7 @@ export default {
     // For example you can use document.getElementById() to retrieve tag inside you want to create the canvas
     rootElement             : document.body,
     // Allow drag & drop songs
-    songsDragDrop           : true,
+    songsDragDrop           : false,
     // default audio volume
     audioVolume             : 0.25,
 
@@ -44,11 +44,11 @@ export default {
     spiralAudioZoomSin              : 1.0,
     spiralFrequency                 : 0.1,
     spiralSpeed                     : 0.12,
-    spiralThickness                 : 0.1,
+    spiralThickness                 : 0.05,
     spiralFrequencySin              : 0.5,
     spiralSpeedSin                  : 0.75,
     spiralThicknessSin              : 0.04,
-    spiralColorSin                  : new THREE.Vector3(1, 1, 1),
+    spiralColorSin                  : new THREE.Color(1, 1, 1),
 
     // Sun
     sunAudioStrengthFreq            : 1.0,
@@ -83,10 +83,10 @@ export default {
     // TopeBloom  -->  S : 0.68, R : -0.16, T : 0.036
     // Psicodelic -->  S : 0.3,  R : 6.11,  T : 0.027
 
-    bloomStrength                   : 0.1, //0.05,
+/*    bloomStrength                   : 0.1, //0.05,
     bloomRadius                     : 6.11, //-5.32,
     bloomThreshold                  : 0.027,//0.05,
-    bloomEnabled                    : true,
+    bloomEnabled                    : true,*/
 
 
     // Bloom Pmndrs (postprocessing)
@@ -98,7 +98,7 @@ export default {
 
     // God rays Pmndrs (postprocessing)
     godRaysDensity                  : 0.96,
-    godRaysDecay                    : 0.9,
+    godRaysDecay                    : 0.88,
     godRaysWeigth                   : 0.3,
     godRaysExposure                 : 0.6,
     godRaysClampMax                 : 1.0,
@@ -106,10 +106,10 @@ export default {
     godRaysEnabled                  : true,
 
     // Shock wave Pmndrs (postprocessing)
-    shockWaveSpeed                  : 7.5,
+/*    shockWaveSpeed                  : 7.5,
     shockWaveMaxRadius              : 1.6,
     shockWaveWaveSize               : 0.2,
-    shockWaveAmplitude              : 20,
+    shockWaveAmplitude              : 20,*/
 
     // Color Correction Pmndrs custom (postprocessing)
     colorCorrectionPowRGB           : new THREE.Vector3(3.0, 3.0, 3.0),

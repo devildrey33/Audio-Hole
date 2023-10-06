@@ -212,8 +212,8 @@ export default class AudioChannel {
         let total       = [ 0, 0, 0, 0, 0 ];// Graves, Medios, Agudos, Agudos inaudibles, Media de todo
         let values      = [ 0, 0, 0, 0, 0 ];// Graves, Medios, Agudos, Agudos inaudibles, Media de todo
         let pos         = 0;        
-        const totalFreq = this.maxData;
-        for (let i = 0; i < totalFreq; i++) {
+        
+        for (let i = 0; i < this.maxData; i++) {
             if (i * hzBar > divisions[pos]) {
                 pos++;
             }
@@ -226,8 +226,10 @@ export default class AudioChannel {
                  values[1] / total[1],    // Medium
                  values[2] / total[2],    // Low
                  values[3] / total[3],    // Inaudible
-                 values[4] / totalFreq ]; // Total average
+                 values[4] / this.maxData ]; // Total average
     }    
+
+
 
 
     paintAudioTexture() {

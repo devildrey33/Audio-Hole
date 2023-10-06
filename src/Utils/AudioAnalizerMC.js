@@ -1,3 +1,4 @@
+import Experience from "../Experience.js";
 import AudioChannel from "./AudioChannel.js";
 /* 
  Audio Analizer for multiple channels
@@ -25,6 +26,8 @@ export default class AudioAnalizerMC {
         }
         
         this.audioOptions = { ...audioDefaultOptions, ...audioOptions };
+
+        this.experience = new Experience();
 
         // Song loaded flag
         this.songsLoaded = false;
@@ -63,14 +66,13 @@ export default class AudioAnalizerMC {
         this.channelPiano = new AudioChannel(this.channelOptions, false);
         this.channelVocal = new AudioChannel(this.channelOptions, false);
         
-        this.channels = [/* 
-            new AudioChannel(this.channelOptions, true),   // Full song with all channels
-            new AudioChannel(this.channelOptions, false),  // Bass
-            new AudioChannel(this.channelOptions, false),  // Drum
-            new AudioChannel(this.channelOptions, false),  // Other
-            new AudioChannel(this.channelOptions, false),  // Piano
-            new AudioChannel(this.channelOptions, false),  // Vocal*/
-            this.channelSong, this.channelBass, this.channelDrum, this.channelOther, this.channelPiano, this.channelVocal
+        this.channels = [
+            this.channelSong, 
+            this.channelBass,
+            this.channelDrum, 
+            this.channelOther, 
+            this.channelPiano, 
+            this.channelVocal
         ];
         this.totalChannels   = this.channels.length;
         this.canPlayChannels = 0;
@@ -185,6 +187,7 @@ export default class AudioAnalizerMC {
     }
 
     calculateCurrentBeat() {
+        if (this.experience.htmlElements.dragTime === true) return;
 
         let currentBpm = Math.floor((this.channels[0].song.currentTime * 1000) / this.bpmTime);
         if (isNaN(currentBpm)) 

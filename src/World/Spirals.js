@@ -23,6 +23,7 @@ export default class Spirals {
             uniforms : {
                 uAudioTexture      : { value : this.audioAnalizer.channelSong.bufferCanvasLinear.texture },
                 uAudioTexture2     : { value : this.audioAnalizer.channelVocal.bufferCanvasLinear.texture },
+//                uAudioTexture3     : { value : this.audioAnalizer.channelDrum.bufferCanvasLinear.texture },
                 uAudioStrength     : { value : this.experience.options.spiralAudioStrength },
                 uAudioZoom         : { value : this.experience.options.spiralAudioZoom },
                 uAudioStrengthSin  : { value : this.experience.options.spiralAudioStrengthSin },

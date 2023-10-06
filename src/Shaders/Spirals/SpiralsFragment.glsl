@@ -1,4 +1,4 @@
-uniform sampler2D   uAudioTexture;  // drums
+uniform sampler2D   uAudioTexture;  // song
 uniform sampler2D   uAudioTexture2; // voice
 uniform float       uAudioStrength;
 uniform float       uAudioZoom;
@@ -32,26 +32,29 @@ vec3 hsl2rgb( in vec3 c ) {
 
 
 vec4 drawAudio(vec2 pos) {
-    float mirror = 2.0;
-    float mirrorSin = 1.0;
-    float audioX = 0.0;
-    float audioXSin = 0.0;
+    const float mirror    = 2.0;
+    const float mirrorSin = 1.0;
+    float       audioX    = 0.0;
+    float       audioXSin = 0.0;
     // adapt audio position to be 0.0 => 1.0 => 0.0
     // So when x is below 0.5 use pos * 2, else invert the position
-    if (mod(pos.x * mirror, 1.0) < 0.5) audioX = mod(pos.x * mirror, 1.0) * 2.0;
-    else                                audioX = 1.0 - ((mod(pos.x * mirror, 1.0)  - 0.5) * 2.0);
+    float x = mod(pos.x * mirror, 1.0);
+    audioX = (x < 0.5) ? 2.0 * x : 2.0 * (1.0 - x);
     // adapt audio position to be 0.0 => 1.0 => 0.0
     // So when x is below 0.5 use pos * 2, else invert the position
-    if (mod(pos.x * mirrorSin, 1.0) < 0.5)  audioXSin = mod(pos.x * mirrorSin, 1.0) * 2.0;
-    else                                    audioXSin = 1.0 - ((mod(pos.x * mirrorSin, 1.0)  - 0.5) * 2.0);
+    x = mod(pos.x * mirrorSin, 1.0);
+    audioXSin = (x < 0.5) ? 2.0 * x : 2.0 * (1.0 - x);
 
     // Get audio bars value
     float audioValue = ((texture2D(uAudioTexture, vec2((audioX / uAudioZoom), 0.0)).r) * uAudioStrength) * uFrequency;
+//    float audioValue2 = ((texture2D(uAudioTexture3, vec2((audioX / uAudioZoom), 0.0)).r) * uAudioStrength) * uFrequency;
 
     // Bars spiral
     vec2 nPos = vec2(pos.x, pos.y - (pos.x * uFrequency) - mod(uTime * uSpeed, 1.0) + audioValue);
+//    vec2 nPos2 = vec2(pos.x, pos.y - ((pos.x + uThickness) * uFrequency) - mod(uTime * uSpeed, 1.0) + audioValue);
     // pos y of each line
     float p = mod(nPos.y, uFrequency);
+//    float p2 = mod(nPos2.y, uFrequency);
 
     // Get audio osciloscpe value
     float audioValueSin = (((texture2D(uAudioTexture2, vec2(audioXSin / uAudioZoomSin, 0.0)).g - 0.5) * 0.55) * uAudioStrengthSin) * uFrequencySin;
@@ -69,8 +72,17 @@ vec4 drawAudio(vec2 pos) {
     }
     // Paint the spiral
     if (p < (uFrequency * uThickness)) {        
-//        return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), (1.0 - pos.y) * 0.5);
+/*        vec3 col = smoothstep(
+            hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )),
+            hsl2rgb(vec3(0.05 + (uTime * -0.05), 1, (1.0 - pos.y) * 0.5 )),
+            vec3(p)
+        );*/
         return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), uAudioValue * ((1.0 - pos.y) * 0.5));
+//        return vec4(col, uAudioValue * ((1.0 - pos.y) * 0.5));
+    }
+    if (p < (uFrequency * uThickness * 2.0)) {        
+//        return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), (1.0 - pos.y) * 0.5);
+        return vec4(hsl2rgb(vec3(0.05 + (uTime * -0.05), 1, (1.0 - pos.y) * 0.5 )), uAudioValue * ((1.0 - pos.y) * 0.5));
     }
 
     discard;
@@ -83,3 +95,5 @@ void main() {
     gl_FragColor = color;
 //    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
+
+

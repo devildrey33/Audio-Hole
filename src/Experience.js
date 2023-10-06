@@ -84,11 +84,11 @@ export default class Experience {
         this.resources.on('ready' , () => { this.resourcesLoaded(); })
 
         // ShockWave click...
-        if (this.options.debug === true && typeof(this.renderer.shockWaveEffect) !== "undefined") {
+/*        if (this.options.debug === true && typeof(this.renderer.shockWaveEffect) !== "undefined") {
             this.canvas.addEventListener("click", (e) => { 
                 this.renderer.shockWaveEffect.explode(); 
             });
-        }
+        }*/
 
         this.beats = 0;
         
@@ -118,10 +118,10 @@ export default class Experience {
         if (this.options.showBPM === true)  {
             // Piano
             const piano = 1;
-            this.htmlElements.elementAudioLevelH0.style.top = ((54 - ((this.audioAnalizer.channelPiano.averageFrequency[0] / 255) * 54* piano))) + "px";
-            this.htmlElements.elementAudioLevelM0.style.top = ((54 - ((this.audioAnalizer.channelPiano.averageFrequency[1] / 255) * 54* piano))) + "px";
-            this.htmlElements.elementAudioLevelL0.style.top = ((54 - ((this.audioAnalizer.channelPiano.averageFrequency[2] / 255) * 54* piano))) + "px";
-            this.htmlElements.elementAudioLevelT0.style.top = ((54 - ((this.audioAnalizer.channelPiano.averageFrequency[4] / 255) * 54* piano))) + "px";
+            this.htmlElements.elementAudioLevelH0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[0] / 255) * 54 * piano)) + "px";
+            this.htmlElements.elementAudioLevelM0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[1] / 255) * 54 * piano)) + "px";
+            this.htmlElements.elementAudioLevelL0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[2] / 255) * 54 * piano)) + "px";
+            this.htmlElements.elementAudioLevelT0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[4] / 255) * 54 * piano)) + "px";
             // Vocals
             const vocals = 1;
             this.htmlElements.elementAudioLevelH1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[0] / 255) * 54 * vocals)) + "px";
@@ -222,7 +222,8 @@ export default class Experience {
     }
 
     onAudioBpmChange = (currentBpm) => {
-        if (this.options.showBPM === true) this.htmlElements.elementBPM.innerHTML = currentBpm;
+        if (this.options.showBPM === true) 
+            this.htmlElements.elementBPM.innerHTML = currentBpm;
     }
     /** 
      * This function destroy the whole scene

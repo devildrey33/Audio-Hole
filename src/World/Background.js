@@ -34,6 +34,11 @@ export default class Background {
         this.scene.add(this.mesh);
     }
 
+    updateBackground() {
+        this.material.uniforms.uTime.value = 0;
+        this.material.uniforms.uTexture.value = this.experience.resources.items["background1"];
+    }
+
     update(delta) {
         this.material.uniforms.uTime.value += delta * 0.001;
         this.mesh.rotation.z += delta / 75000;

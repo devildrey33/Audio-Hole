@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from "./Experience";
-import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ShockWaveEffect, ToneMappingEffect, ToneMappingMode } from "postprocessing";
+import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, /*ShockWaveEffect,*/ ToneMappingEffect, ToneMappingMode } from "postprocessing";
 //import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import ColorCorrectionEffect from "./PostProcessing/ColorCorrectionEffect.js"
 
@@ -74,13 +74,13 @@ export default class Renderer {
         this.godRaysEffect.godRaysMaterial.samples = this.experience.options.godRaysSamples;
 
 
-        this.shockWaveEffect = new ShockWaveEffect(this.camera.instance, new THREE.Vector3(0, 0, -10));
+/*        this.shockWaveEffect = new ShockWaveEffect(this.camera.instance, new THREE.Vector3(0, 0, -10));
         this.shockWavePass = new EffectPass(this.camera.instance, this.shockWaveEffect);
         this.shockWaveEffect.speed = this.experience.options.shockWaveSpeed;
         this.shockWaveEffect.maxRadius = this.experience.options.shockWaveMaxRadius;
         this.shockWaveEffect.waveSize = this.experience.options.shockWaveWaveSize;
         this.shockWaveEffect.amplitude = this.experience.options.shockWaveAmplitude;
-        this.effectComposer.addPass(this.shockWavePass);
+        this.effectComposer.addPass(this.shockWavePass);*/
 
 
         this.colorCorrectionEffect = new ColorCorrectionEffect();

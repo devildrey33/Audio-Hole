@@ -10,12 +10,16 @@ uniform float     uSpeed;           // Spped
 varying vec2 vUv;
 
 vec3 Bars(vec3 color, float speed, float amplitude) {
-    vec2 pos = vec2(-0.5 + mod(vUv.x - ((uTime * 0.01) * speed), 1.0), -0.5 + vUv.y);    
+    vec2 pos = vec2(-0.5 + mod(vUv.x - uTime * 0.01 * speed, 1.0), -0.5 + vUv.y);    
 
-    float audioValue = ((texture2D(uAudioTexture, vec2((abs(pos.x * 2.0) / uAudioZoom), 0.0)).r) * uAudioStrength) * amplitude * 0.5;
-    audioValue += ((texture2D(uAudioTexture2, vec2((abs(pos.x * 2.0) / uAudioZoom), 0.0)).r) * uAudioStrength) * amplitude * 0.5;
+    float audioValue1 = texture2D(uAudioTexture, vec2(abs(pos.x * 2.0) / uAudioZoom, 0.0)).r * uAudioStrength * amplitude * 0.5;
+    float audioValue2 = texture2D(uAudioTexture2, vec2(abs(pos.x * 2.0) / uAudioZoom, 0.0)).r * uAudioStrength * amplitude * 0.5;
+    float combinedAudioValue = audioValue1 + audioValue2;
 
-    if (abs(pos.y) < audioValue ) return color * uAudioValue * 0.125;
+    if (abs(pos.y) < combinedAudioValue) {
+        return color * uAudioValue * 0.125;
+    }
+
     return vec3(0.0);
 }
 

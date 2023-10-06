@@ -1,5 +1,9 @@
 // https://tympanus.net/codrops/2022/06/27/volumetric-light-rays-with-three-js/
 
+/*
+ * NOT USED
+ */
+
 uniform sampler2D tDiffuse;
 varying vec2 vUv;
 

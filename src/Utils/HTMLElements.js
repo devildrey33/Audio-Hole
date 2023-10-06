@@ -140,8 +140,12 @@ export default class HTMLElements {
                     this.experience.audioAnalizer.channelPiano.volume(0);
                 this.elementAudioVolumePiano.value = this.experience.audioAnalizer.channelPiano.currentVolume;
             }); 
-            // default speed
-            this.elementDefaultSpeed = document.getElementById("defaultSpeed");
+            // set default speed
+            this.elementDefaultSpeed.addEventListener('click', () => { 
+                this.elementAudioSpeed.value = 1;
+                this.experience.audioAnalizer.speed(1);
+            });
+
         }
 
 
@@ -360,7 +364,7 @@ export default class HTMLElements {
                     </div>
                     <span id='defaultSpeed'>speed</span>
                     <div class='Experience_AC_Volume'>
-                        <input id='reproductionSpeed' type='range' name='speed' min='0.01' max='2' value='1' step='0.01'></input>
+                        <input id='reproductionSpeed' type='range' name='speed' min='0.1' max='2' value='1' step='0.01'></input>
                     </div>`
                 }
 
