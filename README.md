@@ -7,7 +7,7 @@ To get 5 channels per song i used https://splitter.ai , and thats why i have : b
 
 I have more complex animations for a specific song in a certain beat per minute using gsap (at the moment only 'Kill City Kills' song is using this)
 
-Made with Three.js, pnmdrs postprocessin, gsap, and lil.gui (for debug)
+Made with Three.js, [pnmdrs postprocessing][https://github.com/pmndrs/postprocessing] (God rays and Bloom), gsap, and lil.gui (for debug)
 
 live  : https://devildrey33.es/Ejemplos/AudioHole/index.html
 
