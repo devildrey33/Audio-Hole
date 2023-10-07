@@ -124,6 +124,8 @@ export default class AudioAnalizerMC {
         this.currentBpm = 0;
 
         this.canPlayChannels = 0;
+        this.endedChannels   = 0;
+        this.resyncTime      = 0;
 
         // Load all the channels
         this.channels[0].loadSong(path + "Song.mp3");
@@ -186,7 +188,7 @@ export default class AudioAnalizerMC {
         this.calculateCurrentBeat(delta);
     }
 
-    calculateCurrentBeat() {
+    calculateCurrentBeat(delta) {
         if (this.experience.htmlElements.dragTime === true) return;
 
         let currentBpm = Math.floor((this.channels[0].song.currentTime * 1000) / this.bpmTime);
@@ -197,16 +199,15 @@ export default class AudioAnalizerMC {
             this.currentBpm = currentBpm;
             this.audioOptions.onBpmChange(this.currentBpm);
 
-            this.resync();
+            this.resync(delta);
         }
     }
 
-    resync() {
+    resync(delta = 16) {
         if (this.resyncTime > 0) {
             this.resyncTime -= 16;
             return;
         } 
-
 
         // Play and analize 5 sincronized songs its a loot of work for the CPU,
         // So whe need to ensure all the chanels are almost on the same current position

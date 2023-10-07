@@ -8,6 +8,7 @@ import BPMSpiralsScale from "./BPMSpiralsScale.js";
 import BPMSpiralsPosition from "./BPMSpiralsPosition.js";
 import BPMSpiralBars from "./BPMSpiralBars.js";
 import BPMSpiralOsciloscope from "./BPMSpiralOsciloscope.js";
+import BPMLateralBars from "./BPMLateralBars.js";
 
 const easeRough      = "rough({ template: none.out, strength: 1, points: 20, taper: none, randomize: true, clamp: false})";
 const easeDistorsion = "rough({ strength: 1, points: 20, template: none.out, taper: in, randomize: false, clamp: true })";
@@ -15,10 +16,94 @@ const easeDistorsion = "rough({ strength: 1, points: 20, template: none.out, tap
 export default class BPMEffects {
     constructor() {
         this.experience = new Experience();
+        this.audioAnalizer = this.experience.audioAnalizer;
+    
+    
+        this.songChannels = [
+            { // 01 - Kill City Kills
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelBass,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            },
+            { // 02 - Nothing's Over
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            },
+            { // 03 - One Chance
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            },
+            { // 04 - Quantum Ocean
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            },
+            { // 05 - Six feet under
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            },
+            { // 06 - The deep
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            },
+            { // 07 - Alone
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            },
+            { // 08 - Lost
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            }   
+        ];
     }
 
+
+
+
+
+
     songsEffects = [
-        // 01 - Kill City Kills
+       /************************
+        * 01 - Kill City Kills *
+        ************************/
         [ 
             {   // Slow color correction to blue
                 start : 1, end : 30,
@@ -77,7 +162,7 @@ export default class BPMEffects {
                 effect : new BPMSpiralsScale({ scaleX : 2.3, scaleZ : 0.75, ease : "bounce-inOut" })
             },
             {
-                start : 131, end : 146,
+                start : 131, end : 136,
                 effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce-inOut" })
             },
             {   // 
@@ -85,22 +170,42 @@ export default class BPMEffects {
                 effect : new BPMBloom({ destIntensity : 1.48, destRadius : 1.15, yoyo : true })
             },            
             {
+                start : 244, end : 244.5,
+                effect : new BPMLateralBars({ position : 50, ease : "elastic" })
+            },
+            {
                 start : 390, end : 406,
                 effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce-inOut" })
             },
 
             {   // Guitar solo (ends 423)
                 start : 390, end : 394, 
-                effect : new BPMBloom({ destIntensity : -3, destRadius : 1.35, yoyo : false })
+                effect : new BPMBloom({ destIntensity : -2, destRadius : 0.85, yoyo : false })
             },            
             {   // Guitar solo (ends 423)
                 start : 419, end : 423, 
-                effect : new BPMBloom({ originIntensity : -3, originRadius : 1.35, yoyo : false })
+                effect : new BPMBloom({ originIntensity : -2, originRadius : 0.85, yoyo : false })
             },            
+            {   // batery
+                start : 430, end : 430.5,
+                effect : new BPMSpiralsScale({ scaleX : 2, scaleZ : 0.65, ease : "bounce" })
+            },
+            {   // batery
+                start : 430.5, end : 431,
+                effect : new BPMSpiralsScale({ scaleZ : 3, scaleX : 0.75, scaleY : 0.3, ease : "bounce" })
+            },
 
             {   // yell
                 start : 454, end : 460, 
                 effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2, color : new THREE.Color(1,0,0) })
+            },
+            {   // yell
+                start : 520, end : 521, 
+                effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color(1,0,0) })
+            },
+            {   // yell
+                start : 535, end : 540, 
+                effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.3, color : new THREE.Color(0,0,1) })
             },
 /*            {
                 start : 520,  end : 521 ,
@@ -118,19 +223,19 @@ export default class BPMEffects {
                 })
             }
         ],
-        // 03 - Nothing's Over
+        // 02 - Nothing's Over
         [],
-        // 04 - One Chance
+        // 03 - One Chance
         [],
-        // 05 - Quantum Ocean
+        // 04 - Quantum Ocean
         [],
-        // 06 - Six feet under
+        // 05 - Six feet under
         [],
-        // 07 - The deep
+        // 06 - The deep
         [],
-        // 08 - Alone
+        // 07 - Alone
         [],
-        // 09 - Lost
+        // 08 - Lost
         [
             { 
                 start : 1.5, end : 2,

@@ -52,7 +52,7 @@ void main() {
     float audioValueL = ((texture2D(uAudioTexture, vec2(posL, 0.0)).g ) * uAudioStrength);    
 */
 
-    float audioValue = ((texture2D(uAudioTexture, vec2(mod(vUv.x * 4.0, 1.0), 0.0)).g ) * uAudioStrength);    
+    float audioValue = ((texture2D(uAudioTexture, vec2(mod(vUv.x * 2.0, 1.0), 0.0)).g ) * uAudioStrength);    
 
     vec4 finalColor = vec4(0.0, 0.0, 0.0, 0.0);
     finalColor += Line2(vec3(0.5, 0.5, 1.0), audioValue, .230, uAudioValue.r);

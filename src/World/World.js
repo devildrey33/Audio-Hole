@@ -41,7 +41,6 @@ export default class World {
         gsap.ticker.remove(gsap.updateRoot);
         this.timeline = gsap.timeline();
 
-
         this.spirals = new Spirals(this);
 
         this.sun     = new Sun(this);
@@ -53,6 +52,8 @@ export default class World {
         this.hmlOsciloscope = new HMLOsciloscope(this);
 
         this.bpmEffects = new BPMEffects(this);
+        // Current song channels
+        this.songChannels = this.bpmEffects.songChannels[this.experience.currentSong];
 
         this.background = new Background(this);
     }
@@ -80,8 +81,19 @@ export default class World {
         this.group.rotation.z += this.time.delta / 7500;
     }
 
-    // Recalculate animations
-    RecalculateAnimations() {
+
+
+    setupSong() {
+        // Asociate song channels with his world object
+        this.songChannels = this.bpmEffects.songChannels[this.experience.currentSong];
+        this.hmlBars.material.uniforms.uAudioTexture.value = this.songChannels.LateralBars1.bufferCanvasLinear.texture;
+        this.hmlBars.material.uniforms.uAudioTexture2.value = this.songChannels.LateralBars2.bufferCanvasLinear.texture;
+        this.hmlOsciloscope.material.uniforms.uAudioTexture.value = this.songChannels.LateralOsciloscope.bufferCanvasLinear.texture;
+        this.sun.material.uniforms.uAudioTexture.value = this.songChannels.Sun.bufferCanvasLinear.texture;
+        this.spirals.material.uniforms.uAudioTexture.value = this.songChannels.SpiralBars.bufferCanvasLinear.texture;
+        this.spirals.material.uniforms.uAudioTexture2.value = this.songChannels.SpiralOsciloscope.bufferCanvasLinear.texture;
+
+        // Recalculate animations
         this.timeline.kill();
         this.timeline = gsap.timeline();
 

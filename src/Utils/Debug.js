@@ -10,6 +10,8 @@ export default class Debug {
     setup() {
         this.gui = new dat.GUI({ width : 300 });
 
+        this.setupAudioChannels(true);
+
         this.setupSpirals();
         this.setupSun();
         
@@ -23,28 +25,48 @@ export default class Debug {
         this.setupColorCorrectionPmndrs();
     }
 
-    /*setupPostProcessing(open = false) {
-        this.postProcessing = this.gui.addFolder("Post processing").open(open);
+    setupAudioChannels(open = false) {
+        this.world = this.experience.world;
+        this.audioAnalizer = this.experience.audioAnalizer;
+        this.audioChannels = this.gui.addFolder("Audio Channels").open(open);
+        this.channelOptions = {
+            All : 0,
+            Bass : 1,
+            Drum : 2,
+            Other : 3,
+            Piano : 4,
+            Vocal : 5,
+        }
+        this.LateralBar1 = { value : 'Bass' }
+        this.LateralBar2 = { value : 'Piano' }
+        this.LateralOsciloscope = { value : 'Drum' }
+        this.Sun1 = { value : 'Vocal' }
+        this.Sun2 = { value : 'Vocal' }
+        this.SpiralBars = { value : 'All' }
+        this.SpiralOsciloscope = { value : 'Vocal' }
+
+        this.audioChannels.add(this.LateralBar1, 'value', this.channelOptions).name("Lateral bars 1").onChange(() => {
+            this.world.hmlBars.material.uniforms.uAudioTexture.value = this.audioAnalizer.channels[this.LateralBar1.value].bufferCanvasLinear.texture;
+        });
+        this.audioChannels.add(this.LateralBar2, 'value', this.channelOptions).name("Lateral bars 2").onChange(() => {
+            this.world.hmlBars.material.uniforms.uAudioTexture2.value = this.audioAnalizer.channels[this.LateralBar2.value].bufferCanvasLinear.texture;
+        });
+        this.audioChannels.add(this.LateralOsciloscope, 'value', this.channelOptions).name("Lateral osciloscope").onChange(() => {
+            this.world.hmlOsciloscope.material.uniforms.uAudioTexture.value = this.audioAnalizer.channels[this.LateralOsciloscope.value].bufferCanvasLinear.texture;
+        });
+        this.audioChannels.add(this.Sun1, 'value', this.channelOptions).name("Sun").onChange(() => {
+            this.world.sun.material.uniforms.uAudioTexture.value = this.audioAnalizer.channels[this.Sun1.value].bufferCanvasLinear.texture;
+        });
+        this.audioChannels.add(this.Sun2, 'value', this.channelOptions).name("Sun rays").onChange(() => {
+            this.world.sun.material.uniforms.uAudioTexture.value = this.audioAnalizer.channels[this.Sun2.value].bufferCanvasLinear.texture;
+        });
+        this.audioChannels.add(this.SpiralBars, 'value', this.channelOptions).name("Spiral bars").onChange(() => {
+            this.world.spirals.material.uniforms.uAudioTexture.value = this.audioAnalizer.channels[this.SpiralBars.value].bufferCanvasLinear.texture;
+        });
+        this.audioChannels.add(this.SpiralOsciloscope, 'value', this.channelOptions).name("Spiral osciloscope").onChange(() => {
+            this.world.spirals.material.uniforms.uAudioTexture2.value = this.audioAnalizer.channels[this.SpiralOsciloscope.value].bufferCanvasLinear.texture;
+        });
     }
-
-    setupBloom(open = false) {
-        if (open === true) this.postProcessing.open(true);
-        this.bloom = this.experience.renderer.bloomPass;
-        this.bloomUI = this.postProcessing.addFolder("Unreal Bloom").open(open);
-        this.bloomUI.add(this.experience.options, 'bloomStrength').min(-15).max(15).step(0.01).name("Strength").onChange(() => {
-            this.bloom.strength = this.experience.options.bloomStrength;
-        });
-        this.bloomUI.add(this.experience.options, 'bloomRadius').min(-15).max(15).step(0.01).name("Radius").onChange(() => {
-            this.bloom.radius = this.experience.options.bloomRadius;
-        });
-        this.bloomUI.add(this.experience.options, 'bloomThreshold').min(0).max(1).step(0.001).name("Threshold").onChange(() => {
-            this.bloom.threshold = this.experience.options.bloomThreshold;
-        });
-        this.bloomUI.add(this.experience.options, 'bloomEnabled').name("Enabled").onChange(() => {
-            this.bloom.enabled = this.experience.options.bloomEnabled;
-        });
-
-    }*/
 
     setupPostProcessingPmndrs(open = false) {
         this.postProcessingPmndrs = this.gui.addFolder("Post processing (Pmndrs)").open(open);
@@ -129,7 +151,7 @@ export default class Debug {
     
     }
 
-    setupColorCorrectionPmndrs() {
+    setupColorCorrectionPmndrs(open = false) {
         if (open === true) this.postProcessingPmndrs.open(true);
         this.colorCorrectionPmndrs = this.experience.renderer.colorCorrectionEffect;
 

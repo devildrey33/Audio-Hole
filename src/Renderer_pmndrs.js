@@ -14,6 +14,7 @@ export default class Renderer {
         this.scene      = this.experience.scene;
         this.camera     = this.experience.camera;
         this.time       = this.experience.time;
+        this.world      = this.experience.world;
 
         this.setInstance(sunMesh, spiralsMesh);
     }
@@ -150,9 +151,11 @@ export default class Renderer {
 //        this.bloomEffect.intensity = (1.4 + (Math.sin(this.time.elapsed / 10000))) * 0.5;
 //        console.log(this.bloomEffect.intensity);
 //console.log(this.bloomPass.radius);
-        const audioValue = (this.experience.audioAnalizer.channelVocal.averageFrequency[1] / 255);
+        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] / 255);
         this.godRaysEffect.godRaysMaterial.weight = 0.3 + audioValue;
         this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;
+
+
 //console.log(this.experience.audioAnalizer.channels[4].averageFrequency[4]);
         this.effectComposer.render();
         //this.instance.render(this.scene, this.camera.instance)

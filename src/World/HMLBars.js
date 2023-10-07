@@ -53,7 +53,7 @@ export default class HMLBars {
     update() {        
         this.material.uniforms.uTime.value += this.time.delta / 100;
 
-        this.material.uniforms.uAudioValue.value = 0.01 + (((this.audioAnalizer.channelOther.averageFrequency[0] / 64) + (this.audioAnalizer.channelPiano.averageFrequency[1] / 64)) * 0.5) ;
+        this.material.uniforms.uAudioValue.value = 0.01 + (((this.world.songChannels.LateralBars1.averageFrequency[0] / 64) + (this.world.songChannels.LateralBars2.averageFrequency[1] / 64)) * 0.5) ;
 
         
         this.mesh.scale.y  = 0.5 + (1.0 + Math.cos(this.time.current / 3000))  * (this.material.uniforms.uAudioValue.value * 0.5);

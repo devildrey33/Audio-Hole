@@ -72,8 +72,8 @@ export default class Spirals {
         // update rotation on the cilynder
         this.mesh.rotation.y += advance;
         // update audio value on spiral
-        this.material.uniforms.uAudioValue.value  = (this.audioAnalizer.channelSong.averageFrequency[4] / 64);
-        this.material.uniforms.uAudioValue2.value = (this.audioAnalizer.channelVocal.averageFrequency[0] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[1] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[2] / 64);
+        this.material.uniforms.uAudioValue.value  = (this.world.songChannels.SpiralBars.averageFrequency[4] / 64);
+        this.material.uniforms.uAudioValue2.value = (this.world.songChannels.SpiralOsciloscope.averageFrequency[0] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[1] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[2] / 64);
 //        this.material.uniforms.uAudioValue.value = 1.0;
         // update time on spiral
         this.material.uniforms.uTime.value += advance;   

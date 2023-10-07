@@ -42,7 +42,7 @@ export default class AudioChannel {
         
         this.isPlaying = false;
 
-        this.audioData = [];
+//        this.audioData = [];
     }
  
    
@@ -108,7 +108,6 @@ export default class AudioChannel {
         });
         this.song.addEventListener('ended'  , () => { 
             this.isPlaying = false;
-            console.log(this.audioData);
             this.audioOptions.onEnded();
         });
         // ONLY WANT ONE CHANNEL UPDATING

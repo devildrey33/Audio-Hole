@@ -1,20 +1,19 @@
 import Experience from "../Experience";
 
-
+/* 
+ * Class to create and show bpm animations in debug mode
+ */
 export default class DebugEffect {
     
-
     constructor(name, start, end, params) {
         this.experience = new Experience();
         if (typeof(this.experience.idDebugEffect) === "undefined") this.experience.idDebugEffect = 0;
         else                                                       this.experience.idDebugEffect ++;
-
         
         this.name   = name;
         this.params = params;
         this.start  = start;
         this.end    = end;
-//        this.id    = 0;
 
         this.createHTML();
     }
@@ -24,7 +23,6 @@ export default class DebugEffect {
         this.element = document.createElement("div");
         this.element.className = "Experience_DebugEffect";
         this.element.id = `DebugEffect${this.experience.idDebugEffect}`;
-
 
         let strHTML = `
                             <div>
@@ -42,7 +40,6 @@ export default class DebugEffect {
                         `;
         this.element.innerHTML = strHTML;
 
-
         if (this.experience.htmlElements.elementDebugEffects.firstChild === null) {
             this.experience.htmlElements.elementDebugEffects.appendChild(this.element);
         }
@@ -54,13 +51,4 @@ export default class DebugEffect {
     }
 }
 
-/*
-export default class DebugEffects {
-    constructor() {
-//       this.uno = new DebugEffect("test", 0, 0);
-    }
-
-
-
-}*/
 

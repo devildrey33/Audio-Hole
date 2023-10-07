@@ -197,8 +197,8 @@ export default class Experience {
             this.htmlElements.elementTxtBPM.innerHTML = Math.floor(this.song.bpmMS);
         }
         
-
-        this.world.RecalculateAnimations();
+        // setup animations
+        this.world.setupSong();
     }
 
     onAudioError = () => {

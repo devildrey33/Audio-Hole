@@ -34,6 +34,8 @@ export default {
     audioVolume             : 0.25,
 
     audioFFTSize            : 2048,
+
+    audioMultiChannel       : true,
     // Allow orbit controls (only on debug by default)
     orbitControls           : isDebug,
 
@@ -70,7 +72,7 @@ export default {
     osciloscopeAudioStrength        : 0.5,
     osciloscopeAudioZoom            : 1,*/
 
-    hmsOsciloscopeAudioStrength     : 0.5,
+    hmsOsciloscopeAudioStrength     : 0.75,
     hmsOsciloscopeSpeed             : 2,
 
     // Voronoi Background 
