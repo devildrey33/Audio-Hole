@@ -15,3 +15,7 @@ debug : https://devildrey33.es/Ejemplos/AudioHole/index.html#debug
 
 ![AudioHole](https://github.com/devildrey33/Audio-Hole/assets/15678544/d70af7bc-2c9b-47d1-8bf8-da0212f3175b)
 
+This project its like the evolution of my [Audio Playground](https://github.com/devildrey33/Audio-PlayGround)
+
+But this is not the first time i try to animate a song... look at his prehistoric parent from 2017 : [Cyberparasit](https://devildrey33.es/Lab/Ejemplos/CyberParasit/CyberParasit.html)
+
