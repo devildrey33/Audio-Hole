@@ -34,7 +34,7 @@ export default class AudioChannel {
         // Set the default volume
         this.currentVolume = this.audioOptions.volume;
         // Initialize memory for audio textures
-        this.setupTextures();
+        this.setupTextures(this.audioOptions.fftSize);
 
         this.averageFrequency = [ 0, 0, 0, 0, 0 ];
         // Paint the audio textures to have safe values 
@@ -54,8 +54,8 @@ export default class AudioChannel {
         }
     }
 
-    setupTextures() {
-        this.maxData = this.audioOptions.fftSize * 0.5;
+    setupTextures(fftSize) {        
+        this.maxData = fftSize * 0.5;
 
         // Arrays for analizer data (bars and osciloscope)
         this.analizerData    = new Uint8Array(this.maxData);

@@ -39,11 +39,11 @@ export default class HMLOsciloscope {
         this.mesh.rotation.z = -Math.PI * 0.5 ;
         this.mesh.rotation.x = -Math.PI * 0.5 ;
 //        this.mesh.rotation.y = Math.PI * 0.5;
-        this.mesh.position.set(150, 750, -1024 * 4);
+        this.mesh.position.set(250, 750, -1024 * 4);
 
         this.mesh2.rotation.z = -Math.PI * 0.5 ;
         this.mesh2.rotation.x = -Math.PI * 0.5 ;
-        this.mesh2.position.set(150, -750, -1024 * 4);
+        this.mesh2.position.set(250, -750, -1024 * 4);
 //        this.mesh.rotation.z = Math.PI * 0.5;
 //        this.mesh.position.copy(this.position);
 
@@ -52,8 +52,8 @@ export default class HMLOsciloscope {
 
     }
 
-    update() {        
-        this.material.uniforms.uTime.value += this.time.delta / 100;
+    update(delta) {        
+        this.material.uniforms.uTime.value += delta;
 
         this.material.uniforms.uAudioValue.value = new THREE.Vector4(
             this.world.songChannels.LateralOsciloscope.averageFrequency[0] / 196, 

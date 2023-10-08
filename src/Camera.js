@@ -35,6 +35,11 @@ export default class Camera {
         this.instance.position.set(0, 0, 2);
         this.scene.add(this.instance);
 //        console.log (this.instance.position);
+
+        // Remove the update function if debug mode is active
+        if (this.experience.options.debug === true) {
+            this.update = () => {};
+        }
     }
 
 
@@ -57,8 +62,8 @@ export default class Camera {
 
     update() {
         // update camera rotation using mouse coordinates
-//        this.instance.rotation.y = THREE.MathUtils.lerp(this.instance.rotation.y, (this.mouseX * Math.PI) / 50000, 0.15) 
-//        this.instance.rotation.x = THREE.MathUtils.lerp(this.instance.rotation.x, (this.mouseY * Math.PI) / 50000, 0.15)
+        this.instance.rotation.y = THREE.MathUtils.lerp(this.instance.rotation.y, (this.mouseX * Math.PI) / 20000, 0.15) 
+        this.instance.rotation.x = THREE.MathUtils.lerp(this.instance.rotation.x, (this.mouseY * Math.PI) / 20000, 0.15)
 //        this.instance.rotation.z += this.time.delta / 7500;
     }
 }

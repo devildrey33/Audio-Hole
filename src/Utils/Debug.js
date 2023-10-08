@@ -29,21 +29,29 @@ export default class Debug {
         this.world = this.experience.world;
         this.audioAnalizer = this.experience.audioAnalizer;
         this.audioChannels = this.gui.addFolder("Audio Channels").open(open);
+        
+        this.fftOptions = {
+            "32768" : 32768, "16384" : 16384, "8192" : 8192, "4096" : 4096, "2048" : 2048, 
+            "1024" : 1024, "512" : 512, "256" : 256
+        }
+
+        this.fftSize = { value : this.experience.options.audioFFTSize }
+
         this.channelOptions = {
-            All : 0,
-            Bass : 1,
-            Drum : 2,
+            All   : 0,
+            Bass  : 1,
+            Drum  : 2,
             Other : 3,
             Piano : 4,
             Vocal : 5,
-        }
-        this.LateralBar1 = { value : 'Bass' }
-        this.LateralBar2 = { value : 'Piano' }
+        };
+        this.LateralBar1        = { value : 'Bass' }
+        this.LateralBar2        = { value : 'Piano' }
         this.LateralOsciloscope = { value : 'Drum' }
-        this.Sun1 = { value : 'Vocal' }
-        this.Sun2 = { value : 'Vocal' }
-        this.SpiralBars = { value : 'All' }
-        this.SpiralOsciloscope = { value : 'Vocal' }
+        this.Sun1               = { value : 'Vocal' }
+        this.Sun2               = { value : 'Vocal' } 
+        this.SpiralBars         = { value : 'All' }
+        this.SpiralOsciloscope  = { value : 'Vocal' }
 
         this.audioChannels.add(this.LateralBar1, 'value', this.channelOptions).name("Lateral bars 1").onChange(() => {
             this.world.hmlBars.material.uniforms.uAudioTexture.value = this.audioAnalizer.channels[this.LateralBar1.value].bufferCanvasLinear.texture;
@@ -65,6 +73,11 @@ export default class Debug {
         });
         this.audioChannels.add(this.SpiralOsciloscope, 'value', this.channelOptions).name("Spiral osciloscope").onChange(() => {
             this.world.spirals.material.uniforms.uAudioTexture2.value = this.audioAnalizer.channels[this.SpiralOsciloscope.value].bufferCanvasLinear.texture;
+        });
+
+        this.audioChannels.add(this.fftSize, 'value', this.fftOptions).name("Fast fourier transform size").onChange(() => {
+            this.experience.audioAnalizer.setFFTSize(this.fftSize.value);
+            this.experience.world.asociateChannels();
         });
     }
 

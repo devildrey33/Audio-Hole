@@ -128,12 +128,12 @@ export default class AudioAnalizerMC {
         this.resyncTime      = 0;
 
         // Load all the channels
-        this.channels[0].loadSong(path + "Song.mp3");
-        this.channels[1].loadSong(path + "Bass.mp3");
-        this.channels[2].loadSong(path + "Drum.mp3");
-        this.channels[3].loadSong(path + "Other.mp3");
-        this.channels[4].loadSong(path + "Piano.mp3");
-        this.channels[5].loadSong(path + "Vocal.mp3");
+        this.channelSong.loadSong(path + "Song.mp3");
+        this.channelBass.loadSong(path + "Bass.mp3");
+        this.channelDrum.loadSong(path + "Drum.mp3");
+        this.channelOther.loadSong(path + "Other.mp3");
+        this.channelPiano.loadSong(path + "Piano.mp3");
+        this.channelVocal.loadSong(path + "Vocal.mp3");
     }
 
 
@@ -191,7 +191,7 @@ export default class AudioAnalizerMC {
     calculateCurrentBeat(delta) {
         if (this.experience.htmlElements.dragTime === true) return;
 
-        let currentBpm = Math.floor((this.channels[0].song.currentTime * 1000) / this.bpmTime);
+        let currentBpm = Math.floor((this.channelSong.song.currentTime * 1000) / this.bpmTime);
         if (isNaN(currentBpm)) 
             currentBpm = 0;
 
@@ -228,13 +228,20 @@ export default class AudioAnalizerMC {
             );
             // set the current time for all songs
             for (let i = 1; i < this.totalChannels; i++) {
-                this.channels[i].song.currentTime = this.channels[0].song.currentTime;
+                this.channels[i].song.currentTime = this.channelSong.song.currentTime;
             }
 
             this.resyncTime = 5000;
         }
     }
 
+
+    setFFTSize(fftSize) {
+        for (let i = 0; i < this.totalChannels; i++) {
+            this.channels[i].setupTextures(fftSize);
+            this.channels[i].analizer.fftSize = fftSize;
+        }
+    }
 /*
     jsonSaveAudioData(name, data) {
         // Supongamos que tienes un array grande de datos

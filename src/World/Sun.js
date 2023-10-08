@@ -57,10 +57,8 @@ export default class Sun {
         this.world.group.add(this.sunLight)  
     }
 
-    update() {
-        // get an average advance value
-        const advance = this.time.delta / 1000;
+    update(delta) {
         // update time on sun
-        this.material.uniforms.uTime.value += advance;   
+        this.material.uniforms.uTime.value += delta;   
     }    
 }

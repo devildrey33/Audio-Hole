@@ -17,8 +17,11 @@ export default class Background {
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
-                uTexture      : { value : this.experience.resources.items["background1"] },
-                uTime         : { value : 0 },
+                uTexture1      : { value : this.experience.resources.items["background1"] },
+                uTexture2      : { value : this.experience.resources.items["background2"] },
+                uTexture3      : { value : this.experience.resources.items["background3"] },
+                uActualTexture : { value : 1 },
+                uTime          : { value : 0 },
             },
             vertexShader    : BackgroundVertexShader,
             fragmentShader  : BackgroundFragmentShader,
@@ -36,13 +39,14 @@ export default class Background {
 
     updateBackground() {
         this.material.uniforms.uTime.value = 0;
-        this.material.uniforms.uTexture.value = this.experience.resources.items["background1"];
+        this.material.uniforms.uTexture1.value = this.experience.resources.items["background1"];
+        this.material.uniforms.uTexture2.value = this.experience.resources.items["background2"];
+        this.material.uniforms.uTexture3.value = this.experience.resources.items["background3"];
     }
 
     update(delta) {
-        this.material.uniforms.uTime.value += delta * 0.001;
-        this.mesh.rotation.z += delta / 75000;
-
+        this.material.uniforms.uTime.value += delta;
+        this.mesh.rotation.z += delta / 75;
     }
 
 }

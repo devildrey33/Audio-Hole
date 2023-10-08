@@ -161,21 +161,26 @@ export default class BPMEffects {
                 start : 114,  end : 114.25,
                 effect : new BPMSpiralsScale({ scaleX : 2.3, scaleZ : 0.75, ease : "bounce-inOut" })
             },
-            {
-                start : 131, end : 136,
-                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce-inOut" })
-            },
             {   // 
                 start : 144, end : 146, 
                 effect : new BPMBloom({ destIntensity : 1.48, destRadius : 1.15, yoyo : true })
             },            
             {
-                start : 244, end : 244.5,
-                effect : new BPMLateralBars({ position : 50, ease : "elastic" })
+                start : 145, end : 146,
+                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce" })
             },
             {
+                start : 244, end : 244.5,
+                effect : new BPMLateralBars({ position : 50, ease : "bounce" })
+            },
+            {   // yell
+                start : 356, end : 364, 
+                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25, color : new THREE.Color(0,0.5,0.75) })
+            },
+
+            {
                 start : 390, end : 406,
-                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce-inOut" })
+                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "elastic" })
             },
 
             {   // Guitar solo (ends 423)
@@ -183,8 +188,12 @@ export default class BPMEffects {
                 effect : new BPMBloom({ destIntensity : -2, destRadius : 0.85, yoyo : false })
             },            
             {   // Guitar solo (ends 423)
+                start : 404, end : 408, 
+                effect : new BPMBloom({ originIntensity : -2, originRadius : 0.85, destIntensity : 2, destRadius : 1.12,  yoyo : false })
+            },            
+            {   // Guitar solo (ends 423)
                 start : 419, end : 423, 
-                effect : new BPMBloom({ originIntensity : -2, originRadius : 0.85, yoyo : false })
+                effect : new BPMBloom({ originIntensity : 2, originRadius : 1.12, yoyo : false })
             },            
             {   // batery
                 start : 430, end : 430.5,

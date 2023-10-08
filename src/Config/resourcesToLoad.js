@@ -4,21 +4,21 @@ export default [
         type : 'texture',
         path : './textures/Ray16x64.png'
     },*/
-    { // fuck-of 1
+    { // stars background
         name : 'background1',
         type : 'texture',
         path : './textures/1.webp'
     },
-    /*{ // fuck-of 2
+    { // planet background
         name : 'background2',
         type : 'texture',
         path : './textures/2.jpg'
     },
-    { // fuck-of 3
+    { // hole background
         name : 'background3',
         type : 'texture',
-        path : './textures/3.webp'
-    },
+        path : './textures/4.jpg'
+    },/*
     { // fuck-of 3
         name : 'background4',
         type : 'texture',

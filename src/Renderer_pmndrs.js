@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import Experience from "./Experience";
-import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, /*ShockWaveEffect,*/ ToneMappingEffect, ToneMappingMode } from "postprocessing";
-//import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ToneMappingEffect, ToneMappingMode } from "postprocessing";
 import ColorCorrectionEffect from "./PostProcessing/ColorCorrectionEffect.js"
 
 export default class Renderer {
@@ -59,9 +58,6 @@ export default class Renderer {
 //        this.bloomPass.dithering = false;
         this.effectComposer.addPass(this.bloomPass);
 
-/*        this.godRaysPass2 = new GodRaysEffect(this.camera.instance, spiralsMesh);
-        this.effectComposer.addPass(new EffectPass(this.camera.instance, this.godRaysPass2));
-        this.effectComposer.addPass(this.godRaysPass2);        */
 
         this.godRaysEffect = new GodRaysEffect(this.camera.instance, sunMesh);
         this.godRaysPass = new EffectPass(this.camera.instance, this.godRaysEffect);
@@ -90,9 +86,6 @@ export default class Renderer {
         this.colorCorrectionEffect.uniforms.get("addRGB").value = this.experience.options.colorCorrectionAddRGB;
         this.colorCorrectionPass = new EffectPass(this.camera.instance, this.colorCorrectionEffect);
         this.effectComposer.addPass(this.colorCorrectionPass);
-//        console.log(this.colorCorrectionEffect, this.colorCorrectionPass);
-
-//        this.colorCorrectionEffect.uniforms.powRGB.value = new THREE.Vector3(2, 2, 3);
 
 
         this.toneMappingEffect = new ToneMappingEffect();
@@ -101,28 +94,10 @@ export default class Renderer {
         this.toneMappingPass = new EffectPass(this.camera.instance, this.toneMappingEffect);
         this.effectComposer.addPass(this.toneMappingPass);
 
-//        console.log(this.colorCorrectionPass);
 
-/*        this.godRaysPass2.godRaysMaterial.exposure = 0.2;
-        this.godRaysPass2.godRaysMaterial.density = 0.2;
-        this.godRaysPass2.godRaysMaterial.decay = 0.2;*/
-//        console.log(this.bloomPass, this.godRaysPass)
-
-        // bloom pass
-/*        this.bloomPass = new UnrealBloomPass( new THREE.Vector2( this.sizes.width, this.sizes.height ), 1.5, 0.4, 0.85 );
-        this.bloomPass.threshold = this.experience.options.bloomThreshold;
-        this.bloomPass.strength  = this.experience.options.bloomStrength;
-        this.bloomPass.radius    = this.experience.options.bloomRadius;        
-        this.bloomPass.enabled   = this.experience.options.bloomEnabled;     
-
-        this.effectComposer.addPass(this.bloomPass);*/
-/*        this.brightnessContrastPass = new BrightnessContrastEffect();
-        this.effectComposer.addPass(new EffectPass(this.camera.instance, this.brightnessContrastPass));
-
-        this.brightnessContrastPass.contrast = 0.25;
-        this.brightnessContrastPass.brightness = 0.25*/
-
-        
+        if (this.experience.options.audioMultiChannel === false) {
+            this.updateGodRays = () => {}
+        }
     }
 
     /**
@@ -137,27 +112,16 @@ export default class Renderer {
 //        this.effectComposer.setPixelRatio(this.sizes.pixelRatio);
     }
 
-    /**
+    /*
      * Function called on update
-    */
+     */
     update() {
-        const advance = this.time.delta / 1000;
-//        this.displacementPass.material.uniforms.uTime.value += advance;
+        this.effectComposer.render();
+    }
 
-        // Modify bloom strenght using low sound average frequency (bass) 
-//        this.bloomPass.luminanceMaterial.smoothing = 1.0 + (this.experience.audioAnalizer.averageFrequency[2] / 255);
-//        console.log(this.bloomPass.luminanceMaterial.uniforms.smoothing.value);
-        // Set bloom radius using a sine wave and time to go from -1.5 to 3.5
-//        this.bloomEffect.intensity = (1.4 + (Math.sin(this.time.elapsed / 10000))) * 0.5;
-//        console.log(this.bloomEffect.intensity);
-//console.log(this.bloomPass.radius);
+    updateGodRays() {
         const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] / 255);
         this.godRaysEffect.godRaysMaterial.weight = 0.3 + audioValue;
-        this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;
-
-
-//console.log(this.experience.audioAnalizer.channels[4].averageFrequency[4]);
-        this.effectComposer.render();
-        //this.instance.render(this.scene, this.camera.instance)
-    }    
+        this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;    
+    }
 }

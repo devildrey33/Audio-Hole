@@ -66,17 +66,17 @@ export default class Spirals {
 
     }
 
-    update() {
+    update(delta) {
         // get an average advance value
-        const advance = this.time.delta / 1000;
+       //const advance = this.time.delta / 1000;
         // update rotation on the cilynder
-        this.mesh.rotation.y += advance;
+        this.mesh.rotation.y += delta;
         // update audio value on spiral
         this.material.uniforms.uAudioValue.value  = (this.world.songChannels.SpiralBars.averageFrequency[4] / 64);
         this.material.uniforms.uAudioValue2.value = (this.world.songChannels.SpiralOsciloscope.averageFrequency[0] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[1] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[2] / 64);
 //        this.material.uniforms.uAudioValue.value = 1.0;
         // update time on spiral
-        this.material.uniforms.uTime.value += advance;   
+        this.material.uniforms.uTime.value += delta;   
         // Set osciloscope line thickness applying the low sound average frequency
 //        this.material.uniforms.uThicknessSin.value = 0.01 + ((this.audioAnalizer.averageFrequency[2] / 255) * 0.05);
 

@@ -22,16 +22,16 @@ varying vec2      vUv;
 
 #define PI 3.1415
 
-vec4 Line(vec3 color, float audioValue, float speed, float width) {
+/*vec4 Line(vec3 color, float audioValue, float speed, float width) {
     const float freq = 15.0;
     const float amp = 1.0 / 15.0;
     vec2 uv = vUv - 0.5;
-    float y = sin(uv.x * PI * freq * (uTime) * speed) * amp;
+    float y = sin(uv.x * PI * freq * (uTime * 10.0) * speed) * amp;
     return vec4(color - abs(uv.y - (y + 0.01)), 1.0);
-}
+}*/
 
 vec4 Line2(vec3 color, float audioValue, float speed, float width) {
-    float curve = (0.25 * width) * sin((10.25 * vUv.x) + (uSpeed * speed * uTime));
+    float curve = (0.25 * width) * sin((10.25 * vUv.x) + (uSpeed * speed * uTime * 10.0));
 
     float lineAShape = smoothstep(1.0 - clamp(distance(curve + (vUv.y) + (audioValue * 0.5), 0.5 ) * 1.0, 0.0, 1.0), 1.0, 0.99);
     vec4  lineACol = (1.0 - lineAShape) * vec4(mix(vec4(color, 1.0), vec4(0.0), lineAShape));
@@ -67,7 +67,7 @@ void main() {
 //        finalColor.a = 0.1 - (vUv.x * 0.1);
 //        finalColor.a *= uAudioValue * 0.05;
 //    }    
-    finalColor.a *= (0.01 + uAudioValue.g) * 0.5 * vUv.x;
+    finalColor.a *= (0.01 + uAudioValue.g) * 0.75 * vUv.x;
     //finalColor.a = 1.0;
 
 //    if (finalColor.a < 0.01) discard;

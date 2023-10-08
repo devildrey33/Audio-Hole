@@ -67,23 +67,24 @@ export default class World {
     update() {
 //        if (this.ready === true) {
 //        }
+        const delta = this.time.delta / 1000;
             
         this.timeline.time(this.experience.audioAnalizer.channelSong.song.currentTime);
 
-        this.background.update(this.time.delta);
+        this.background.update(delta);
 
-        this.spirals.update();
-        this.sun.update();
+        this.spirals.update(delta);
+        this.sun.update(delta);
         this.raysToHole.update();
-        this.hmlOsciloscope.update();
-        this.hmlBars.update();
+        this.hmlOsciloscope.update(delta);
+        this.hmlBars.update(delta);
 
+        // Rotate all elements in the group
         this.group.rotation.z += this.time.delta / 7500;
     }
 
 
-
-    setupSong() {
+    asociateChannels (){
         // Asociate song channels with his world object
         this.songChannels = this.bpmEffects.songChannels[this.experience.currentSong];
         this.hmlBars.material.uniforms.uAudioTexture.value = this.songChannels.LateralBars1.bufferCanvasLinear.texture;
@@ -91,7 +92,11 @@ export default class World {
         this.hmlOsciloscope.material.uniforms.uAudioTexture.value = this.songChannels.LateralOsciloscope.bufferCanvasLinear.texture;
         this.sun.material.uniforms.uAudioTexture.value = this.songChannels.Sun.bufferCanvasLinear.texture;
         this.spirals.material.uniforms.uAudioTexture.value = this.songChannels.SpiralBars.bufferCanvasLinear.texture;
-        this.spirals.material.uniforms.uAudioTexture2.value = this.songChannels.SpiralOsciloscope.bufferCanvasLinear.texture;
+        this.spirals.material.uniforms.uAudioTexture2.value = this.songChannels.SpiralOsciloscope.bufferCanvasLinear.texture;    
+    }
+
+    setupSong() {
+        this.asociateChannels();
 
         // Recalculate animations
         this.timeline.kill();
