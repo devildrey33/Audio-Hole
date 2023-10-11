@@ -1,13 +1,14 @@
 //import * as THREE from "three"
-//import Experience from "../Experience";
+import Experience from "../Experience";
 import Rays from "./Rays.js";
 
 
 export default class RaysToHole {
-    numRays = 50;
 
     constructor() {
-//        this.experience = new Experience();
+        this.experience = new Experience();
+        this.numRays = this.experience.options.numRays;
+
 //        this.time  = this.experience.time;
 //        this.world = world;
         this.setup();

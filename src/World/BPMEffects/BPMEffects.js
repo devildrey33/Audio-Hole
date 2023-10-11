@@ -117,10 +117,15 @@ export default class BPMEffects {
                 start : 9, end : 9.5,
                 effect : new BPMSpiralsScale({ scaleZ : 3, scaleX : 0.75, scaleY : 0.3, ease : "bounce" })
             },
+            {   // batery
+                start : 12, end : 12.5,
+                effect : new BPMSpiralsScale({ scaleX : 0.375, ease : "bounce" })
+            },
             {   // bass changing rithm
                 start : 24.75, end : 25.25,
                 effect : new BPMSpiralsScale({ scaleX : 3.5, ease : "bounce" })
             },
+
 /*            {
                 start : 30, end : 32,
                 effect : new BPMSpiralsPosition({ positionX : 0.2, ease : easeDistorsion })
@@ -166,13 +171,27 @@ export default class BPMEffects {
                 effect : new BPMBloom({ destIntensity : 1.48, destRadius : 1.15, yoyo : true })
             },            
             {
-                start : 145, end : 146,
+                start : 144.5, end : 145,
+                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce" })
+            },
+            {
+                start : 145.5, end : 146,
                 effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "bounce" })
             },
             {
                 start : 244, end : 244.5,
                 effect : new BPMLateralBars({ position : 50, ease : "bounce" })
             },
+
+            {   // hey
+                start : 274, end : 274.75,
+                effect : new BPMSpiralsScale({ scaleX : 3.5, ease : "bounce" })
+            },
+            {   // hey
+                start : 274.75, end : 275.5,
+                effect : new BPMSpiralsScale({ scaleZ : 2.75, ease : "bounce" })
+            },
+
             {   // yell
                 start : 356, end : 364, 
                 effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25, color : new THREE.Color(0,0.5,0.75) })
@@ -180,7 +199,7 @@ export default class BPMEffects {
 
             {
                 start : 390, end : 406,
-                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "elastic" })
+                effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "" })
             },
 
             {   // Guitar solo (ends 423)
@@ -203,11 +222,29 @@ export default class BPMEffects {
                 start : 430.5, end : 431,
                 effect : new BPMSpiralsScale({ scaleZ : 3, scaleX : 0.75, scaleY : 0.3, ease : "bounce" })
             },
+            {   // batery
+                start : 434.5, end : 435,
+                effect : new BPMSpiralsScale({ scaleX : 0.375, ease : "bounce" })
+            },
 
             {   // yell
                 start : 454, end : 460, 
                 effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2, color : new THREE.Color(1,0,0) })
             },
+
+            {   // mayday
+                start : 475.5, end : 476.5, 
+                effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
+            },
+            {   // mayday
+                start : 478, end : 479,
+                effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
+            },
+            {   // oneday
+                start : 486, end : 487,
+                effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
+            },
+
             {   // yell
                 start : 520, end : 521, 
                 effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color(1,0,0) })

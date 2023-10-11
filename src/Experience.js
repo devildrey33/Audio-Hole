@@ -52,7 +52,7 @@ export default class Experience {
         this.audioAnalizerOptions = {
             onPlay           : this.onAudioPlay,
             onPause          : this.onAudioPause,
-            onTimeUpdate     : this.onAudioTimeUpdate,
+            onTimeUpdate     : (this.options.debug) ? this.onAudioTimeUpdate : function() {},
             onDurationChange : this.onAudioDurationChange,
             onEnded          : this.onAudioEnded,
             onError          : this.onAudioError,
@@ -64,10 +64,6 @@ export default class Experience {
             fftSize          : this.options.audioFFTSize
         }
 
-        if (this.options.audioMultiChannel === true) 
-            this.audioAnalizer  = new AudioAnalizerMC(this.audioAnalizerOptions);
-        else
-            this.audioAnalizer  = new AudioAnalizerSC(this.audioAnalizerOptions);
         // Set the canvas element
         this.canvas         = this.htmlElements.elementCanvas;
 
@@ -75,14 +71,12 @@ export default class Experience {
 //        this.resources      = new Resources(sources);
         this.camera         = new Camera();
         this.world          = new World();
-        this.renderer       = new Renderer(this.world.sun.mesh, this.world.spirals.mesh);
+        this.renderer       = new Renderer();
 
 
-        if (this.options.debug === true) {
-            this.debug      = new Debug();
-        }
-        else {
+        if (this.options.debug === false) {
             this.updateDebug = () => {}
+//            this.AudioTimeUpdate = () => {}
         }
         
 
@@ -99,8 +93,39 @@ export default class Experience {
         }*/
 
         this.beats = 0;
-        
+
+//        this.htmlElements.elementExperience.setAttribute("loading", "false");
+    }
+
+    setQuality(preset = "high") {       
+        // Setup low config (high is the standard)
+        if (preset === "low") {
+            this.options.audioFFTSize      = 1024;
+            this.options.audioMultiChannel = false;
+        }
+
+        // Update the loading function to catch loaded songs
+        this.setLoading = this.setLoadingAudio;
+        this.setLoading();
+
+        if (this.options.audioMultiChannel === true) 
+            this.audioAnalizer  = new AudioAnalizerMC(this.audioAnalizerOptions);
+        else
+            this.audioAnalizer  = new AudioAnalizerSC(this.audioAnalizerOptions);
+
+        // Create meshes that need audio analizer
+        this.world.setQuality();
+        // Setup the god rays for the sun mesh
+        this.renderer.setGodRays(this.world.sun.mesh);
+        // Load the song
         this.audioAnalizer.loadSong(this.song.path, this.song.bpm);
+        // Apply the new update function
+        this.update = this.updateQuality;
+        // Enable play button
+        this.htmlElements.elementPlay.setAttribute("disabled", "false");
+
+        if (this.options.debug)
+            this.debug = new Debug();
 
     }
 
@@ -116,6 +141,13 @@ export default class Experience {
      * Function called when a frame is about to update
     */
     update() {
+        this.camera.update();
+
+        this.world.update();
+        this.renderer.update();
+    }
+
+    updateQuality() {
         this.camera.update();
         this.audioAnalizer.update(this.time.delta);
 
@@ -172,6 +204,12 @@ export default class Experience {
 
     setLoading() {
         let isLoading = true;
+        if (this.loading === false) isLoading = false;
+        this.htmlElements.elementExperience.setAttribute("loading", isLoading);
+    }
+
+    setLoadingAudio() {
+        let isLoading = true;
         if (this.loading === false && this.songLoading === false) isLoading = false;
         this.htmlElements.elementExperience.setAttribute("loading", isLoading);
     }
@@ -192,14 +230,17 @@ export default class Experience {
         this.beats = 0;
     }
     
+
     onAudioTimeUpdate = (currentTime) => {
         if (this.htmlElements.dragTime == false)
-            this.htmlElements.elementAudioTime.value = currentTime;
+            this.htmlElements.elementAudioTime.value = currentTime;        
     }
 
     onAudioDurationChange = (newDuration) => {
-        // Update max time on the time slider
-        this.htmlElements.elementAudioTime.setAttribute("max", newDuration);
+        if (this.options.debug === true) {
+            // Update max time on the time slider
+            this.htmlElements.elementAudioTime.setAttribute("max", newDuration);
+        }
 
         this.song.bpmMS = (60000 / this.song.bpm);
         if (this.options.showBPM === true) {

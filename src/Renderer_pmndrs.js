@@ -5,7 +5,7 @@ import ColorCorrectionEffect from "./PostProcessing/ColorCorrectionEffect.js"
 
 export default class Renderer {
     // Costructor
-    constructor(sunMesh, spiralsMesh) {
+    constructor() {
         // Get the experience instance
         this.experience = new Experience();
         this.canvas     = this.experience.canvas;
@@ -15,10 +15,10 @@ export default class Renderer {
         this.time       = this.experience.time;
         this.world      = this.experience.world;
 
-        this.setInstance(sunMesh, spiralsMesh);
+        this.setInstance();
     }
 
-    setInstance(sunMesh, spiralsMesh) {
+    setInstance() {
 
         this.instance = new THREE.WebGLRenderer({
             canvas          : this.canvas, 
@@ -59,16 +59,6 @@ export default class Renderer {
         this.effectComposer.addPass(this.bloomPass);
 
 
-        this.godRaysEffect = new GodRaysEffect(this.camera.instance, sunMesh);
-        this.godRaysPass = new EffectPass(this.camera.instance, this.godRaysEffect);
-        this.effectComposer.addPass(this.godRaysPass);
-
-        this.godRaysEffect.godRaysMaterial.density  = this.experience.options.godRaysDensity;
-        this.godRaysEffect.godRaysMaterial.decay = this.experience.options.godRaysDecay;
-        this.godRaysEffect.godRaysMaterial.weight = this.experience.options.godRaysWeigth;
-        this.godRaysEffect.godRaysMaterial.exposure = this.experience.options.godRaysExposure;
-        this.godRaysEffect.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
-        this.godRaysEffect.godRaysMaterial.samples = this.experience.options.godRaysSamples;
 
 
 /*        this.shockWaveEffect = new ShockWaveEffect(this.camera.instance, new THREE.Vector3(0, 0, -10));
@@ -94,10 +84,25 @@ export default class Renderer {
         this.toneMappingPass = new EffectPass(this.camera.instance, this.toneMappingEffect);
         this.effectComposer.addPass(this.toneMappingPass);
 
-
+        // Remove automatic GodRays with a separate channel because there is only one channel
         if (this.experience.options.audioMultiChannel === false) {
             this.updateGodRays = () => {}
         }
+    }
+
+    setGodRays(sunMesh) {        
+        this.godRaysEffect = new GodRaysEffect(this.camera.instance, sunMesh);
+        this.godRaysPass = new EffectPass(this.camera.instance, this.godRaysEffect);
+        this.effectComposer.addPass(this.godRaysPass, 1);
+
+        this.godRaysEffect.godRaysMaterial.density  = this.experience.options.godRaysDensity;
+        this.godRaysEffect.godRaysMaterial.decay = this.experience.options.godRaysDecay;
+        this.godRaysEffect.godRaysMaterial.weight = this.experience.options.godRaysWeigth;
+        this.godRaysEffect.godRaysMaterial.exposure = this.experience.options.godRaysExposure;
+        this.godRaysEffect.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
+        this.godRaysEffect.godRaysMaterial.samples = this.experience.options.godRaysSamples;
+
+        this.update = this.updateQuality;
     }
 
     /**
@@ -117,6 +122,11 @@ export default class Renderer {
      */
     update() {
         this.effectComposer.render();
+    }
+
+    updateQuality() {
+        this.effectComposer.render();
+        this.updateGodRays();
     }
 
     updateGodRays() {

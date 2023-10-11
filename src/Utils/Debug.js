@@ -10,10 +10,12 @@ export default class Debug {
     setup() {
         this.gui = new dat.GUI({ width : 300 });
 
-        this.setupAudioChannels(true);
+        this.setupAudioChannels();
 
         this.setupSpirals();
         this.setupSun();
+        this.setupLateralBars();
+        this.setupLateralOsciloscope();
         
 //        this.setupPostProcessing();
 //        this.setupBloom();
@@ -23,6 +25,54 @@ export default class Debug {
         this.setupGodRaysPmndrs();
 //        this.setupShockWavePmndrs();
         this.setupColorCorrectionPmndrs();
+
+/*        let buba = { value : "Buba1" }
+        const bubas = {
+            Buba1 : "fuckOff1",
+            Buba2 : "fuckOff2",
+            Buba3 : "fuckOff3",
+            Buba4 : "fuckOff4",
+            Buba5 : "fuckOff5"
+        }
+
+        this.gui.add(buba, 'value', bubas).name("Bubaface").onChange(() => {
+            this.experience.world.background2.name = buba.value;
+            this.experience.world.background2.updateBackground();
+        });
+
+        this.bubapacity = 0.125;
+        this.gui.add(this, 'bubapacity').min(0.025).max(1).name("Bubapacity").onChange(() => {
+            this.experience.world.background2.material.uniforms.uAlpha.value = this.bubapacity;
+        });*/
+    }
+
+    setupLateralBars(open = false) {
+        this.lateralBars = this.experience.world.hmlBars;
+        this.lateralBarsUI = this.gui.addFolder("Lateral Bars").open(open);
+        
+        this.lateralBarsUI.add(this.experience.options, 'barsAudioStrength').min(0).max(8).step(0.1).name("Audio strength").onChange(() => {
+            this.lateralBars.material.uniforms.uAudioStrength.value = this.experience.options.barsAudioStrength;
+        });
+        this.lateralBarsUI.add(this.experience.options, 'barsAudioZoom').min(0).max(8).step(0.1).name("Audio zoom").onChange(() => {
+            this.lateralBars.material.uniforms.uAudioZoom.value = this.experience.options.barsAudioZoom;
+        });
+        this.lateralBarsUI.add(this.experience.options, 'barsSpeed').min(0.01).max(8).step(0.1).name("Speed").onChange(() => {
+            this.lateralBars.material.uniforms.uSpeed.value = this.experience.options.barsSpeed;
+        });
+    
+    }
+
+    setupLateralOsciloscope(open = false) {
+        this.lateralOsciloscope = this.experience.world.hmlOsciloscope;
+        this.lateralOsciloscopeUI = this.gui.addFolder("Lateral Osciloscope").open(open);
+
+        this.lateralOsciloscopeUI.add(this.experience.options, 'hmsOsciloscopeAudioStrength').min(0).max(8).step(0.1).name("Audio strength").onChange(() => {
+            this.lateralOsciloscope.material.uniforms.uAudioStrength.value = this.experience.options.hmsOsciloscopeAudioStrength;
+        });
+        this.lateralOsciloscopeUI.add(this.experience.options, 'hmsOsciloscopeSpeed').min(0.01).max(8).step(0.1).name("Speed").onChange(() => {
+            this.lateralOsciloscope.material.uniforms.uSpeed.value = this.experience.options.hmsOsciloscopeSpeed;
+        });
+    
     }
 
     setupAudioChannels(open = false) {
@@ -45,8 +95,8 @@ export default class Debug {
             Piano : 4,
             Vocal : 5,
         };
-        this.LateralBar1        = { value : 'Bass' }
-        this.LateralBar2        = { value : 'Piano' }
+        this.LateralBar1        = { value : 'Other' }
+        this.LateralBar2        = { value : 'Bass' }
         this.LateralOsciloscope = { value : 'Drum' }
         this.Sun1               = { value : 'Vocal' }
         this.Sun2               = { value : 'Vocal' } 

@@ -35,8 +35,13 @@ export default class World {
     setup() {
         this.group = new THREE.Group();
         this.scene.add(this.group);
-        // Setup gsap plugins
-        gsap.registerPlugin(RoughEase);
+
+        this.backgroundPosition = 0;
+        this.background = new Background(this, "background1");
+//        this.background2 = new Background(this, "fuckOff1", 350 * .25, 250 * .25, 0, -20, -160);
+    }
+
+    setQuality() {
         // Create a gsap timeline
         gsap.ticker.remove(gsap.updateRoot);
         this.timeline = gsap.timeline();
@@ -55,12 +60,13 @@ export default class World {
         // Current song channels
         this.songChannels = this.bpmEffects.songChannels[this.experience.currentSong];
 
-        this.background = new Background(this);
+        this.update = this.updateQuality;
     }
 
     // All resources are loaded
     resourcesLoaded() {
         this.background.updateBackground();
+//        this.background2.updateBackground();
         this.ready = true;
     }
 
@@ -69,9 +75,20 @@ export default class World {
 //        }
         const delta = this.time.delta / 1000;
             
-        this.timeline.time(this.experience.audioAnalizer.channelSong.song.currentTime);
-
         this.background.update(delta);
+        this.background.mesh.rotation.z += delta / 75;
+
+        // Rotate all elements in the group
+        this.group.rotation.z += this.time.delta / 7500;
+    }
+
+    updateQuality() {
+        const delta = this.time.delta / 1000;
+            
+        this.background.update(delta);
+        this.background.mesh.rotation.z += delta / 75;
+
+        this.timeline.time(this.experience.audioAnalizer.channelSong.song.currentTime);
 
         this.spirals.update(delta);
         this.sun.update(delta);
@@ -84,15 +101,16 @@ export default class World {
     }
 
 
-    asociateChannels (){
+    asociateChannels () {
         // Asociate song channels with his world object
         this.songChannels = this.bpmEffects.songChannels[this.experience.currentSong];
-        this.hmlBars.material.uniforms.uAudioTexture.value = this.songChannels.LateralBars1.bufferCanvasLinear.texture;
-        this.hmlBars.material.uniforms.uAudioTexture2.value = this.songChannels.LateralBars2.bufferCanvasLinear.texture;
+        this.hmlBars.material.uniforms.uAudioTexture.value        = this.songChannels.LateralBars1.bufferCanvasLinear.texture;
+        this.hmlBars.material.uniforms.uAudioTexture2.value       = this.songChannels.LateralBars2.bufferCanvasLinear.texture;
         this.hmlOsciloscope.material.uniforms.uAudioTexture.value = this.songChannels.LateralOsciloscope.bufferCanvasLinear.texture;
-        this.sun.material.uniforms.uAudioTexture.value = this.songChannels.Sun.bufferCanvasLinear.texture;
-        this.spirals.material.uniforms.uAudioTexture.value = this.songChannels.SpiralBars.bufferCanvasLinear.texture;
-        this.spirals.material.uniforms.uAudioTexture2.value = this.songChannels.SpiralOsciloscope.bufferCanvasLinear.texture;    
+        this.sun.material.uniforms.uAudioTexture.value            = this.songChannels.Sun.bufferCanvasLinear.texture;
+        // SunRays its asociated directly with the Render_pnmdrs::update function
+        this.spirals.material.uniforms.uAudioTexture.value        = this.songChannels.SpiralBars.bufferCanvasLinear.texture;
+        this.spirals.material.uniforms.uAudioTexture2.value       = this.songChannels.SpiralOsciloscope.bufferCanvasLinear.texture;    
     }
 
     setupSong() {

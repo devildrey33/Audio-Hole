@@ -11,7 +11,7 @@ void main() {
 //    float audioValue = ((texture2D(uAudioTexture, vec2(vUv.x / uAudioZoom, 0.0)).g - .5) * uAudioStrength) + .5;
     float audioValue = 1.0;
     
-    float curSize = uSize - (vUv.x * uSize);
+    float curSize = uSize - ((1.0 - vUv.x) * uSize);
     // Its inside the line
     if (abs(vUv.y - audioValue) < curSize) {
         gl_FragColor = vec4(uColor, uAudioValue * 1.0);

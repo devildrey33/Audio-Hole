@@ -15,7 +15,19 @@ export default class HTMLElements {
         this.create();
 
         this.setupAudioControlEvents();
+        this.setupQualityEvents();
 //        this.createAudioControls();
+    }
+
+    setupQualityEvents() {
+        this.elementQualityHigh.addEventListener('click', ()=> {
+            this.experience.setQuality("high");
+            this.elementQuality.remove();
+        })
+        this.elementQualityLow.addEventListener('click', ()=> {
+            this.experience.setQuality("low");            
+            this.elementQuality.remove();
+        })
     }
 
     setupAudioControlEvents() {
@@ -23,47 +35,40 @@ export default class HTMLElements {
         this.dragTime = false;
         // Not a drag & drop song
         this.defaultSong = true;
+        
 
-        // Audio songs select option element
-        this.elementAudioSongs.addEventListener('change', (e) => {
-            for (let i = 0; i < this.songs.length; i++) {
-                if (e.currentTarget.value === this.songs[i].name) {
-                    this.experience.song = this.songs[i];
-                    this.experience.currentSong = i;
-                    break;
-                }
-            }
-            
-            this.experience.audioAnalizer.loadSong(this.experience.song.path, this.experience.song.bpm);
-            this.experience.audioAnalizer.playPause();
-//            this.experience.world.audioInfo.setup();
-        });
-/*        // Audio play / pause button element
-        this.elementAudioPlay.addEventListener('click', (e) => { 
-            if (this.experience.audioAnalizer.playPause() == false) {
-                this.elementAudioPlay.innerHTML = "Play";
-            }
-            else {
-                this.elementAudioPlay.innerHTML = "Pause";
-            }
-        });*/
-        // Audio main volume slider element
-        this.elementAudioVolume.addEventListener('input', (e) => { 
-            if (this.experience.debug === false) {
-                this.experience.audioAnalizer.volume(e.currentTarget.value);
-            }
-            else {
-                this.experience.audioAnalizer.volume(e.currentTarget.value, true);
-                this.elementAudioVolumeSong.value = 0;
-                this.elementAudioVolumeBass.value = e.currentTarget.value;
-                this.elementAudioVolumeDrum.value = e.currentTarget.value;
-                this.elementAudioVolumeOther.value = e.currentTarget.value;
-                this.elementAudioVolumeVoice.value = e.currentTarget.value;
-                this.elementAudioVolumePiano.value = e.currentTarget.value;
-            }
-            
-        }); 
         if (this.experience.options.debug === true) {
+
+            // Audio songs select option element
+            this.elementAudioSongs.addEventListener('change', (e) => {
+                for (let i = 0; i < this.songs.length; i++) {
+                    if (e.currentTarget.value === this.songs[i].name) {
+                        this.experience.song = this.songs[i];
+                        this.experience.currentSong = i;
+                        break;
+                    }
+                }
+                
+                this.experience.audioAnalizer.loadSong(this.experience.song.path, this.experience.song.bpm);
+                this.experience.audioAnalizer.playPause();
+            });
+
+            // Audio main volume slider element
+            this.elementAudioVolume.addEventListener('input', (e) => { 
+                if (this.experience.debug === false) {
+                    this.experience.audioAnalizer.volume(e.currentTarget.value);
+                }
+                else {
+                    this.experience.audioAnalizer.volume(e.currentTarget.value, true);
+                    this.elementAudioVolumeSong.value = 0;
+                    this.elementAudioVolumeBass.value = e.currentTarget.value;
+                    this.elementAudioVolumeDrum.value = e.currentTarget.value;
+                    this.elementAudioVolumeOther.value = e.currentTarget.value;
+                    this.elementAudioVolumeVoice.value = e.currentTarget.value;
+                    this.elementAudioVolumePiano.value = e.currentTarget.value;
+                }
+                
+            }); 
             if (this.experience.options.audioMultiChannel === true) {
                 // Song volume
                 this.elementAudioVolumeSong.addEventListener('input', (e) => { 
@@ -152,8 +157,7 @@ export default class HTMLElements {
                 this.experience.audioAnalizer.speed(1);
             });
 
-        }
-
+        
 
         // Audio time slider element mousedown
         this.elementAudioTime.addEventListener('mousedown', (e) => { 
@@ -183,6 +187,10 @@ export default class HTMLElements {
                 this.experience.onAudioBpmChange(this.experience.audioAnalizer.currentBpm);
             }
         }); 
+
+    }
+
+
 
         // Update bpms
         if (this.experience.options.debug === true && this.experience.options.showBPM === true) {
@@ -235,13 +243,37 @@ export default class HTMLElements {
             strHTML += '<canvas id="Experience' + this.id + '_Canvas" class="Experience_Canvas"></canvas>';
             // Añado la etiqueta para el marco que indica que se está cargando
             strHTML += '<div class="Experience_Loading Experience_Panel"><span>Loading...</span></div>';
+
+
+            /*
+             * Menu to select the experience quality
+             */
+            strHTML += `<div id='Experience_Quality' class='Experience_Panel'> 
+                <h2>Select experience quality</h2>                
+                <div class='Experience_Quality_List' id='Experience_Quality_Low'>
+                    <div>Low</div>
+                    <div>
+                        One channel analized <br />
+                        512 frequency values
+                    </div>
+                </div>
+                <div class='Experience_Quality_List' id='Experience_Quality_High'>
+                    <div>High</div>
+                    <div>
+                        Six channels analized <br />
+                        2048 frequency values
+                    </div>
+                </div>
+            </div>`;
+
+            // Debug ui for effects
             if (this.options.showBPM === true) {
-                strHTML += `<div class="Experience_DebugEffects"> </div>`; 
+                strHTML += `<div class="Experience_DebugEffects"></div>`; 
             }            
             
             // Añado la etiqueta para el marco de los controles
             strHTML += '<div class="Experience_Controls">';
-            // Show FPS
+            // Show beats per minute
             if (this.options.showBPM === true) {
                 strHTML +=  "<div class='Experience_Panel Experience_Static' title='Beats per minute'>" +
                                 "<div class='Experience_BPM'>0</div>" +
@@ -271,6 +303,7 @@ export default class HTMLElements {
                                 "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT4'></div>" +
                             "</div>";
             }
+            // Show frames per second
             if (this.options.showFPS === true) {
                 strHTML +=  "<div class='Experience_Panel Experience_Static' title='Frames Per Second'>" +
                                 "<div class='Experience_FPS'>60</div>" +
@@ -307,7 +340,7 @@ export default class HTMLElements {
             strHTML += '</div>';
 
             // Play button
-            strHTML += '<div class="Experience_Play Experience_Panel Experience_Control" play="true">' +
+            strHTML += '<div class="Experience_Play Experience_Panel Experience_Control" play="true" disabled="true">' +
                             "<img draggable='false' src='https://devildrey33.es/Ejemplos/Three.js-Journey/Audio-PlayGround/icos.svg#svg-play' />" +
                     '</div>';
             // Pause button
@@ -329,21 +362,21 @@ export default class HTMLElements {
             /* 
              * AudioControls
              */
-            strHTML += `<div class='Experience_AudioControls'>
-                <div class="Experience_AC_SongsVolume">
-                    <span>song</span>
-                    <select name='songs'>`
-                    for (let i = 0; i < this.songs.length; i++) {
-                        strHTML += (this.songs[i].name === this.song.name) ? "<option selected>" : "<option>";
-                        strHTML += this.songs[i].name + "</option>";
-                    }        
-            strHTML +=`</select>
-                    <span>volume</span>
-                    <div class='Experience_AC_Volume'>
-                        <input id='volume' type='range' name='volume' min='0' max='1' value='${this.experience.options.audioVolume}' step='0.01'></input>
-                    </div>`
-
             if (this.experience.options.debug === true) {
+                strHTML += `<div class='Experience_AudioControls'>
+                    <div class="Experience_AC_SongsVolume">
+                        <span>song</span>
+                        <select name='songs'>`
+                        for (let i = 0; i < this.songs.length; i++) {
+                            strHTML += (this.songs[i].name === this.song.name) ? "<option selected>" : "<option>";
+                            strHTML += this.songs[i].name + "</option>";
+                        }        
+                strHTML +=`</select>
+                        <span>volume</span>
+                        <div class='Experience_AC_Volume'>
+                            <input id='volume' type='range' name='volume' min='0' max='1' value='${this.experience.options.audioVolume}' step='0.01'></input>
+                        </div>`
+
                 if (this.experience.options.audioMultiChannel === true) {
                 strHTML +=`<span id='muteSong'>song</span>
                     <div class='Experience_AC_Volume'>
@@ -376,11 +409,13 @@ export default class HTMLElements {
                     </div>`
             }
 
-            strHTML += `</div>
-                <div class='Experience_AC_Time'>
-                    <input type='range' step="0.1" value="0"></input>
-                </div>
-            </div>`;
+            strHTML += `</div>`;
+            if (this.experience.options.debug === true) {
+                strHTML += `<div class='Experience_AC_Time'>
+                                <input type='range' step="0.1" value="0"></input>
+                            </div>`
+            }
+            strHTML += `</div>`;
 
             // Add the html string to the experience element
             this.elementExperience.innerHTML = strHTML;
@@ -456,6 +491,12 @@ export default class HTMLElements {
             this.elementLoading = document.querySelector("#" + this.elementExperience.id + " > .Experience_Loading");
             // Obtengo la etiqueta del marco para los controles
             this.elementControls = document.querySelector("#" + this.elementExperience.id + " > .Experience_Controls");
+            
+            // Experience quality
+            this.elementQuality = document.getElementById("Experience_Quality");
+            this.elementQualityLow = document.getElementById("Experience_Quality_Low");
+            this.elementQualityHigh = document.getElementById("Experience_Quality_High");
+
             // if FPS are show
             if (this.options.showFPS === true) {
                 // Get FPS html element from the doom

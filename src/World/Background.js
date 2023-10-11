@@ -4,22 +4,21 @@ import BackgroundVertexShader from "../Shaders/Background/BackgroundVertex.glsl"
 import BackgroundFragmentShader from "../Shaders/Background/BackgroundFragment.glsl"
 
 export default class Background {
-    constructor(world) {
-
+    constructor(world, name, width = 22400, height = 12600, x = 0, y = 0, z = -10000) {
+        this.name = name;
         this.experience = new Experience();
         this.scene = this.experience.scene;
         this.world = world;
-        this.setup();        
+        this.setup(width, height, x, y, z);        
     }
 
-    setup() {
-        this.geometry = new THREE.PlaneGeometry(16000 * 1.4, 9000 * 1.4);
+    setup(width, height, x, y, z) {
+        this.geometry = new THREE.PlaneGeometry(width, height);
 
         this.material = new THREE.ShaderMaterial({
             uniforms : {
-                uTexture1      : { value : this.experience.resources.items["background1"] },
-                uTexture2      : { value : this.experience.resources.items["background2"] },
-                uTexture3      : { value : this.experience.resources.items["background3"] },
+                uTexture1      : { value : this.experience.resources.items[this.name] },
+                uAlpha         : { value : 0.125 },
                 uActualTexture : { value : 1 },
                 uTime          : { value : 0 },
             },
@@ -30,23 +29,24 @@ export default class Background {
         });
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
-        this.mesh.rotation.z = -Math.PI * 0.5;
-        this.mesh.position.set(0, 0, -10000);
-        this.mesh.name = "Background";
+//        this.mesh.rotation.z = -Math.PI;
+
+        console.log(this.world.backgroundPosition);
+        this.world.backgroundPosition++;
+
+        this.mesh.position.set(x, y, z);
+        this.mesh.name = this.name;
     
         this.scene.add(this.mesh);
     }
 
     updateBackground() {
         this.material.uniforms.uTime.value = 0;
-        this.material.uniforms.uTexture1.value = this.experience.resources.items["background1"];
-        this.material.uniforms.uTexture2.value = this.experience.resources.items["background2"];
-        this.material.uniforms.uTexture3.value = this.experience.resources.items["background3"];
+        this.material.uniforms.uTexture1.value = this.experience.resources.items[this.name];
     }
 
     update(delta) {
         this.material.uniforms.uTime.value += delta;
-        this.mesh.rotation.z += delta / 75;
     }
 
 }

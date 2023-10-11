@@ -11,7 +11,7 @@ export default class Sun {
         this.audioAnalizer = this.experience.audioAnalizer;
         this.world         = world;
         this.setupSun();
-        this.setupLight();
+//        this.setupLight();
     }
 
     
@@ -43,7 +43,7 @@ export default class Sun {
         this.scene.add(this.mesh);
     }
 
-    setupLight() {
+/*    setupLight() {
         this.sunLight = new THREE.DirectionalLight('#ffffff', this.experience.options.sunLightIntensity)
         this.sunLight.shadow.camera.far = 256;
         this.sunLight.shadow.mapSize.set(1024, 1024);
@@ -55,7 +55,7 @@ export default class Sun {
         this.sunLight.position.set(0, 0, -134);      
         this.sunLight.castShadow = true;
         this.world.group.add(this.sunLight)  
-    }
+    }*/
 
     update(delta) {
         // update time on sun

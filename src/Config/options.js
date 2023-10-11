@@ -14,7 +14,7 @@ export default {
     // Height in pixels. Use 'auto' to fit all viewport height
     height                  : "auto",       */
     // Show framerate inside the butons frame
-    showFPS                 : true,
+    showFPS                 : isDebug,
     // Show current beat per minute            
     showBPM                 : isDebug,
     // Show full screen buton in the buttons frame
@@ -28,14 +28,14 @@ export default {
     // Element where canvas is inserted (by default is document.body)
     // For example you can use document.getElementById() to retrieve tag inside you want to create the canvas
     rootElement             : document.body,
-    // Allow drag & drop songs
+    // Allow drag & drop songs (NOT IMPLEMENTED FOR MULTICHANNEL)
     songsDragDrop           : false,
     // default audio volume
     audioVolume             : 0.25,
 
-    audioFFTSize            : 512,
+    audioFFTSize            : 4096,
 
-    audioMultiChannel       : false,
+    audioMultiChannel       : true,
     // Allow orbit controls (only on debug by default)
     orbitControls           : isDebug,
 
@@ -57,39 +57,18 @@ export default {
     sunAudioStrengthSin             : 2.1,
     sunNoiseStrength                : 15,
     sunNoiseSpeed                   : 1,
-    sunLightIntensity               : 1,
-
 
     // Rays (particles)
     raysCount                       : 50,
 
-    // Bars
+    // Lateral Bars
     barsAudioStrength               : 0.5,
     barsAudioZoom                   : 1.5,
     barsSpeed                       : 1.0,
 
-/*
-    osciloscopeAudioStrength        : 0.5,
-    osciloscopeAudioZoom            : 1,*/
-
+    // Lateral osciloscope
     hmsOsciloscopeAudioStrength     : 0.5,
     hmsOsciloscopeSpeed             : 2,
-
-    // Voronoi Background 
-    /*voronoiBackgroundSpeed          : 1.0,
-    voronoiBackgroundThickness      : 0.01,
-    voronoiBackgroundCount          : 64.0,*/
-    
-
-    // Bloom (postprocessing)
-    // TopeBloom  -->  S : 0.68, R : -0.16, T : 0.036
-    // Psicodelic -->  S : 0.3,  R : 6.11,  T : 0.027
-
-/*    bloomStrength                   : 0.1, //0.05,
-    bloomRadius                     : 6.11, //-5.32,
-    bloomThreshold                  : 0.027,//0.05,
-    bloomEnabled                    : true,*/
-
 
     // Bloom Pmndrs (postprocessing)
     bloomPmndrsIntensity            : .8, //2.0,   // 0.3,   // 2.7
@@ -107,11 +86,6 @@ export default {
     godRaysSamples                  : 60,
     godRaysEnabled                  : true,
 
-    // Shock wave Pmndrs (postprocessing)
-/*    shockWaveSpeed                  : 7.5,
-    shockWaveMaxRadius              : 1.6,
-    shockWaveWaveSize               : 0.2,
-    shockWaveAmplitude              : 20,*/
 
     // Color Correction Pmndrs custom (postprocessing)
     colorCorrectionPowRGB           : new THREE.Vector3(3.0, 3.0, 3.0),

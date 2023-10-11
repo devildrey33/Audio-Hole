@@ -31,7 +31,7 @@ varying vec2      vUv;
 }*/
 
 vec4 Line2(vec3 color, float audioValue, float speed, float width) {
-    float curve = (0.25 * width) * sin((10.25 * vUv.x) + (uSpeed * speed * uTime * 10.0));
+    float curve = (0.25 * width) * sin((10.25 * vUv.x) - (uSpeed * speed * uTime * 10.0));
 
     float lineAShape = smoothstep(1.0 - clamp(distance(curve + (vUv.y) + (audioValue * 0.5), 0.5 ) * 1.0, 0.0, 1.0), 1.0, 0.99);
     vec4  lineACol = (1.0 - lineAShape) * vec4(mix(vec4(color, 1.0), vec4(0.0), lineAShape));

@@ -9,7 +9,7 @@ export default [
         type : 'texture',
         path : './textures/1.webp'
     },
-    { // planet background
+/*    { // planet background
         name : 'background2',
         type : 'texture',
         path : './textures/2.jpg'
@@ -18,15 +18,30 @@ export default [
         name : 'background3',
         type : 'texture',
         path : './textures/4.jpg'
-    },/*
-    { // fuck-of 3
-        name : 'background4',
+    },*/
+/*    { // fuck-of 3
+        name : 'fuckOff1',
         type : 'texture',
-        path : './textures/4.webp'
+        path : './textures/fuckoff.png'
+    },   
+    { // fuck-of 3
+        name : 'fuckOff2',
+        type : 'texture',
+        path : './textures/fuckoff2.png'
     },
     { // fuck-of 3
-        name : 'background5',
+        name : 'fuckOff3',
         type : 'texture',
-        path : './textures/5.webp'
-    },*/
+        path : './textures/fuckoff3.png'
+    },    
+    { // fuck-of 3
+        name : 'fuckOff4',
+        type : 'texture',
+        path : './textures/fuckoff4.png'
+    },    
+    { // fuck-of 3
+        name : 'fuckOff5',
+        type : 'texture',
+        path : './textures/fuckoff5.png'
+    },    */
 ]

@@ -50,7 +50,7 @@ vec4 drawAudio(vec2 pos) {
 //    float audioValue2 = ((texture2D(uAudioTexture3, vec2((audioX / uAudioZoom), 0.0)).r) * uAudioStrength) * uFrequency;
 
     // Bars spiral
-    vec2 nPos = vec2(pos.x, pos.y - (pos.x * uFrequency) - mod(uTime * uSpeed, 1.0) + audioValue);
+    vec2 nPos = vec2(pos.x, pos.y - (pos.x * uFrequency) + mod(uTime * uSpeed, 1.0) + audioValue);
 //    vec2 nPos2 = vec2(pos.x, pos.y - ((pos.x + uThickness) * uFrequency) - mod(uTime * uSpeed, 1.0) + audioValue);
     // pos y of each line
     float p = mod(nPos.y, uFrequency);
@@ -60,7 +60,7 @@ vec4 drawAudio(vec2 pos) {
     float audioValueSin = (((texture2D(uAudioTexture2, vec2(audioXSin / uAudioZoomSin, 0.0)).g - 0.5) * 0.55) * uAudioStrengthSin) * uFrequencySin;
 
     // Oscyloscope spiral
-    vec2 nPosSin = vec2(pos.x, pos.y + (pos.x * uFrequencySin) - mod(uTime * uSpeedSin, 1.0) + audioValueSin);
+    vec2 nPosSin = vec2(pos.x, pos.y + (pos.x * uFrequencySin) + mod(uTime * uSpeedSin, 1.0) + audioValueSin);
     float pSin = mod(nPosSin.y, uFrequencySin);
 
     //float nThickness = uThickness + uAudioValue * 0.05;

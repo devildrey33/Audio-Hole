@@ -47,6 +47,45 @@ html, body {
     box-shadow:  5px  5px 5px rgba(0,0,0, 0.5);
 }
 
+#Experience_Quality {
+    margin:auto;
+    width:293px;
+    height: 182px;
+    top: calc(25vh - 50px);
+    padding :10px;
+/*    left : calc(50vw - 209px);*/
+
+}
+
+.Experience_Quality_List {
+    margin-top:20px;
+    width:262px;
+    display: grid;
+    grid-template-columns: 70px 200px;
+    grid-row: auto auto;
+/*    grid-column-gap: 20px;*/
+    grid-row-gap: 3px;    
+    position:relative;
+    left:4px;
+    padding:10px;
+    border:1px solid rgba(255, 255, 0, 0);
+    background-color: rgba(30, 30, 90, 0);
+    transition: 0.3s ease-in-out;
+    cursor:pointer;
+}
+
+.Experience_Quality_List:hover {
+    border:1px solid rgba(255, 255, 0, 1);
+    background-color: rgba(30, 30, 90, 0.75);
+    color:rgba(255, 255, 0, 1);
+}
+
+.Experience_Quality_List > div:nth-child(1) {
+    font-size: 21px;
+    
+}
+
+
 .Experience > .Experience_Loading {
     padding:13px;
 /*    width:4em;*/
@@ -209,7 +248,9 @@ html, body {
  * Audio controls
  */
  /* Disable play button while loading and mage a grayscale on them */
-.Experience[loading = "true"] > .Experience_Play,  .Experience[loading = "true"] > .Experience_Play > img {
+ 
+.Experience[loading = "true"] > .Experience_Play, .Experience[loading = "true"] > .Experience_Play > img,
+.Experience_Play[disabled = "true"], .Experience_Play[disabled = "true"] > img {
     pointer-events:none;
     filter: grayscale(1);
 }
@@ -472,3 +513,4 @@ html, body {
     width: 100%;
     height: 100%;
 }*/
+

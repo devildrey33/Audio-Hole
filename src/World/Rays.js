@@ -39,7 +39,7 @@ export default class Rays {
 
         this.angle = Math.PI - Math.random(Math.PI * 2);
         this.radius = 0.4 + Math.random() * 2.8;
-        this.position = new THREE.Vector3(Math.cos(this.angle * this.radius) , Math.sin(this.angle * this.radius), 10);
+        this.position = new THREE.Vector3(Math.cos(this.angle * this.radius) , Math.sin(this.angle * this.radius), -60);
 
 //        console.log(this.color);
     }
@@ -85,7 +85,7 @@ export default class Rays {
     }*/
 
     update() {
-        this.mesh.position.z -= this.speed;
+        this.mesh.position.z += this.speed;
         this.angle += this.rotationSpeed;
         this.radius -= this.rotationSpeed * 0.5;
         this.mesh.position.x = Math.cos(this.angle * this.radius);
@@ -93,7 +93,7 @@ export default class Rays {
         
         this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.channelSong.averageFrequency[4] / 64);
 
-        if (this.mesh.position.z < - 60) {
+        if (this.mesh.position.z > 5) {
             this.createRandValues();
             this.appyRandValues();
         }
