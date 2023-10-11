@@ -47,17 +47,31 @@ html, body {
     box-shadow:  5px  5px 5px rgba(0,0,0, 0.5);
 }
 
+#Experience_PressPlay {
+    display:none;
+    position: fixed;
+    width: 180px;
+    padding:10px;
+    bottom:15px;
+    left: 80px;
+    font-size: 18px;
+    animation:OpacityAnimation 1s ease 0s infinite alternate;
+}
+
+.Experience[loading = "false"] > #Experience_PressPlay[show = "true"] {
+    display:block;
+}
+
 #Experience_Quality {
     margin:auto;
     width:293px;
     height: 182px;
     top: calc(25vh - 50px);
     padding :10px;
-/*    left : calc(50vw - 209px);*/
-
 }
 
 .Experience_Quality_List {
+    text-shadow: 1px 1px 2px black;
     margin-top:20px;
     width:262px;
     display: grid;
@@ -70,7 +84,7 @@ html, body {
     padding:10px;
     border:1px solid rgba(255, 255, 0, 0);
     background-color: rgba(30, 30, 90, 0);
-    transition: 0.3s ease-in-out;
+    transition: border 0.3s ease-in-out, background-color 0.3s ease-in-out, color 0.3s ease-in-out;
     cursor:pointer;
 }
 
@@ -80,10 +94,37 @@ html, body {
     color:rgba(255, 255, 0, 1);
 }
 
-.Experience_Quality_List > div:nth-child(1) {
-    font-size: 21px;
-    
+.Experience_Quality_List > div {
+    transition: color 0.3s ease-in-out;
 }
+/* LOW, HIGH texts */
+.Experience_Quality_List > div:nth-child(1) {
+    font-size: 21px;    
+}
+/* recomended LOW, HIGH texts */
+.Experience_Quality_List[recomended = "true"] > div:nth-child(1) {
+    color:lime;
+}
+
+/* recomended label animation */
+.Experience_Quality_List[recomended = "true"]::after {
+    content: 'recomended';
+    position:absolute;
+    color:lime;
+    width: 100px;
+    top: 25px;
+    left:195px;
+    z-index: 100;
+    font-weight: bolder;
+    transform: rotate(-25deg);
+
+    animation:OpacityAnimation 1s ease 0s infinite alternate;
+}
+
+@keyframes OpacityAnimation {
+    0%   { opacity:0;  }
+    100% { opacity:1;  }
+}  
 
 
 .Experience > .Experience_Loading {

@@ -94,7 +94,24 @@ export default class Experience {
 
         this.beats = 0;
 
+        this.time.measureQuality();
 //        this.htmlElements.elementExperience.setAttribute("loading", "false");
+    }
+
+    /* 
+     * Recomends the experience quality using an average of fps taken during the first 3 seconds
+     */
+    recomended(value) {
+        // A value of 50 means an high end machine
+        if (value > 50) {
+            if (typeof(this.htmlElements.elementQualityHigh) !== "undefined")
+                this.htmlElements.elementQualityHigh.setAttribute("recomended", "true");
+        }
+        // A value below 50 means a low end machine
+        else {
+            if (typeof(this.htmlElements.elementQualityLow) !== "undefined")
+                this.htmlElements.elementQualityLow.setAttribute("recomended", "true");
+        }
     }
 
     setQuality(preset = "high") {       
@@ -123,6 +140,8 @@ export default class Experience {
         this.update = this.updateQuality;
         // Enable play button
         this.htmlElements.elementPlay.setAttribute("disabled", "false");
+
+        this.htmlElements.elementPressPlay.setAttribute("show", "true");
 
         if (this.options.debug)
             this.debug = new Debug();

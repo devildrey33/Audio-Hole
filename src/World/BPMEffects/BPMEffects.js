@@ -40,7 +40,7 @@ export default class BPMEffects {
             },
             { // 03 - One Chance
                 LateralBars1       : this.audioAnalizer.channelOther,
-                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralBars2       : this.audioAnalizer.channelBass,
                 LateralOsciloscope : this.audioAnalizer.channelDrum,
                 Sun                : this.audioAnalizer.channelVocal,
                 SunRays            : this.audioAnalizer.channelVocal,
@@ -58,7 +58,7 @@ export default class BPMEffects {
             },
             { // 05 - Six feet under
                 LateralBars1       : this.audioAnalizer.channelOther,
-                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralBars2       : this.audioAnalizer.channelBass,
                 LateralOsciloscope : this.audioAnalizer.channelDrum,
                 Sun                : this.audioAnalizer.channelVocal,
                 SunRays            : this.audioAnalizer.channelVocal,
@@ -85,7 +85,7 @@ export default class BPMEffects {
             },
             { // 08 - Lost
                 LateralBars1       : this.audioAnalizer.channelOther,
-                LateralBars2       : this.audioAnalizer.channelPiano,
+                LateralBars2       : this.audioAnalizer.channelBass,
                 LateralOsciloscope : this.audioAnalizer.channelDrum,
                 Sun                : this.audioAnalizer.channelVocal,
                 SunRays            : this.audioAnalizer.channelVocal,
@@ -95,9 +95,15 @@ export default class BPMEffects {
         ];
     }
 
-
-
-
+    /* 
+     * Setups all the animations of the current song in the specified timeline
+     */
+    RecalculateAnimations(timeline) {
+        const currentSong = this.experience.currentSong;
+        this.songsEffects[currentSong].forEach(element => {
+            element.effect.setupAnimation(timeline, element.start, element.end);            
+        });
+    }
 
 
     songsEffects = [
@@ -126,17 +132,13 @@ export default class BPMEffects {
                 effect : new BPMSpiralsScale({ scaleX : 3.5, ease : "bounce" })
             },
 
-/*            {
-                start : 30, end : 32,
-                effect : new BPMSpiralsPosition({ positionX : 0.2, ease : easeDistorsion })
-            },*/
             {   // first yell
                 start : 33, end : 41, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2, color : new THREE.Color(0,1,0) })
+                effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color(0,1,0) })
             },
             {   // end first yell and begin of a second mini yell
                 start : 49, end : 51, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25, color : new THREE.Color(1,0,0) })
+                effect : new BPMSpiralOsciloscope({ audioStrength : 2.75, thickness : 0.25, color : new THREE.Color(1,0,0) })
             },
             {   // 
                 start : 73, end : 77, 
@@ -192,9 +194,23 @@ export default class BPMEffects {
                 effect : new BPMSpiralsScale({ scaleZ : 2.75, ease : "bounce" })
             },
 
+            {   // mayday
+                start : 312.5, end : 313.5, 
+                effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
+            },
+            {   // mayday
+                start : 314.5, end : 315.5,
+                effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
+            },
+            {   // oneday
+                start : 322.5, end : 323.5,
+                effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
+            },
+
+
             {   // yell
                 start : 356, end : 364, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25, color : new THREE.Color(0,0.5,0.75) })
+                effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.25, color : new THREE.Color(0,0.5,0.75) })
             },
 
             {
@@ -229,7 +245,7 @@ export default class BPMEffects {
 
             {   // yell
                 start : 454, end : 460, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2, color : new THREE.Color(1,0,0) })
+                effect : new BPMSpiralOsciloscope({ audioStrength : 2.75, thickness : 0.2, color : new THREE.Color(1,0,0) })
             },
 
             {   // mayday
@@ -247,11 +263,11 @@ export default class BPMEffects {
 
             {   // yell
                 start : 520, end : 521, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color(1,0,0) })
+                effect : new BPMSpiralOsciloscope({ audioStrength : 2.5, thickness : 0.2, color : new THREE.Color(1,0,0) })
             },
             {   // yell
                 start : 535, end : 540, 
-                effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.3, color : new THREE.Color(0,0,1) })
+                effect : new BPMSpiralOsciloscope({ audioStrength : 2.75, thickness : 0.3, color : new THREE.Color(0,0,1) })
             },
 /*            {
                 start : 520,  end : 521 ,
@@ -329,11 +345,5 @@ export default class BPMEffects {
         [],
     ]
 
-    RecalculateAnimations(timeline) {
-        const currentSong = this.experience.currentSong;
-        this.songsEffects[currentSong].forEach(element => {
-            element.effect.setupAnimation(timeline, element.start, element.end);            
-        });
-    }
 }
 

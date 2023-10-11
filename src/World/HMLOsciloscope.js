@@ -39,11 +39,11 @@ export default class HMLOsciloscope {
         this.mesh.rotation.z = -Math.PI * 0.5 ;
         this.mesh.rotation.x = -Math.PI * 0.5 ;
 //        this.mesh.rotation.y = Math.PI * 0.5;
-        this.mesh.position.set(250, 750, -1024 * 4);
+        this.mesh.position.set(200, 750, -1024 * 4);
 
         this.mesh2.rotation.z = -Math.PI * 0.5 ;
         this.mesh2.rotation.x = -Math.PI * 0.5 ;
-        this.mesh2.position.set(250, -750, -1024 * 4);
+        this.mesh2.position.set(200, -750, -1024 * 4);
 //        this.mesh.rotation.z = Math.PI * 0.5;
 //        this.mesh.position.copy(this.position);
 

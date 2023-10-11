@@ -39,6 +39,8 @@ export default class World {
         this.backgroundPosition = 0;
         this.background = new Background(this, "background1");
 //        this.background2 = new Background(this, "fuckOff1", 350 * .25, 250 * .25, 0, -20, -160);
+
+        this.group.position.z = 5;
     }
 
     setQuality() {
@@ -70,9 +72,10 @@ export default class World {
         this.ready = true;
     }
 
+    /* 
+     * Update function without knowing the quality settings
+     */
     update() {
-//        if (this.ready === true) {
-//        }
         const delta = this.time.delta / 1000;
             
         this.background.update(delta);
@@ -82,6 +85,9 @@ export default class World {
         this.group.rotation.z += this.time.delta / 7500;
     }
 
+    /* 
+     * Update function when the quality is set
+     */
     updateQuality() {
         const delta = this.time.delta / 1000;
             

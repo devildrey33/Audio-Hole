@@ -266,6 +266,13 @@ export default class HTMLElements {
                 </div>
             </div>`;
 
+            /*
+             * Press play button to start
+             */
+            strHTML += `<div id='Experience_PressPlay' class='Experience_Panel'>
+            Press play button
+            </div>`
+
             // Debug ui for effects
             if (this.options.showBPM === true) {
                 strHTML += `<div class="Experience_DebugEffects"></div>`; 
@@ -374,7 +381,7 @@ export default class HTMLElements {
                 strHTML +=`</select>
                         <span>volume</span>
                         <div class='Experience_AC_Volume'>
-                            <input id='volume' type='range' name='volume' min='0' max='1' value='${this.experience.options.audioVolume}' step='0.01'></input>
+                            <input id='volume' type='range' name='volume' min='0' max='1' value='0' step='0.01'></input>
                         </div>`
 
                 if (this.experience.options.audioMultiChannel === true) {
@@ -475,9 +482,12 @@ export default class HTMLElements {
             // Get the play and pause button elements
             this.elementPlay  = document.querySelector("#" + this.elementExperience.id + " > .Experience_Play");
             this.elementPause = document.querySelector("#" + this.elementExperience.id + " > .Experience_Pause");            
+            
+            
             // Play pause button listen click
             this.elementPlay.addEventListener( "click", (e) => { 
                 this.audioUI(!this.experience.audioAnalizer.playPause(this.experience.song.path, this.experience.song.bpm));  
+                this.elementPressPlay.setAttribute("show", "false");
             });
             this.elementPause.addEventListener("click", (e) => {  
                 this.audioUI(!this.experience.audioAnalizer.playPause());  
@@ -496,6 +506,8 @@ export default class HTMLElements {
             this.elementQuality = document.getElementById("Experience_Quality");
             this.elementQualityLow = document.getElementById("Experience_Quality_Low");
             this.elementQualityHigh = document.getElementById("Experience_Quality_High");
+
+            this.elementPressPlay = document.getElementById("Experience_PressPlay");
 
             // if FPS are show
             if (this.options.showFPS === true) {

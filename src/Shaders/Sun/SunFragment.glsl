@@ -197,5 +197,6 @@ void main() {
 
     if (color.a == 0.0) discard;
 
+    color.a = clamp(uTime * 0.1, 0.0, 1.0);
     gl_FragColor = color;
 }
