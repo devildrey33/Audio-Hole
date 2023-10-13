@@ -85,13 +85,21 @@ vec4 drawAudio(vec2 pos) {
         return vec4(hsl2rgb(vec3(0.05 + (uTime * -0.05), 1, (1.0 - pos.y) * 0.5 )), uAudioValue * ((1.0 - pos.y) * 0.5));
     }
 
+    // draw ring
+/*    float time = mod(uTime, 1.0);
+    float pos2 = 1.0 - clamp(time, 0.0, 0.5) * 2.0;
+    const float thickness = 0.01;
+
+    if (pos2 > vUv.y && pos2 < (vUv.y + thickness))  return vec4(.0, .0, 1.0, uAudioValue * vUv.y );
+*/
+
     discard;
 }
 
 
-
 void main() {
     vec4 color = drawAudio(vUv);
+//    color += drawRing();
     gl_FragColor = color;
 //    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }

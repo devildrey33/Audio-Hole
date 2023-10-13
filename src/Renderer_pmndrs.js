@@ -102,6 +102,10 @@ export default class Renderer {
         this.godRaysEffect.godRaysMaterial.clampMax = this.experience.options.godRaysClampMax;
         this.godRaysEffect.godRaysMaterial.samples = this.experience.options.godRaysSamples;
 
+        // Setup the god rays update for single or multichannel
+        this.updateGodRays = (this.experience.options.audioMultiChannel) ? this.updateGodRaysMC : this.updateGodRaysSC;
+
+        // Set the update function for post quality selected
         this.update = this.updateQuality;
     }
 
@@ -129,8 +133,16 @@ export default class Renderer {
         this.updateGodRays();
     }
 
-    updateGodRays() {
+    // Multichannel is more acurate and max values are low
+    updateGodRaysMC() {
         const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] / 255);
+        this.godRaysEffect.godRaysMaterial.weight = 0.3 + audioValue;
+        this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;    
+    }
+
+    // Singlechannel is less acurate and max values are high because are an average of all channels
+    updateGodRaysSC() {
+        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] / 512);
         this.godRaysEffect.godRaysMaterial.weight = 0.3 + audioValue;
         this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;    
     }

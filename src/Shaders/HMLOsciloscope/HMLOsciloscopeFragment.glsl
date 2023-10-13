@@ -67,7 +67,7 @@ void main() {
 //        finalColor.a = 0.1 - (vUv.x * 0.1);
 //        finalColor.a *= uAudioValue * 0.05;
 //    }    
-    finalColor.a *= (0.01 + uAudioValue.g) * 0.75 * vUv.x;
+    finalColor.a *= (0.001 + uAudioValue.g) * 0.75 * vUv.x;
     //finalColor.a = 1.0;
 
 //    if (finalColor.a < 0.01) discard;

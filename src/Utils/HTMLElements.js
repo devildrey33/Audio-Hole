@@ -1,5 +1,11 @@
 import Experience from "../Experience";
 
+/*
+ * Make this more more clear (or at least something thant doesnt feel like my old tubo c++ programs),
+     separate object creation in single functions, and make class functions for the events and not inline like now
+     Its more code, but its a loot more easy to mantain.
+ */
+
 export default class HTMLElements {
     // Static counter for canvas id's
     static #countIds = 0;
@@ -253,25 +259,31 @@ export default class HTMLElements {
                 <div class='Experience_Quality_List' id='Experience_Quality_Low'>
                     <div>Low</div>
                     <div>
-                        One channel analized <br />
-                        512 frequency values
+                        512 frequency values <br />
+                        One channel analisis 
                     </div>
                 </div>
                 <div class='Experience_Quality_List' id='Experience_Quality_High'>
                     <div>High</div>
                     <div>
-                        Six channels analized <br />
-                        2048 frequency values
+                        2048 frequency values <br />
+                        Six channel analisis 
                     </div>
                 </div>
             </div>`;
 
             /*
              * Press play button to start
+             * and
+             * Full screen mode
              */
             strHTML += `<div id='Experience_PressPlay' class='Experience_Panel'>
-            Press play button
-            </div>`
+            Press play to start
+            </div>
+            <div id='Experience_PressFullScreen' class='Experience_Panel' show='true'>
+                Full screen button
+            </div>            
+            `
 
             // Debug ui for effects
             if (this.options.showBPM === true) {
@@ -287,28 +299,6 @@ export default class HTMLElements {
                                 "<div class='Experience_TxtBPM'>cbpm</div>" +
                             "</div>";
 
-                strHTML +=  "<div class='Experience_Panel Experience_Static Experience_AudioLevels' title='Audio levels (High / Medium / Low / Total)'>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH0'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM0'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL0'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT0'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH1'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM1'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL1'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT1'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH2'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM2'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL2'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT2'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH3'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM3'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL3'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT3'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelH' id='Experience_AudioLevelH4'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelM' id='Experience_AudioLevelM4'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelL' id='Experience_AudioLevelL4'></div>" +
-                                "<div class='Experience_AudioLevel Experience_AudioLevelT' id='Experience_AudioLevelT4'></div>" +
-                            "</div>";
             }
             // Show frames per second
             if (this.options.showFPS === true) {
@@ -435,6 +425,8 @@ export default class HTMLElements {
                     this.elementExperience.requestFullscreen();
                     this.elementFullScreen.style.display    = "none";
                     this.elementRestoreScreen.style.display = "block";
+                    // disable the initial tooltip
+                    this.elementPressFullScreen.setAttribute("show", "false");
                 });
                 this.elementRestoreScreen.addEventListener("click", (e) => {
                     document.exitFullscreen();
@@ -488,6 +480,7 @@ export default class HTMLElements {
             this.elementPlay.addEventListener( "click", (e) => { 
                 this.audioUI(!this.experience.audioAnalizer.playPause(this.experience.song.path, this.experience.song.bpm));  
                 this.elementPressPlay.setAttribute("show", "false");
+                this.elementPressFullScreen.setAttribute("show", "false");
             });
             this.elementPause.addEventListener("click", (e) => {  
                 this.audioUI(!this.experience.audioAnalizer.playPause());  
@@ -508,6 +501,7 @@ export default class HTMLElements {
             this.elementQualityHigh = document.getElementById("Experience_Quality_High");
 
             this.elementPressPlay = document.getElementById("Experience_PressPlay");
+            this.elementPressFullScreen = document.getElementById("Experience_PressFullScreen");
 
             // if FPS are show
             if (this.options.showFPS === true) {

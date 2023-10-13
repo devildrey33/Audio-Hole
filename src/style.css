@@ -47,17 +47,30 @@ html, body {
     box-shadow:  5px  5px 5px rgba(0,0,0, 0.5);
 }
 
+#Experience_PressFullScreen {
+    display:none;
+    position: fixed;
+    width: 185px;
+    padding:10px;
+    bottom:155px;
+    right: 80px;
+    font-size: 18px;
+    animation:OpacityAnimation 2s ease 0s 5;
+    opacity: 0;
+}
+
 #Experience_PressPlay {
     display:none;
     position: fixed;
-    width: 180px;
+    width: 190px;
     padding:10px;
     bottom:15px;
     left: 80px;
     font-size: 18px;
-    animation:OpacityAnimation 1s ease 0s infinite alternate;
+    animation:OpacityAnimation 2s ease 0s infinite;
 }
 
+.Experience[loading = "false"] > #Experience_PressFullScreen[show = "true"],
 .Experience[loading = "false"] > #Experience_PressPlay[show = "true"] {
     display:block;
 }
@@ -118,12 +131,13 @@ html, body {
     font-weight: bolder;
     transform: rotate(-25deg);
 
-    animation:OpacityAnimation 1s ease 0s infinite alternate;
+    animation:OpacityAnimation 2s ease 0s infinite;
 }
 
 @keyframes OpacityAnimation {
-    0%   { opacity:0;  }
-    100% { opacity:1;  }
+    0%  { opacity:0;  }
+    50% { opacity:1;  }
+    100% { opacity:0;  }
 }  
 
 
@@ -471,34 +485,6 @@ html, body {
 }
 
 
-.Experience_AudioLevels {
-    display: grid;
-    grid-template-columns: 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px 10px;
-    gap: 2px;
-    overflow: hidden;
-    width : 240px;
-}
-
-.Experience_AudioLevel {
-    position: relative;
-    height: 60px;
-    background-color: v;
-}
-
-
-.Experience_AudioLevel:nth-child(4n+0) {
-    background-color: #0000FF; /* Color de la barra */
-}
-.Experience_AudioLevel:nth-child(4n+1) {
-    background-color: #0000BB; /* Color de la barra */
-}
-.Experience_AudioLevel:nth-child(4n+2) {
-    background-color: #000088; /* Color de la barra */
-}
-.Experience_AudioLevel:nth-child(4n+3) {
-    background-color: #000055; /* Color de la barra */
-}
-
 
 
 
@@ -555,3 +541,19 @@ html, body {
     height: 100%;
 }*/
 
+
+/* lil.gui */
+.lil-gui.root {
+    position:absolute;
+    top:0px;
+    right:0px;
+    z-index: 1000;
+}
+
+/* canvas to show the average levels of all channels */
+.Experience_DebugAverages {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
+}

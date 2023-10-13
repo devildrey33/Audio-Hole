@@ -8,7 +8,10 @@ export default class Debug {
     }
 
     setup() {
-        this.gui = new dat.GUI({ width : 300 });
+        this.gui = new dat.GUI({ 
+            width : 300, 
+            container : this.experience.htmlElements.elementExperience 
+        });
 
         this.setupAudioChannels();
 

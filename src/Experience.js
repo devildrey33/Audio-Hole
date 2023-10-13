@@ -14,6 +14,7 @@ import World from './World/World.js';
 import Debug from './Utils/Debug.js';
 import Resources from './Utils/Resources.js';
 import sources from "./Config/resourcesToLoad.js"
+import DebugAverages from './Utils/DebugAverages.js';
 
 
 let experienceInstance = null;
@@ -141,23 +142,32 @@ export default class Experience {
         // Enable play button
         this.htmlElements.elementPlay.setAttribute("disabled", "false");
 
+        // Enable help tooltips
         this.htmlElements.elementPressPlay.setAttribute("show", "true");
+        this.htmlElements.elementPressFullScreen.setAttribute("show", "false");
+        
 
-        if (this.options.debug)
+        if (this.options.debug) {
             this.debug = new Debug();
+            this.debugAverages = new DebugAverages((this.options.audioMultiChannel) ? 300 : 50, 80);
+        }
+        else {
+            // Create an empty debugAverages object to simulate its update function
+            this.debugAverages = { update : () => { } }
+        }
 
     }
 
     /**
      * Function called on resize
-    */
+     */
     resize() {
         this.camera.resize();
         this.renderer.resize();
     }
 
     /**
-     * Function called when a frame is about to update
+     * Function called when a frame is about to update (before the world objects creation)
     */
     update() {
         this.camera.update();
@@ -166,6 +176,9 @@ export default class Experience {
         this.renderer.update();
     }
 
+    /**
+     * Function called when a frame is about to update (after the world objects creation)
+    */
     updateQuality() {
         this.camera.update();
         this.audioAnalizer.update(this.time.delta);
@@ -173,44 +186,9 @@ export default class Experience {
         this.world.update();
         this.renderer.update();
 
-        this.updateDebug();
+        this.debugAverages.update();
     }
 
-    updateDebug() {
-        if (this.options.audioMultiChannel === true) {
-            // Piano
-            this.htmlElements.elementAudioLevelH0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[0] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelM0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[1] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelL0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[2] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelT0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[4] / 255) * 54)) + "px";
-            // Vocals
-            this.htmlElements.elementAudioLevelH1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[0] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelM1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[1] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelL1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[2] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelT1.style.top = (54 - ((this.audioAnalizer.channelVocal.averageFrequency[4] / 255) * 54)) + "px";
-            // Other
-            this.htmlElements.elementAudioLevelH2.style.top = (54 - ((this.audioAnalizer.channelOther.averageFrequency[0] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelM2.style.top = (54 - ((this.audioAnalizer.channelOther.averageFrequency[1] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelL2.style.top = (54 - ((this.audioAnalizer.channelOther.averageFrequency[2] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelT2.style.top = (54 - ((this.audioAnalizer.channelOther.averageFrequency[4] / 255) * 54)) + "px";
-            // Bass
-            this.htmlElements.elementAudioLevelH3.style.top = (54 - ((this.audioAnalizer.channelBass.averageFrequency[0] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelM3.style.top = (54 - ((this.audioAnalizer.channelBass.averageFrequency[1] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelL3.style.top = (54 - ((this.audioAnalizer.channelBass.averageFrequency[2] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelT3.style.top = (54 - ((this.audioAnalizer.channelBass.averageFrequency[4] / 255) * 54)) + "px";
-            // Drums
-            this.htmlElements.elementAudioLevelH4.style.top = (54 - ((this.audioAnalizer.channelDrum.averageFrequency[0] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelM4.style.top = (54 - ((this.audioAnalizer.channelDrum.averageFrequency[1] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelL4.style.top = (54 - ((this.audioAnalizer.channelDrum.averageFrequency[2] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelT4.style.top = (54 - ((this.audioAnalizer.channelDrum.averageFrequency[4] / 255) * 54)) + "px";
-        }
-        else {
-            this.htmlElements.elementAudioLevelH0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[0] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelM0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[1] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelL0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[2] / 255) * 54)) + "px";
-            this.htmlElements.elementAudioLevelT0.style.top = (54 - ((this.audioAnalizer.channelPiano.averageFrequency[4] / 255) * 54)) + "px";
-        }
-    }
  
     /**
      * Function called when all thre resources are loaded (except the song)
