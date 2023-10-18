@@ -84,8 +84,8 @@ export default class Debug {
         this.audioChannels = this.gui.addFolder("Audio Channels").open(open);
         
         this.fftOptions = {
-            "32768" : 32768, "16384" : 16384, "8192" : 8192, "4096" : 4096, "2048" : 2048, 
-            "1024" : 1024, "512" : 512, "256" : 256
+            "32768" : 32768, "16384" : 16384, "8192" : 8192, 
+            "4096" : 4096, "2048" : 2048, "1024" : 1024, "512" : 512
         }
 
         this.fftSize = { value : this.experience.options.audioFFTSize }
