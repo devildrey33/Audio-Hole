@@ -91,7 +91,17 @@ export default class BPMEffects {
                 SunRays            : this.audioAnalizer.channelVocal,
                 SpiralBars         : this.audioAnalizer.channelSong,
                 SpiralOsciloscope  : this.audioAnalizer.channelVocal
-            }   
+            },
+            { // 09 - Core dumped
+                LateralBars1       : this.audioAnalizer.channelOther,
+                LateralBars2       : this.audioAnalizer.channelBass,
+                LateralOsciloscope : this.audioAnalizer.channelDrum,
+                Sun                : this.audioAnalizer.channelVocal,
+                SunRays            : this.audioAnalizer.channelVocal,
+                SpiralBars         : this.audioAnalizer.channelSong,
+                SpiralOsciloscope  : this.audioAnalizer.channelVocal
+            },
+
         ];
     }
 
@@ -211,7 +221,7 @@ export default class BPMEffects {
                 effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
             },
             {   // oneday
-                start : 322.5, end : 323.5,
+                start : 322.5, end : 324,
                 effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
             },
 
@@ -265,7 +275,7 @@ export default class BPMEffects {
                 effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
             },
             {   // oneday
-                start : 485.5, end : 486.5,
+                start : 485.5, end : 487,
                 effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
             },
 
@@ -352,6 +362,8 @@ export default class BPMEffects {
             },
 
         ],
+        // 09 -
+        [],
         // 10 -
         [],
     ]

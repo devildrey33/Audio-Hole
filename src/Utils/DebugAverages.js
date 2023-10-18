@@ -43,7 +43,8 @@ export default class DebugAverages {
         
         for (let i = 0; i < this.audioAnalizer.totalChannels; i++) {
             const avFreq = this.audioAnalizer.channels[i].averageFrequency;            
-            const peak = this.peaks[i];
+            const avFreqPeak = this.audioAnalizer.channels[i].averageFrequencyPeaks;            
+//            const peak = this.peaks[i];
             
             // calculate positions
             let freq0 = (avFreq[0] / 255) * height;
@@ -59,17 +60,19 @@ export default class DebugAverages {
             this.context.fillRect((50 * i) + 34, height - freq4, 10, freq4);
 
             // calculate peaks
-            (peak[0] < freq0) ? peak[0] = freq0  : peak[0]-= 0.4;
+/*            (peak[0] < freq0) ? peak[0] = freq0  : peak[0]-= 0.4;
             (peak[1] < freq1) ? peak[1] = freq1  : peak[1]-= 0.4;
             (peak[2] < freq2) ? peak[2] = freq2  : peak[2]-= 0.4;
-            (peak[3] < freq4) ? peak[3] = freq4  : peak[3]-= 0.4;
+            (peak[3] < freq4) ? peak[3] = freq4  : peak[3]-= 0.4;*/
             
             this.context.fillStyle = "white";
+//console.log(avFreqPeak[0], peak[0] )
+
             // fill peaks
-            this.context.fillRect((50 * i) + 1, height - peak[0], 10, -2);
-            this.context.fillRect((50 * i) + 12, height - peak[1], 10, -2);
-            this.context.fillRect((50 * i) + 23, height - peak[2], 10, -2);
-            this.context.fillRect((50 * i) + 34, height - peak[3], 10, -2);
+            this.context.fillRect((50 * i) + 1, height - ((avFreqPeak[0] / 255) * height), 10, -2);
+            this.context.fillRect((50 * i) + 12, height - ((avFreqPeak[1] / 255) * height), 10, -2);
+            this.context.fillRect((50 * i) + 23, height - ((avFreqPeak[2] / 255) * height), 10, -2);
+            this.context.fillRect((50 * i) + 34, height - ((avFreqPeak[4] / 255) * height), 10, -2);
 
         }
     }

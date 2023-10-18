@@ -181,7 +181,7 @@ export default class AudioAnalizerMC {
 
     update(delta) {
         for (let i = 0; i < this.totalChannels; i++) {
-            this.channels[i].update();
+            this.channels[i].update(delta);
         }
 
         // Calculate current beats per minute 

@@ -32,7 +32,7 @@ export default class Experience {
         // Setup the songs list
         this.songs = songs;
         // select a random song
-        this.currentSong = Math.floor(Math.random() * this.songs.length);
+//        this.currentSong = Math.floor(Math.random() * this.songs.length);
         this.currentSong = 0;
         this.song = this.songs[this.currentSong];
         this.songLoading = true;

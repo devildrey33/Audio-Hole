@@ -31,9 +31,11 @@ varying vec2      vUv;
 }*/
 
 vec4 Line2(vec3 color, float audioValue, float speed, float width) {
-    float curve = (0.25 * width) * sin((10.25 * vUv.x) - (uSpeed * speed * uTime * 10.0));
+    vec2 pos = vUv - 0.125;
 
-    float lineAShape = smoothstep(1.0 - clamp(distance(curve + (vUv.y) + (audioValue * 0.5), 0.5 ) * 1.0, 0.0, 1.0), 1.0, 0.99);
+    float curve = (0.25 * width) * sin((10.25 * pos.x) - (uSpeed * speed * uTime * 10.0));
+
+    float lineAShape = smoothstep(1.0 - clamp(distance(curve + (pos.y) + (audioValue * 0.5), 0.5 ) * 1.0, 0.0, 1.0), 1.0, 0.99);
     vec4  lineACol = (1.0 - lineAShape) * vec4(mix(vec4(color, 1.0), vec4(0.0), lineAShape));
     return lineACol;
 }
@@ -61,6 +63,9 @@ void main() {
 //    finalColor += vec4(Line2(vec3(0.0), audioValue, .245));
     vec4 tmpCol = Line2(vec3(1.0, 1.0, 1.0), audioValue, .845, uAudioValue.a);
     if (tmpCol.a > 0.1) finalColor = tmpCol;
+
+    if (finalColor.a == 0.0) discard;
+//    else                  discard;
 //        finalColor.rgb += Line(uv, 1.0, 16.0, audioValue * 5.0, 2.0);
 //        finalColor.rgb += Line(uv, 1.0, 16.0, audioValue * 5.0, 4.0);
 //        finalColor.a = 1.0;

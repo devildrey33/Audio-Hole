@@ -37,6 +37,7 @@ export default class AudioChannel {
         this.setupTextures(this.audioOptions.fftSize);
 
         this.averageFrequency = [ 0, 0, 0, 0, 0 ];
+        this.averageFrequencyPeaks = [ 0, 0, 0, 0, 0 ];
         // Paint the audio textures to have safe values 
         this.paintAudioTexture();
         
@@ -180,11 +181,11 @@ export default class AudioChannel {
         this.analizer.getByteFrequencyData(this.analizerData);
         this.analizer.getByteTimeDomainData(this.analizerDataSin);
         
-        // Paint audio texture ussing analizerData
+        // Paint audio texture using analizerData
         this.paintAudioTexture();
 
         // Get average frequency
-        this.averageFrequency = this.getAverageFrequency();
+        this.getAverageFrequency(delta);
 
 /*        if (this.isPlaying === true && this.audioOptions.saveAudioData === true)
             this.audioData.push({
@@ -201,7 +202,7 @@ export default class AudioChannel {
     }
 
 
-    getAverageFrequency() {
+    getAverageFrequency(delta) {
         // greus  de 0hz a 256hz
         // mitjos de 257hz a 2000hz
         // aguts  de 2001hz a 16000hz
@@ -221,11 +222,22 @@ export default class AudioChannel {
             values[4]   += this.analizerData[i];    // set the total average
         }
         
-        return [ values[0] / total[0],    // High
-                 values[1] / total[1],    // Medium
-                 values[2] / total[2],    // Low
-                 values[3] / total[3],    // Inaudible
-                 values[4] / this.maxData ]; // Total average
+        this.averageFrequency = [
+            values[0] / total[0],    // High
+            values[1] / total[1],    // Medium
+            values[2] / total[2],    // Low
+            values[3] / total[3],    // Inaudible
+            values[4] / this.maxData // Total average
+        ]; 
+
+        // update peaks
+        const avf  = this.averageFrequency;
+        const avfp = this.averageFrequencyPeaks;
+        const d    = delta * 0.1;
+
+        for (let i = 0; i < 5; i++) {
+            (avf[i] > avfp[i]) ? avfp[i] = avf[i] : avfp[i] -= d;
+        }
     }    
 
 

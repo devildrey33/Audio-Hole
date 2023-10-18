@@ -48,7 +48,14 @@ const songs = [
         path    : "./songs/lost/",
         url     : "https://www.jamendo.com/track/1910909/jount-lost",
         bpm     : 117
-    }
+    }, /*{    
+        name    : "Core dumped",
+        group   : "Alfaro",
+        path    : "./songs/core-dumped/",
+        url     : "",
+        bpm     : 136
+    },*/
+
 
 ]
 

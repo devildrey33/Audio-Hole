@@ -39,11 +39,11 @@ export default class HMLOsciloscope {
         this.mesh.rotation.z = -Math.PI * 0.5 ;
         this.mesh.rotation.x = -Math.PI * 0.5 ;
 //        this.mesh.rotation.y = Math.PI * 0.5;
-        this.mesh.position.set(200, 750, -1024 * 4);
+        this.mesh.position.set(0, 750, -1024 * 4);
 
         this.mesh2.rotation.z = -Math.PI * 0.5 ;
         this.mesh2.rotation.x = -Math.PI * 0.5 ;
-        this.mesh2.position.set(200, -750, -1024 * 4);
+        this.mesh2.position.set(0, -750, -1024 * 4);
 //        this.mesh.rotation.z = Math.PI * 0.5;
 //        this.mesh.position.copy(this.position);
 
@@ -56,14 +56,17 @@ export default class HMLOsciloscope {
         this.material.uniforms.uTime.value += delta;
 
         this.material.uniforms.uAudioValue.value = new THREE.Vector4(
-            this.world.songChannels.LateralOsciloscope.averageFrequency[0] / 196, 
-            this.world.songChannels.LateralOsciloscope.averageFrequency[1] / 196,
-            this.world.songChannels.LateralOsciloscope.averageFrequency[2] / 196,
-            this.world.songChannels.LateralOsciloscope.averageFrequency[4] / 196
+            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[0] / 196, 
+            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[1] / 196,
+            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[2] / 196,
+            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[4] / 196
         );
 //        this.material.uniforms.uAudioValue.value = (this.audioAnalizer.averageFrequency[4] / 64);
 
-//        this.mesh.scale.y  =  0.5 + (1.0 + Math.sin(this.time.current / 3000))* 2 * (this.material.uniforms.uAudioValue.value * 0.5);
+        const scale = (this.audioAnalizer.channelDrum.averageFrequencyPeaks[1] / 128);
+//        this.mesh.scale.x = scale;
+        this.mesh.scale.y = scale;
+        this.mesh2.scale.y = scale;
 //        this.mesh2.scale.y = this.mesh.scale.y;
         
     }
