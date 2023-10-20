@@ -46,7 +46,7 @@ export default class killCityKills {
 
         {   // first yell
             start : 33, end : 41, 
-            effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color(0,1,0) })
+            effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color("yellow") })
         },
         {   // end first yell and begin of a second mini yell
             start : 49, end : 51, 

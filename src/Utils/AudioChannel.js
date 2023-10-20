@@ -233,7 +233,6 @@ export default class AudioChannel {
         // update peaks
         const avf  = this.averageFrequency;
         const avfp = this.averageFrequencyPeaks;
-        console.log(delta)
         const d    = delta / 2500;
 
         for (let i = 0; i < 5; i++) {

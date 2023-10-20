@@ -31,8 +31,8 @@ export default class Background {
         this.mesh = new THREE.Mesh(this.geometry, this.material);
 //        this.mesh.rotation.z = -Math.PI;
 
-        console.log(this.world.backgroundPosition);
-        this.world.backgroundPosition++;
+//        console.log(this.world.backgroundPosition);
+//        this.world.backgroundPosition++;
 
         this.mesh.position.set(x, y, z);
         this.mesh.name = this.name;

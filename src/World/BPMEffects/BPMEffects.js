@@ -12,7 +12,7 @@ import Lost from "./Songs/Lost.js";
 
 export default class BPMEffects {
     constructor() {
-        this.experience = new Experience();
+        this.experience    = new Experience();
         this.audioAnalizer = this.experience.audioAnalizer;
     
         this.killCityKills = new KillCityKills(this.audioAnalizer);
