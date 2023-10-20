@@ -71,7 +71,7 @@ export default {
     hmsOsciloscopeSpeed             : 2,
 
     // Bloom Pmndrs (postprocessing)
-    bloomPmndrsIntensity            : .8, //2.0,   // 0.3,   // 2.7
+    bloomPmndrsIntensity            : .7, //2.0,   // 0.3,   // 2.7
     bloomPmndrsThreshold            : 15.4, //4.3,    // 159.5, // -234.8
     bloomPmndrsSmoothing            : -1.97, // -342,  // 240.1
     bloomPmndrsRadius               : 0.98, //-5.32, //0.7,   // 1.4,   // 1.4

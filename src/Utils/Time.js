@@ -45,13 +45,13 @@ export default class Time extends EventEmitter {
                     clearInterval(this.qualityInterval);
                     this.qualityTotal = this.qualityTotal / (this.qualityTimes);
                     this.experience.recomended(this.qualityTotal);
-                    console.log(this.qualityTotal);
+//                    console.log(this.qualityTotal);
                     return;
                 }
                 // avoid first time, its always 0
                 if (this.qualityCounter != 0) {
                     this.qualityTotal += this.fps;
-                    console.log(this.fps);            
+//                    console.log(this.fps);            
                 }
                 this.qualityCounter++;
             }, 250);

@@ -64,14 +64,10 @@ void main() {
     vec4 tmpCol = Line2(vec3(1.0, 1.0, 1.0), audioValue, .845, uAudioValue.a);
     if (tmpCol.a > 0.1) finalColor = tmpCol;
 
+    // Discard if its transparent
     if (finalColor.a == 0.0) discard;
-//    else                  discard;
-//        finalColor.rgb += Line(uv, 1.0, 16.0, audioValue * 5.0, 2.0);
-//        finalColor.rgb += Line(uv, 1.0, 16.0, audioValue * 5.0, 4.0);
-//        finalColor.a = 1.0;
-//        finalColor.a = 0.1 - (vUv.x * 0.1);
-//        finalColor.a *= uAudioValue * 0.05;
-//    }    
+
+    // set opacity to simulate depth
     finalColor.a *= (0.001 + uAudioValue.g) * 0.75 * vUv.x;
     //finalColor.a = 1.0;
 

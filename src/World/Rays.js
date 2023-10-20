@@ -91,7 +91,7 @@ export default class Rays {
         this.mesh.position.x = Math.cos(this.angle * this.radius);
         this.mesh.position.y = Math.sin(this.angle * this.radius);
         
-        this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.channelSong.averageFrequency[4] / 64);
+        this.material.uniforms.uAudioValue.value = 0.01 + (this.audioAnalizer.channelSong.averageFrequency[4] * 4);
 
         if (this.mesh.position.z > 5) {
             this.createRandValues();

@@ -56,14 +56,14 @@ export default class HMLOsciloscope {
         this.material.uniforms.uTime.value += delta;
 
         this.material.uniforms.uAudioValue.value = new THREE.Vector4(
-            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[0] / 196, 
-            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[1] / 196,
-            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[2] / 196,
-            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[4] / 196
+            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[0] * 1.5, 
+            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[1] * 1.5,
+            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[2] * 1.5,
+            this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[4] * 1.5
         );
 //        this.material.uniforms.uAudioValue.value = (this.audioAnalizer.averageFrequency[4] / 64);
 
-        const scale = (this.audioAnalizer.channelDrum.averageFrequencyPeaks[1] / 128);
+        const scale = 0.5 + (this.audioAnalizer.channelDrum.averageFrequencyPeaks[1]);
 //        this.mesh.scale.x = scale;
         this.mesh.scale.y = scale;
         this.mesh2.scale.y = scale;

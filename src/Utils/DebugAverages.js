@@ -47,10 +47,10 @@ export default class DebugAverages {
 //            const peak = this.peaks[i];
             
             // calculate positions
-            let freq0 = (avFreq[0] / 255) * height;
-            let freq1 = (avFreq[1] / 255) * height;
-            let freq2 = (avFreq[2] / 255) * height;
-            let freq4 = (avFreq[4] / 255) * height;
+            let freq0 = avFreq[0] * height;
+            let freq1 = avFreq[1] * height;
+            let freq2 = avFreq[2] * height;
+            let freq4 = avFreq[4] * height;
 
             this.context.fillStyle = "red";
             // fill the bars
@@ -69,10 +69,10 @@ export default class DebugAverages {
 //console.log(avFreqPeak[0], peak[0] )
 
             // fill peaks
-            this.context.fillRect((50 * i) + 1, height - ((avFreqPeak[0] / 255) * height), 10, -2);
-            this.context.fillRect((50 * i) + 12, height - ((avFreqPeak[1] / 255) * height), 10, -2);
-            this.context.fillRect((50 * i) + 23, height - ((avFreqPeak[2] / 255) * height), 10, -2);
-            this.context.fillRect((50 * i) + 34, height - ((avFreqPeak[4] / 255) * height), 10, -2);
+            this.context.fillRect((50 * i) + 1, height - (avFreqPeak[0] * height), 10, -2);
+            this.context.fillRect((50 * i) + 12, height - (avFreqPeak[1] * height), 10, -2);
+            this.context.fillRect((50 * i) + 23, height - (avFreqPeak[2] * height), 10, -2);
+            this.context.fillRect((50 * i) + 34, height - (avFreqPeak[4] * height), 10, -2);
 
         }
     }

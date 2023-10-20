@@ -223,17 +223,18 @@ export default class AudioChannel {
         }
         
         this.averageFrequency = [
-            values[0] / total[0],    // High
-            values[1] / total[1],    // Medium
-            values[2] / total[2],    // Low
-            values[3] / total[3],    // Inaudible
-            values[4] / this.maxData // Total average
+            (values[0] / total[0]) / 255,    // High
+            (values[1] / total[1]) / 255,    // Medium
+            (values[2] / total[2]) / 255,    // Low
+            (values[3] / total[3]) / 255,    // Inaudible
+            (values[4] / this.maxData) / 255 // Total average
         ]; 
 
         // update peaks
         const avf  = this.averageFrequency;
         const avfp = this.averageFrequencyPeaks;
-        const d    = delta * 0.1;
+        console.log(delta)
+        const d    = delta / 2500;
 
         for (let i = 0; i < 5; i++) {
             (avf[i] > avfp[i]) ? avfp[i] = avf[i] : avfp[i] -= d;

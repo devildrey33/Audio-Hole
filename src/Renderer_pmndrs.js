@@ -135,14 +135,14 @@ export default class Renderer {
 
     // Multichannel is more acurate and max values are low
     updateGodRaysMC() {
-        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] / 255);
+        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1]);
         this.godRaysEffect.godRaysMaterial.weight = 0.3 + audioValue;
         this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;    
     }
 
     // Singlechannel is less acurate and max values are high because are an average of all channels
     updateGodRaysSC() {
-        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] / 512);
+        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] * 0.5);
         this.godRaysEffect.godRaysMaterial.weight = 0.3 + audioValue;
         this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;    
     }
