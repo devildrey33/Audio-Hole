@@ -47,6 +47,7 @@ export default {
     spiralFrequency                 : 0.1,
     spiralSpeed                     : 0.12,
     spiralThickness                 : 0.05,
+    spiralMirrors                   : 1,
     spiralFrequencySin              : 0.5,
     spiralSpeedSin                  : 0.75,
     spiralThicknessSin              : 0.04,

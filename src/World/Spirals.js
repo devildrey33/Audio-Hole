@@ -34,6 +34,7 @@ export default class Spirals {
                 uFrequency         : { value : this.experience.options.spiralFrequency },
                 uSpeed             : { value : this.experience.options.spiralSpeed },
                 uThickness         : { value : this.experience.options.spiralThickness },
+                uMirrors           : { value : this.experience.options.spiralMirrors },
                 uFrequencySin      : { value : this.experience.options.spiralFrequencySin },
                 uSpeedSin          : { value : this.experience.options.spiralSpeedSin },
                 uThicknessSin      : { value : this.experience.options.spiralThicknessSin },
@@ -67,15 +68,13 @@ export default class Spirals {
     }
 
     update(delta) {
-        // get an average advance value
-       //const advance = this.time.delta / 1000;
         // update rotation on the cilynder
         this.mesh.rotation.y += delta;
         // update audio value on spiral
         this.material.uniforms.uAudioValue.value  = (this.world.songChannels.SpiralBars.averageFrequency[4] * 4);
         this.material.uniforms.uAudioValue2.value = (this.world.songChannels.SpiralOsciloscope.averageFrequency[0]) + (this.audioAnalizer.channelVocal.averageFrequency[1] / 64) + (this.audioAnalizer.channelVocal.averageFrequency[2]);//        this.material.uniforms.uAudioValue.value = 1.0;
         // update time on spiral
-        this.material.uniforms.uTime.value += delta;   
+        this.material.uniforms.uTime.value += delta;
         // Set osciloscope line thickness applying the low sound average frequency
 //        this.material.uniforms.uThicknessSin.value = 0.01 + ((this.audioAnalizer.averageFrequency[2] / 255) * 0.05);
 

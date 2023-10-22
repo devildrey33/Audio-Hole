@@ -297,6 +297,9 @@ export default class Debug {
         this.spiralBarsUI.add(this.experience.options, 'spiralThickness').min(0.01).max(0.99).step(0.001).name("Thickness").onChange(() => {
             this.spirals.material.uniforms.uThickness.value = this.experience.options.spiralThickness;
         });
+        this.spiralBarsUI.add(this.experience.options, 'spiralMirrors').min(1).max(100).step(1).name("Mirrors").onChange(() => {
+            this.spirals.material.uniforms.uMirrors.value = this.experience.options.spiralMirrors;
+        });
 
         this.spiralOsciloscopeUI = this.gui.addFolder("Spiral Osciloscope").open(open);
         this.spiralOsciloscopeUI.add(this.experience.options, 'spiralAudioStrengthSin').min(0).max(8).step(0.1).name("Audio strength").onChange(() => {

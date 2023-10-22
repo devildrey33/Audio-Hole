@@ -54,15 +54,18 @@ void main() {
     float audioValueL = ((texture2D(uAudioTexture, vec2(posL, 0.0)).g ) * uAudioStrength);    
 */
 
-    float audioValue = ((texture2D(uAudioTexture, vec2(mod(vUv.x * 2.0, 1.0), 0.0)).g ) * uAudioStrength);    
+    float audioValue0 = ((texture2D(uAudioTexture, vec2(mod(uTime + vUv.x * .230, 1.0), 0.0)).g ) * uAudioStrength);    
+    float audioValue1 = ((texture2D(uAudioTexture, vec2(mod(uTime + vUv.x * .435, 1.0), 0.0)).g ) * uAudioStrength);    
+    float audioValue2 = ((texture2D(uAudioTexture, vec2(mod(uTime + vUv.x * .640, 1.0), 0.0)).g ) * uAudioStrength);    
+    float audioValue3 = ((texture2D(uAudioTexture, vec2(mod(uTime + vUv.x * .845, 1.0), 0.0)).g ) * uAudioStrength);    
 
     vec4 finalColor = vec4(0.0, 0.0, 0.0, 0.0);
-    finalColor += Line2(vec3(0.5, 0.5, 1.0), audioValue, .230, uAudioValue.r);
-    finalColor += Line2(vec3(0.5, 1.0, 0.5), audioValue, .435, uAudioValue.g);
-    finalColor += Line2(vec3(1.0, 0.5, 0.5), audioValue, .640, uAudioValue.b);
+    finalColor += Line2(vec3(0.5, 0.5, 1.0), audioValue0, .230, uAudioValue.r);
+    finalColor += Line2(vec3(0.5, 1.0, 0.5), audioValue1, .435, uAudioValue.g);
+    finalColor += Line2(vec3(1.0, 0.5, 0.5), audioValue2, .640, uAudioValue.b);
 //    finalColor += vec4(Line2(vec3(0.0), audioValue, .245));
-    vec4 tmpCol = Line2(vec3(1.0, 1.0, 1.0), audioValue, .845, uAudioValue.a);
-    if (tmpCol.a > 0.1) finalColor = tmpCol;
+    vec4 tmpCol = Line2(vec3(1.0, 1.0, 1.0), audioValue3, .845, uAudioValue.a);
+    if (tmpCol.a > 0.25) finalColor = tmpCol;
 
     // Discard if its transparent
     if (finalColor.a == 0.0) discard;

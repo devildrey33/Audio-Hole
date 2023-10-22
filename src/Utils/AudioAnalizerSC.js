@@ -144,7 +144,7 @@ export default class AudioAnalizerMC {
         this.calculateCurrentBeat(delta);
     }
 
-    calculateCurrentBeat(delta) {
+    calculateCurrentBeat() {
         if (this.experience.htmlElements.dragTime === true) return;
 
         let currentBpm = Math.floor((this.channelSong.song.currentTime * 1000) / this.bpmTime);
@@ -155,12 +155,12 @@ export default class AudioAnalizerMC {
             this.currentBpm = currentBpm;
             this.audioOptions.onBpmChange(this.currentBpm);
 
-            this.resync(delta);
+            this.resync();
         }
     }
 
     // whe dont need to resync because its only one channel
-    resync(delta = 16) {
+    resync() {
 
     }
 

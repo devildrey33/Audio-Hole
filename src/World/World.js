@@ -85,6 +85,7 @@ export default class World {
         this.group.rotation.z += this.time.delta / 7500;
     }
 
+    
     /* 
      * Update function when the quality is set
      */

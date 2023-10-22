@@ -51,6 +51,7 @@ export default class BPMEffects {
      * Setups all the animations of the current song in the specified timeline
      */
     RecalculateAnimations(timeline) {
+        console.log("recalculate animations")
         const currentSong = this.experience.currentSong;
         this.songsEffects[currentSong].forEach(element => {
             element.effect.setupAnimation(timeline, element.start, element.end);            

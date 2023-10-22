@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from "./Experience";
-import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ToneMappingEffect, ToneMappingMode } from "postprocessing";
+import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ToneMappingEffect, ToneMappingMode, GlitchEffect } from "postprocessing";
 import ColorCorrectionEffect from "./PostProcessing/ColorCorrectionEffect.js"
 
 export default class Renderer {
@@ -78,6 +78,13 @@ export default class Renderer {
         this.effectComposer.addPass(this.colorCorrectionPass);
 
 
+/*        this.glitchEffect = new GlitchEffect();
+        this.glitchPass = new EffectPass(this.camera.instance, this.glitchEffect);
+        this.effectComposer.addPass(this.glitchPass);*/
+
+//        this.glitchEffect.time = 0;
+//        this.glitchEffect.active(true);
+
         this.toneMappingEffect = new ToneMappingEffect();
         this.toneMappingEffect.mode = ToneMappingMode.OPTIMIZED_CINEON;
         this.toneMappingEffect.exposure = 1.75;
@@ -135,14 +142,14 @@ export default class Renderer {
 
     // Multichannel is more acurate and max values are low
     updateGodRaysMC() {
-        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1]);
+        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] * 0.75);
         this.godRaysEffect.godRaysMaterial.weight = 0.3 + audioValue;
         this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;    
     }
 
     // Singlechannel is less acurate and max values are high because are an average of all channels
     updateGodRaysSC() {
-        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] * 0.5);
+        const audioValue = (this.world.songChannels.SunRays.averageFrequency[1] * 0.35);
         this.godRaysEffect.godRaysMaterial.weight = 0.3 + audioValue;
         this.godRaysEffect.godRaysMaterial.density = 0.96 + audioValue;    
     }

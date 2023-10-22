@@ -2,7 +2,14 @@ import Experience from "../../Experience";
 import BPMEffect from "./BPMEffect";
 
 export default class BPMBloom extends BPMEffect {
-    constructor({ originIntensity = 0.7, originRadius = 0.98, destIntensity = 0.7, destRadius = 0.98, ease = "none", yoyo = false }) {
+    constructor({ 
+            originIntensity = 0.7, 
+            originRadius = 0.98, 
+            destIntensity = 0.7, 
+            destRadius = 0.98, 
+            ease = "none", 
+            yoyo = false 
+        }) {
         super();
         this.ease   = ease;
         this.yoyo   = yoyo;

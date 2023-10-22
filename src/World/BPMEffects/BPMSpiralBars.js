@@ -3,16 +3,21 @@ import options from "../../Config/options.js";
 
 export default class BPMSpiralBars extends BPMEffect {
     constructor({ 
-        audioStrength = options.spiralAudioStrength, 
-        thickness     = options.spiralThickness, 
-        ease          = "none", 
-        yoyo          = true 
+        originAudioStrength = options.spiralAudioStrength, 
+        originThickness     = options.spiralThickness, 
+        originMirrors       = options.spiralMirrors,
+        destAudioStrength   = options.spiralAudioStrength, 
+        destThickness       = options.spiralThickness, 
+        destMirrors         = options.spiralMirrors,        
+        ease                = "none", 
+        yoyo                = true 
     }) {
         super();
-        this.dest = [ audioStrength , thickness ];
+        this.dest = [ destAudioStrength , destThickness, destMirrors ];
+        this.origin = [ originAudioStrength, originThickness, originMirrors ];
         
         this.name = "SpiralBars";
-        this.params = `(${audioStrength}, ${thickness})`;
+        this.params = `(${destAudioStrength}, ${destThickness}, ${destMirrors})`;
 
         this.ease = ease;
         this.yoyo = yoyo;
@@ -29,7 +34,6 @@ export default class BPMSpiralBars extends BPMEffect {
         let startMS = (start * bpmMS) / 1000;
         let endMS   = ((end * bpmMS) / 1000) - startMS;        
         
-        this.origin = [ this.spiralUniforms.uAudioStrength.value, this.spiralUniforms.uThickness.value ];
 
         tl.to(
             this.origin, 
@@ -55,6 +59,8 @@ export default class BPMSpiralBars extends BPMEffect {
     onUpdate(This) {
         This.spiralUniforms.uAudioStrength.value = this.targets()[0][0];
         This.spiralUniforms.uThickness.value     = this.targets()[0][1];
+//        This.spiralUniforms.uMirrors.value       = this.targets()[0][2];
+        This.spiralUniforms.uMirrors.value       = Math.floor(this.targets()[0][2]);
 
         This.onUpdateProgress(this._tTime, this._tDur);        
     }

@@ -139,6 +139,7 @@ export default class AudioAnalizerMC {
 
     onCanPlay() {
         this.canPlayChannels ++;
+//        console.log("canplay channels", this.canPlayChannels)
         if (this.canPlayChannels === this.totalChannels) {
             this.audioOptions.onCanPlay();
             this.canPlayChannels = 0;
@@ -188,7 +189,7 @@ export default class AudioAnalizerMC {
         this.calculateCurrentBeat(delta);
     }
 
-    calculateCurrentBeat(delta) {
+    calculateCurrentBeat() {
         if (this.experience.htmlElements.dragTime === true) return;
 
         let currentBpm = Math.floor((this.channelSong.song.currentTime * 1000) / this.bpmTime);
@@ -199,11 +200,11 @@ export default class AudioAnalizerMC {
             this.currentBpm = currentBpm;
             this.audioOptions.onBpmChange(this.currentBpm);
 
-            this.resync(delta);
+            this.resync();
         }
     }
 
-    resync(delta = 16) {
+    resync() {
         if (this.resyncTime > 0) {
             this.resyncTime -= 16;
             return;

@@ -234,7 +234,6 @@ export default class AudioChannel {
         const avf  = this.averageFrequency;
         const avfp = this.averageFrequencyPeaks;
         const d    = delta / 2500;
-
         for (let i = 0; i < 5; i++) {
             (avf[i] > avfp[i]) ? avfp[i] = avf[i] : avfp[i] -= d;
         }

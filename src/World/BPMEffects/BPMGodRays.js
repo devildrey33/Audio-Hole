@@ -1,7 +1,5 @@
-import Experience from "../../Experience";
-import gsap from "gsap";
 import BPMEffect from "./BPMEffect";
-//import { BPMEffect } from "./BPMEffects.js"
+
 
 export default class BPMGodRays extends BPMEffect {
     constructor({ density = 0.9, weigth = 0.3, ease = "none", yoyo = true }) {

@@ -1,5 +1,4 @@
 import BPMEffect from "./BPMEffect.js";
-import options from "../../Config/options.js";
 
 export default class BPMLateralBars extends BPMEffect {
     constructor({ 

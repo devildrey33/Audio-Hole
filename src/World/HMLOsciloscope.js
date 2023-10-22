@@ -62,7 +62,7 @@ export default class HMLOsciloscope {
             this.world.songChannels.LateralOsciloscope.averageFrequencyPeaks[4] * 1.5
         );
 //        this.material.uniforms.uAudioValue.value = (this.audioAnalizer.averageFrequency[4] / 64);
-
+        
         const scale = 0.5 + (this.audioAnalizer.channelDrum.averageFrequencyPeaks[1]);
 //        this.mesh.scale.x = scale;
         this.mesh.scale.y = scale;

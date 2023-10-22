@@ -37,6 +37,7 @@ export default class DebugAverages {
 
 
     update() {
+        
         let height = this.height - 20;
         // Clear the canvas
         this.context.clearRect(0, 0, this.width, height + 1);        
@@ -44,7 +45,6 @@ export default class DebugAverages {
         for (let i = 0; i < this.audioAnalizer.totalChannels; i++) {
             const avFreq = this.audioAnalizer.channels[i].averageFrequency;            
             const avFreqPeak = this.audioAnalizer.channels[i].averageFrequencyPeaks;            
-//            const peak = this.peaks[i];
             
             // calculate positions
             let freq0 = avFreq[0] * height;
@@ -59,14 +59,7 @@ export default class DebugAverages {
             this.context.fillRect((50 * i) + 23, height - freq2, 10, freq2);
             this.context.fillRect((50 * i) + 34, height - freq4, 10, freq4);
 
-            // calculate peaks
-/*            (peak[0] < freq0) ? peak[0] = freq0  : peak[0]-= 0.4;
-            (peak[1] < freq1) ? peak[1] = freq1  : peak[1]-= 0.4;
-            (peak[2] < freq2) ? peak[2] = freq2  : peak[2]-= 0.4;
-            (peak[3] < freq4) ? peak[3] = freq4  : peak[3]-= 0.4;*/
-            
             this.context.fillStyle = "white";
-//console.log(avFreqPeak[0], peak[0] )
 
             // fill peaks
             this.context.fillRect((50 * i) + 1, height - (avFreqPeak[0] * height), 10, -2);

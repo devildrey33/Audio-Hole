@@ -46,10 +46,12 @@ export default class Experience {
         this.htmlElements   = new HTMLElements();
         // Initialize time
         this.time           = new Time();
-
+        // Start loading resource files
         this.resources      = new Resources(sources);
+        // Set loading to true
         this.loading = true;
 
+        // Initialize audio analizer options and callbacks
         this.audioAnalizerOptions = {
             onPlay           : this.onAudioPlay,
             onPause          : this.onAudioPause,
@@ -69,15 +71,13 @@ export default class Experience {
         this.canvas         = this.htmlElements.elementCanvas;
 
         this.scene          = new THREE.Scene();
-//        this.resources      = new Resources(sources);
         this.camera         = new Camera();
         this.world          = new World();
         this.renderer       = new Renderer();
 
-
+        // Remove the updateDebug function if the experience is not on debug mode
         if (this.options.debug === false) {
             this.updateDebug = () => {}
-//            this.AudioTimeUpdate = () => {}
         }
         
 
@@ -96,7 +96,6 @@ export default class Experience {
         this.beats = 0;
 
         this.time.measureQuality();
-//        this.htmlElements.elementExperience.setAttribute("loading", "false");
     }
 
     /* 
@@ -115,17 +114,22 @@ export default class Experience {
         }
     }
 
+    /*
+     * Sets the quality for the experience 
+     *  preset can be "low" or "high"
+     */
     setQuality(preset = "high") {       
         // Setup low config (high is the standard)
         if (preset === "low") {
-            this.options.audioFFTSize      = 1024;
-            this.options.audioMultiChannel = false;
+            this.options.audioFFTSize      = 1024;   // 512 values
+            this.options.audioMultiChannel = false;  // only one channel analisis
         }
 
         // Update the loading function to catch loaded songs
         this.setLoading = this.setLoadingAudio;
         this.setLoading();
 
+        // Start the audio analizer & player
         if (this.options.audioMultiChannel === true) 
             this.audioAnalizer  = new AudioAnalizerMC(this.audioAnalizerOptions);
         else
@@ -145,12 +149,14 @@ export default class Experience {
         // Enable help tooltips
         this.htmlElements.elementPressPlay.setAttribute("show", "true");
         this.htmlElements.elementPressFullScreen.setAttribute("show", "false");
-        
 
+        // Start debug mode
         if (this.options.debug) {
             this.debug = new Debug();
+            // Create a DebugAverages object with 300 of width if is multi channel or 50 if is single channel
             this.debugAverages = new DebugAverages((this.options.audioMultiChannel) ? 300 : 50, 80);
         }
+        // Release mode
         else {
             // Create an empty debugAverages object to simulate its update function
             this.debugAverages = { update : () => { } }
@@ -199,12 +205,18 @@ export default class Experience {
         this.world.resourcesLoaded();
     }
 
+    /*
+     * Initial setLoading function (this function is replaced by setLoadingAudio when whe can load songs)
+     */
     setLoading() {
         let isLoading = true;
         if (this.loading === false) isLoading = false;
         this.htmlElements.elementExperience.setAttribute("loading", isLoading);
     }
 
+    /*
+     * Final setLoading function when whe can load songs
+     */
     setLoadingAudio() {
         let isLoading = true;
         if (this.loading === false && this.songLoading === false) isLoading = false;
@@ -214,40 +226,47 @@ export default class Experience {
     /* 
      * Audio events
      */
+
+    // Audio play
     onAudioPlay = () => {
         this.htmlElements.audioUI(false); 
     }
 
+    // Audio pause
     onAudioPause = () => { 
         this.htmlElements.audioUI(true);
     }
 
+    // Audio has reached the end
     onAudioEnded = () => { 
         this.htmlElements.audioUI(true);
         this.beats = 0;
+
+        if (this.options.showBPM === true) {
+            this.htmlElements.elementDebugEffects.innerHTML = "";
+        }
     }
     
-
+    // Audio time has changed (this function is only for debug, in release mode its an empty function)
     onAudioTimeUpdate = (currentTime) => {
         if (this.htmlElements.dragTime == false)
             this.htmlElements.elementAudioTime.value = currentTime;        
     }
 
+    // Whe know for the first time the audio total time
     onAudioDurationChange = (newDuration) => {
         if (this.options.debug === true) {
             // Update max time on the time slider
             this.htmlElements.elementAudioTime.setAttribute("max", newDuration);
         }
-
+        // Calculate how much miliseconds has one beat
         this.song.bpmMS = (60000 / this.song.bpm);
         if (this.options.showBPM === true) {
             this.htmlElements.elementTxtBPM.innerHTML = Math.floor(this.song.bpmMS);
         }
-        
-        // setup animations
-        this.world.setupSong();
     }
 
+    // Event error
     onAudioError = () => {
         this.songLoading = false; 
         this.beats = 0;
@@ -256,22 +275,34 @@ export default class Experience {
         window.alert("error loading : " + this.song.path);
     }
 
+    // Song its ready to play
     onAudioCanPlay = () => {
+        // Setup animations, and asociate channels
+        // ONLY IF SONG IS LOADING (I dont know why canPlay event trigers sometimes in the middle of the song)
+        if (this.songLoading === true) {
+            this.world.setupSong();
+        }
+
         this.songLoading = false;
         this.beats = 0;
         this.setLoading();
+
+
     }
 
+    // Start loading song
     onAudioLoading = () => {
         this.songLoading = true;
         this.setLoading();
         this.htmlElements.audioUI(true);    
     }
 
+    // Current Beat Per Minute has changed
     onAudioBpmChange = (currentBpm) => {
         if (this.options.showBPM === true) 
             this.htmlElements.elementBPM.innerHTML = currentBpm;
     }
+
     /** 
      * This function destroy the whole scene
      */
@@ -302,6 +333,7 @@ export default class Experience {
         // renderer
         this.renderer.instance.dispose();
         
+        // remove debug ui
         if (this.debug.active) {
             this.debug.ui.destroy();
         }

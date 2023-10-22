@@ -82,15 +82,21 @@ export default class killCityKills {
         },            
         {   // hey
             start : 144.5, end : 145,
-            effect : new BPMSpiralBars({ thickness : 0.15, audioStrength : 0.75, ease : "bounce" })
+            effect : new BPMSpiralBars({ destThickness : 0.15, destAudioStrength : 0.75, ease : "bounce" })
         },
         {   // hey
             start : 144.5, end : 145,
             effect : new BPMLateralBars({ position : 50, ease : "bounce" })
         },
+
+        {   // Last hey add a mirror
+            start : 144.5, end : 145, 
+            effect : new BPMSpiralBars({ originMirrors : 1, destMirrors : 2,  yoyo : false })
+        },            
+
         {   // hey
             start : 145.5, end : 146,
-            effect : new BPMSpiralBars({ thickness : 0.15, audioStrength : 0.75, ease : "bounce" })
+            effect : new BPMSpiralBars({ originMirrors : 2, destMirrors : 2, destThickness : 0.15, destAudioStrength : 0.75, ease : "bounce" })
         },           
         {   // hey
             start : 145.5, end : 146,
@@ -115,6 +121,10 @@ export default class killCityKills {
             effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
         },
 
+        {   // wuah
+            start : 211, end : 211.5,
+            effect : new BPMLateralBars({ position : 50, ease : "bounce" })
+        },
 
         {   // right
             start : 243.5,  end : 245,
@@ -157,14 +167,29 @@ export default class killCityKills {
 
 
         {   // yell
-            start : 356, end : 364, 
+            start : 356, end : 361, 
             effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25, color : new THREE.Color(0,0.5,0.75) })
         },
+        
 
-        {
-            start : 390, end : 400,
-            effect : new BPMSpiralBars({ thickness : 0.40, audioStrength : 0.75, ease : "" })
+        {   // Guitar solo first end
+
+            start : 394, end : 395,
+            effect : new BPMLateralBars({ position : 50, ease : "elastic" })
         },
+
+        {   // Guitar solo (ends 423)
+            start : 390, end : 394, 
+            effect : new BPMSpiralBars({ destThickness : 0.50, originMirrors : 2, destMirrors : 24,  yoyo : false })
+        },            
+        {   // Guitar solo (ends 423)
+            start : 406, end : 415, 
+            effect : new BPMSpiralBars({ originThickness : 0.50, originMirrors : 24, destMirrors : 3,  yoyo : false })
+        },            
+/*        {   // Guitar solo (ends 423)
+            start : 423.5, end : 424, 
+            effect : new BPMSpiralBars({ originMirrors : 2, destMirrors : 3,  yoyo : false })
+        },            */
 
         {   // Guitar solo (ends 423)
             start : 390, end : 394, 
@@ -240,7 +265,7 @@ export default class killCityKills {
             effect : new BPMGodRays({ density : 2.6, weigth : 0.9 })
         },*/
         { // invert first blue color correction to black
-            start : 560,  end : 561 ,
+            start : 560,  end : 561,
             effect : new BPMColorCorrection({ 
                 originPow : [3, 3, 8], originMul : [2, 2, 15], originAdd : [0.05, 0.05, 0.5], 
                 destPow   : [3, 3, 3], destMul   : [2, 2, 2] , destAdd   : [0.05, 0.05, 0.05] 
