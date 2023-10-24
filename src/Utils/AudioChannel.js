@@ -1,7 +1,6 @@
 
 import * as THREE from "three"
 import BufferCanvas from "./BufferCanvas.js";
-//import Experience from "../Experience.js";
 
 
 /* Audio analizer for one channel */
@@ -22,7 +21,7 @@ export default class AudioChannel {
             fftSize           : 1024,     // fast fourier transform size (1024 gives 512 frequency bars)
 //            saveAudioData     : false
         }
-        
+        // First channel is the song to play, the rest are only for analisis
         this.fistChannel = first;
 
         this.audioOptions = { ...audioDefaultOptions, ...audioOptions };
@@ -35,15 +34,14 @@ export default class AudioChannel {
         this.currentVolume = this.audioOptions.volume;
         // Initialize memory for audio textures
         this.setupTextures(this.audioOptions.fftSize);
-
-        this.averageFrequency = [ 0, 0, 0, 0, 0 ];
+        // Average frequency values
+        this.averageFrequency      = [ 0, 0, 0, 0, 0 ];
+        // Average frequency peak values. (if peak values are greather than his average frequency, they decrease slowly, if not peak is set to frequency)
         this.averageFrequencyPeaks = [ 0, 0, 0, 0, 0 ];
         // Paint the audio textures to have safe values 
         this.paintAudioTexture();
         
         this.isPlaying = false;
-
-//        this.audioData = [];
     }
  
    
@@ -186,13 +184,6 @@ export default class AudioChannel {
 
         // Get average frequency
         this.getAverageFrequency(delta);
-
-/*        if (this.isPlaying === true && this.audioOptions.saveAudioData === true)
-            this.audioData.push({
-                data     : this.analizerDataSin, 
-                average  : this.averageFrequency, 
-                time     : this.song.currentTime 
-            });*/
     }
 
 
@@ -235,7 +226,7 @@ export default class AudioChannel {
         const avfp = this.averageFrequencyPeaks;
         const d    = delta / 2500;
         for (let i = 0; i < 5; i++) {
-            (avf[i] > avfp[i]) ? avfp[i] = avf[i] : avfp[i] -= d;
+            (avf[i] >= avfp[i]) ? avfp[i] = avf[i] : avfp[i] -= d;
         }
     }    
 

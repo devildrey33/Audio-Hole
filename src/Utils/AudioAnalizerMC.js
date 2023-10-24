@@ -80,23 +80,11 @@ export default class AudioAnalizerMC {
 
         this.resyncTime = 0;
     }
-
-    setupDragDropEvents() {
-        // Drag & drop events
-        document.body.addEventListener("dragenter", (e) => { return false });
-        document.body.addEventListener("dragover" , (e) => { return e.preventDefault()  });
-        document.body.addEventListener("drop"     , (e) => {         
-            this.loadSongDrop(e.dataTransfer.files);
-            e.stopPropagation();  
-            e.preventDefault(); 
-        });
-    }
-
-    loadSongDrop(files) {
-        this.loadSong(URL.createObjectURL(files[0]));
-    }   
     
-
+    /*
+     * Setup volume for song if its in release
+     * in debug mode sets all channels volume, and mutes the main song
+     */ 
     volume(vol, debug = false) {
         if (typeof vol !== "undefined") this.currentVolume = vol;
         if (debug === false) {
@@ -109,6 +97,9 @@ export default class AudioAnalizerMC {
         }
     }
 
+    /*
+     * Setup the speed for all channels (only debug)
+     */
     speed(newSpeed) {
         if (typeof newSpeed !== "undefined") {
             for (let i = 0; i < this.totalChannels; i++) 
@@ -151,20 +142,6 @@ export default class AudioAnalizerMC {
         this.endedChannels ++;
         if (this.endedChannels === this.totalChannels) {
 
-/*            if (this.audioOptions.saveAudioData === true) {
-                // save audio data for each channel...
-                this.jsonSaveAudioData("bass" , this.channels[0].audioData);
-                this.jsonSaveAudioData("drum" , this.channels[1].audioData);
-                this.jsonSaveAudioData("other", this.channels[2].audioData);
-                this.jsonSaveAudioData("piano", this.channels[3].audioData);
-                this.jsonSaveAudioData("voice", this.channels[4].audioData);
-                // Free memory
-                this.channels[0].audioData = [];
-                this.channels[1].audioData = [];
-                this.channels[2].audioData = [];
-                this.channels[3].audioData = [];
-                this.channels[4].audioData = [];
-            }*/
             this.endedChannels = 0;
             this.audioOptions.onEnded();
         }
@@ -243,64 +220,4 @@ export default class AudioAnalizerMC {
             this.channels[i].analizer.fftSize = fftSize;
         }
     }
-/*
-    jsonSaveAudioData(name, data) {
-        // Supongamos que tienes un array grande de datos
-        const datosGrandes = [
-            // ... tus datos aquí
-        ];
-        
-        // Dividir los datos en fragmentos más pequeños (por ejemplo, cada fragmento tiene 1000 elementos)
-        const fragmentos = [];
-        const fragmentoTamaño = 1000;
-        for (let i = 0; i < data.length; i += fragmentoTamaño) {
-            const fragmento = data.slice(i, i + fragmentoTamaño);
-            fragmentos.push(fragmento);
-        }
-        
-        // Convertir cada fragmento en una cadena JSON
-        const fragmentosJSON = fragmentos.map(fragmento => JSON.stringify(fragmento));
-        
-        // Crear un objeto que contenga el array de fragmentos
-        const objetoParaGuardar = {
-            fragmentos: fragmentosJSON
-        };
-        
-        // Convertir el objeto en una cadena JSON
-        const jsonString = JSON.stringify(objetoParaGuardar, null, 2);
-        
-        // Crea un Blob con la cadena JSON
-        const blob = new Blob([jsonString], { type: 'application/json' });
-        
-        // Crea una URL para el Blob
-        const blobURL = URL.createObjectURL(blob);
-        
-        // Crea un enlace (link) en el DOM para descargar el archivo
-        const enlaceDescarga = document.createElement('a');
-        enlaceDescarga.href = blobURL;
-        enlaceDescarga.download = name + '.json'; // Nombre del archivo a descargar
-        
-        // Simula un clic en el enlace para abrir el diálogo de descarga
-        enlaceDescarga.click();
-        
-        // Limpia la URL creada para el Blob después de que se descargue el archivo
-        URL.revokeObjectURL(blobURL);
-    }*/
-/*
-    calculateCurrentBeat(delta) {
-        if (this.isPlaying === true && this.bpm !== 0) {
-            this.bpmTime += delta;
-            const mspb = 60000 / this.bpm;
-            if (this.bpmTime > mspb) {
-                this.currentBpm ++;
-                this.bpmTime -= mspb;
-                this.audioOptions.onBpmChange(this.currentBpm);
-            }
-        }
-    }   */ 
-
-/*    getRandTexture() {
-        let r = Math.floor(Math.random() * (this.totalChannels - 1));
-        return this.channels[r].bufferCanvasLinear.texture;
-    }*/
  }

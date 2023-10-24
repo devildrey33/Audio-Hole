@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import Experience from "./Experience";
-import { BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ToneMappingEffect, ToneMappingMode, GlitchEffect } from "postprocessing";
+import { BlendFunction, BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ToneMappingEffect, ToneMappingMode, GlitchEffect } from "postprocessing";
 import ColorCorrectionEffect from "./PostProcessing/ColorCorrectionEffect.js"
 
 export default class Renderer {
@@ -71,6 +71,7 @@ export default class Renderer {
 
 
         this.colorCorrectionEffect = new ColorCorrectionEffect();
+//        this.colorCorrectionEffect.blendMode.blendFunction = BlendFunction.REFLECT;
         this.colorCorrectionEffect.uniforms.get("powRGB").value = this.experience.options.colorCorrectionPowRGB;
         this.colorCorrectionEffect.uniforms.get("mulRGB").value = this.experience.options.colorCorrectionMulRGB;
         this.colorCorrectionEffect.uniforms.get("addRGB").value = this.experience.options.colorCorrectionAddRGB;

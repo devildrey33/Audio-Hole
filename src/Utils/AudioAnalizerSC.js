@@ -138,7 +138,7 @@ export default class AudioAnalizerMC {
     }
 
     update(delta) {
-        this.channelSong.update();
+        this.channelSong.update(delta);
 
         // Calculate current beats per minute 
         this.calculateCurrentBeat(delta);

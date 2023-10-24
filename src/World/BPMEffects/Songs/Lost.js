@@ -48,13 +48,5 @@ export default class Lost {
             start : 56, end : 56.5,
             effect : new BPMSpiralsScale({ scaleX : 0.25, scaleZ: 2, ease : "bounce" })
         },
-        { 
-            start : 61, end : 66,
-            effect : new BPMBloom({ destIntensity : 1.4, destRadius : -1.32 })
-        },
-        { 
-            start : 72, end : 84.5,
-            effect : new BPMBloom({ originIntensity : 1.4, originRadius : -1.32, destIntensity : 1.45, destRadius : 1.1 })
-        },
     ]
 }
