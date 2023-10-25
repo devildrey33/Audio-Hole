@@ -1,6 +1,10 @@
 uniform float uEnabled;
 uniform float uTime;
 uniform float uStartTime;
+/*
+ * TODO : add uEndTime, by this way whe can remove the half of ifs nad its more controlable
+ */
+
 
 void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
     if (uEnabled == 0.1) { // bigger width disable
