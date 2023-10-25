@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import Experience from "./Experience";
 import { BlendFunction, BloomEffect, EffectComposer, EffectPass, RenderPass, GodRaysEffect, ToneMappingEffect, ToneMappingMode, GlitchEffect } from "postprocessing";
 import ColorCorrectionEffect from "./PostProcessing/ColorCorrectionEffect.js"
+import MirrorModeEffect from "./PostProcessing/MirrorModeEffect.js"
 
 export default class Renderer {
     // Costructor
@@ -48,6 +49,11 @@ export default class Renderer {
 
         this.effectComposer.addPass(new RenderPass(this.scene, this.camera.instance));
 
+        this.mirrorModeEffect = new MirrorModeEffect();
+        this.mirrorModePass = new EffectPass(this.camera.instance, this.mirrorModeEffect);
+        this.effectComposer.addPass(this.mirrorModePass);
+
+
         this.bloomEffect = new BloomEffect({ mipmapBlur : true, levels : 5 });
         //this.bloomPass.strength = this.experience.options.bloomStrength;   
         this.bloomEffect.intensity = this.experience.options.bloomPmndrsIntensity;
@@ -68,6 +74,7 @@ export default class Renderer {
         this.shockWaveEffect.waveSize = this.experience.options.shockWaveWaveSize;
         this.shockWaveEffect.amplitude = this.experience.options.shockWaveAmplitude;
         this.effectComposer.addPass(this.shockWavePass);*/
+
 
 
         this.colorCorrectionEffect = new ColorCorrectionEffect();
@@ -137,6 +144,8 @@ export default class Renderer {
     }
 
     updateQuality() {
+        this.mirrorModeEffect.uniforms.get("uTime").value = this.experience.audioAnalizer.channelSong.song.currentTime;
+//        console.log(this.mirrorModeEffect.uniforms.get("uTime").value, this.mirrorModeEffect.uniforms.get("uStartTime").value)
         this.effectComposer.render();
         this.updateGodRays();
     }

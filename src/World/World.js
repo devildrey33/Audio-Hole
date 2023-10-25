@@ -75,14 +75,14 @@ export default class World {
     /* 
      * Update function without knowing the quality settings
      */
-    update() {
-        const delta = this.time.delta / 1000;
+    update(delta) {
+        const newDelta = delta / 1000;
             
-        this.background.update(delta);
-        this.background.mesh.rotation.z += delta / 75;
+        this.background.update(newDelta);
+        this.background.mesh.rotation.z += newDelta / 75;
 
         // Rotate all elements in the group
-        this.group.rotation.z += this.time.delta / 7500;
+        this.group.rotation.z += delta / 7500;
     }
 
     

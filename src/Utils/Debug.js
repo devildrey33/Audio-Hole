@@ -221,7 +221,7 @@ export default class Debug {
         if (open === true) this.postProcessingPmndrs.open(true);
         this.colorCorrectionPmndrs = this.experience.renderer.colorCorrectionEffect;
 
-        this.colorCorrectionPmndrsUI = this.postProcessingPmndrs.addFolder("Color correction").open(open);        
+        this.colorCorrectionPmndrsUI = this.postProcessingPmndrs.addFolder("Color correction (custom)").open(open);        
         this.colorCorrectionPmndrsUI.add(this.experience.options.colorCorrectionPowRGB, 'x').min(0).max(15).step(0.1).name("Power R").onChange(() => {
             this.colorCorrectionPmndrs.uniforms.get("powRGB").value.x = this.experience.options.colorCorrectionPowRGB.x;
         });

@@ -171,7 +171,7 @@ export default class AudioChannel {
     }
 
 
-    update(delta) {
+    update(delta, freqDivisor) {
         // Avoid update if analizer is not created
         if (typeof this.analizer === "undefined") return;
 
@@ -183,7 +183,7 @@ export default class AudioChannel {
         this.paintAudioTexture();
 
         // Get average frequency
-        this.getAverageFrequency(delta);
+        this.getAverageFrequency(delta, freqDivisor);
     }
 
 
@@ -193,7 +193,7 @@ export default class AudioChannel {
     }
 
 
-    getAverageFrequency(delta) {
+    getAverageFrequency(delta, freqDivisor) {
         // greus  de 0hz a 256hz
         // mitjos de 257hz a 2000hz
         // aguts  de 2001hz a 16000hz
@@ -214,11 +214,11 @@ export default class AudioChannel {
         }
         
         this.averageFrequency = [
-            (values[0] / total[0]) / 255,    // High
-            (values[1] / total[1]) / 255,    // Medium
-            (values[2] / total[2]) / 255,    // Low
-            (values[3] / total[3]) / 255,    // Inaudible
-            (values[4] / this.maxData) / 255 // Total average
+            (values[0] / total[0]) / freqDivisor,    // High
+            (values[1] / total[1]) / freqDivisor,    // Medium
+            (values[2] / total[2]) / freqDivisor,    // Low
+            (values[3] / total[3]) / freqDivisor,    // Inaudible
+            (values[4] / this.maxData) / freqDivisor // Total average
         ]; 
 
         // update peaks

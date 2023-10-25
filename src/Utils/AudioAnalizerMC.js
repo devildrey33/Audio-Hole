@@ -159,7 +159,7 @@ export default class AudioAnalizerMC {
 
     update(delta) {
         for (let i = 0; i < this.totalChannels; i++) {
-            this.channels[i].update(delta);
+            this.channels[i].update(delta, 255);
         }
 
         // Calculate current beats per minute 
@@ -197,13 +197,13 @@ export default class AudioAnalizerMC {
         }
         // If the diference between all positions its more than 16ms
         if ((timeMax - timeMin) * 1000 > 16) {
-            console.log("re-sincronize", 
+/*            console.log("re-sincronize", 
                 Math.floor(this.channels[0].song.currentTime * 1000),
                 Math.floor(this.channels[1].song.currentTime * 1000),
                 Math.floor(this.channels[2].song.currentTime * 1000),
                 Math.floor(this.channels[3].song.currentTime * 1000),
                 Math.floor(this.channels[4].song.currentTime * 1000)                        
-            );
+            );*/
             // set the current time for all songs
             for (let i = 1; i < this.totalChannels; i++) {
                 this.channels[i].song.currentTime = this.channelSong.song.currentTime;

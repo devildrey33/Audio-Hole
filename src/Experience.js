@@ -175,21 +175,23 @@ export default class Experience {
     /**
      * Function called when a frame is about to update (before the world objects creation)
     */
-    update() {
+    update() {        
+        const delta = this.time.delta;
         this.camera.update();
 
-        this.world.update();
-        this.renderer.update();
+        this.world.update(delta);
+        this.renderer.update(delta);
     }
 
     /**
      * Function called when a frame is about to update (after the world objects creation)
     */
     updateQuality() {
+        const delta = this.time.delta;
         this.camera.update();
-        this.audioAnalizer.update(this.time.delta);
+        this.audioAnalizer.update(delta);
 
-        this.world.update();
+        this.world.update(delta);
         this.renderer.update();
 
         this.debugAverages.update();

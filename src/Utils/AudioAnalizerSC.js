@@ -138,7 +138,8 @@ export default class AudioAnalizerMC {
     }
 
     update(delta) {
-        this.channelSong.update(delta);
+        // freqDivisor is 512 because the main channel has higger values than i used whit separated channels
+        this.channelSong.update(delta, 512);
 
         // Calculate current beats per minute 
         this.calculateCurrentBeat(delta);
