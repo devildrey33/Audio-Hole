@@ -4,6 +4,7 @@ uniform float     uAudioStrengthSin;
 uniform float     uTime;
 uniform float     uNoiseStrength;
 uniform float     uNoiseSpeed;
+uniform vec3      uColorSin;
 
 varying vec2      vUv; // Coordenadas UV del fragmento
 
@@ -160,9 +161,9 @@ vec4 circleSin(vec4 currentColor, vec2 center) {
     } else {
         normAngle = (1.0 + ((rad - PI) / PI));
     }*/
-    float radiusSin = 0.125 + sin(uTime) * 0.025;
+    float radiusSin = 0.165 + sin(uTime) * 0.025;
 
-    vec2 pos1 = vec2(0.4, 0.5);
+    vec2 pos1 = vec2(0.45, 0.5);
     float dist = length(vUv - center);
     float rad = atan(vUv.y - center.y, vUv.x - center.x);
 
@@ -174,7 +175,10 @@ vec4 circleSin(vec4 currentColor, vec2 center) {
 
     if (dist - audioValue + strength + 0.01 < radiusSin) {
 //        return vec4(getColor(uTime * 0.05) , 1.0 /* 0.5 + (2.0 * dist) - sin(uTime) * 0.25 */);
-        return vec4(2.0, 2.0, 1.5, 0.75);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
+        
+        
+//        return vec4(2.0 * uColorSin.r, 2.0 * uColorSin.g, 1.5 * uColorSin.b, 0.75);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
+        return vec4(uColorSin, 0.5);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
 //        return vec4(0.6, 0.2, 0.7, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
 //        return vec4(abs(sin(uTime * 5.312)), abs(cos(uTime * 0.32)), 0.5, 1.0);//0.5 + (2.0 * dist) - sin(uTime) * 0.125);
     }

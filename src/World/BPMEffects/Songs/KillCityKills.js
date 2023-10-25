@@ -33,24 +33,24 @@ export default class killCityKills {
         },
         {   // batery
             start : 9, end : 9.5,
-            effect : new BPMSpiralsScale({ scaleZ : 3, scaleX : 0.75, scaleY : 0.3, ease : "bounce" })
+            effect : new BPMSpiralsScale({ scaleZ : 3, scaleX : 0.75, scaleY : 0.63, ease : "bounce" })
         },
         {   // batery
             start : 12, end : 12.5,
-            effect : new BPMSpiralsScale({ scaleX : 0.375, ease : "bounce" })
+            effect : new BPMLateralBars({ position : 50, ease : "bounce" }) //effect : new BPMSpiralsScale({ scaleX : 0.375, ease : "bounce" })
         },
         {   // bass changing rithm
-            start : 24.75, end : 25.25,
+            start : 24.75, end : 25.25,            
             effect : new BPMSpiralsScale({ scaleX : 3.5, ease : "bounce" })
         },
 
         {   // first yell
             start : 33, end : 41, 
-            effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color("yellow") })
+            effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.15, color : new THREE.Color(2,2,0) })
         },
         {   // end first yell and begin of a second mini yell
             start : 49, end : 51, 
-            effect : new BPMSpiralOsciloscope({ audioStrength : 1.5, thickness : 0.25, color : new THREE.Color(1,0,0) })
+            effect : new BPMSpiralOsciloscope({ audioStrength : 1.5, thickness : 0.2, color : new THREE.Color(2,0,0) })
         },
         {   // 
             start : 73, end : 77, 
@@ -152,6 +152,16 @@ export default class killCityKills {
             effect : new BPMSpiralsScale({ scaleZ : 2.75, ease : "bounce" })
         },
 
+        {   // now!
+            start : 291, end : 291.5,
+            effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
+        },
+        {   // now!
+            start : 291.25, end : 291.75,
+            effect : new BPMLateralBars({ position : 25, ease : "bounce" }) //effect : new BPMSpiralsScale({ scaleX : 0.375, ease : "bounce" })
+        },
+
+        
         {   // mayday
             start : 312.5, end : 313.5, 
             effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
@@ -168,7 +178,7 @@ export default class killCityKills {
 
         {   // yell
             start : 356, end : 361, 
-            effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25, color : new THREE.Color(0,0.5,0.75) })
+            effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.25, color : new THREE.Color(0,2,3) })
         },
         
 
@@ -180,11 +190,19 @@ export default class killCityKills {
 
         {   // Guitar solo (ends 423)
             start : 390, end : 394, 
-            effect : new BPMSpiralBars({ destThickness : 0.50, originMirrors : 2, destMirrors : 24,  yoyo : false })
+            effect : new BPMSpiralBars({ destThickness : 0.50, originMirrors : 2, destMirrors : 24, destAudioStrength : 0.5, yoyo : false })
+        },            
+        {   // end of mirror grow
+            start : 394.5, end : 395, 
+            effect : new BPMSpiralsScale({ scaleZ : 2.75, ease : "bounce" })
+        },            
+        {   // remove thickness
+            start : 399, end : 402, 
+            effect : new BPMSpiralBars({ originAudioStrength : 0.5, destAudioStrength : 0.5, originThickness : 0.5, originMirrors : 24, destMirrors : 24, destThickness : 0.25,  yoyo : false })
         },            
         {   // Guitar solo (ends 423)
             start : 406, end : 415, 
-            effect : new BPMSpiralBars({ originThickness : 0.50, originMirrors : 24, destMirrors : 3,  yoyo : false })
+            effect : new BPMSpiralBars({ originAudioStrength : 0.5, originThickness : 0.25,  originMirrors : 24, destMirrors : 3,  yoyo : false })
         },            
 /*        {   // Guitar solo (ends 423)
             start : 423.5, end : 424, 
@@ -209,10 +227,10 @@ export default class killCityKills {
         },
         {   // batery
             start : 430.5, end : 431,
-            effect : new BPMSpiralsScale({ scaleZ : 3, scaleX : 0.75, scaleY : 0.3, ease : "bounce" })
+            effect : new BPMSpiralsScale({ scaleZ : 3, scaleX : 0.75, scaleY : 0.63, ease : "bounce" })
         },
         {   // batery
-            start : 434.5, end : 435,
+            start : 434, end : 434.5,
             effect : new BPMSpiralsScale({ scaleX : 0.375, ease : "bounce" })
         },
 
@@ -226,10 +244,15 @@ export default class killCityKills {
             })
         },
 
+        {   // bass changing rithm
+            start : 446.75, end : 447.25,            
+            effect : new BPMSpiralsScale({ scaleX : 3.5, ease : "bounce" })
+        },
+
 
         {   // yell
             start : 454, end : 460, 
-            effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.2, color : new THREE.Color(1,0,0) })
+            effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.15, color : new THREE.Color(2,0,0) })
         },
 
         {   // mayday
@@ -250,11 +273,11 @@ export default class killCityKills {
 
         {   // yell
             start : 520, end : 521, 
-            effect : new BPMSpiralOsciloscope({ audioStrength : 1.5, thickness : 0.2, color : new THREE.Color(1,0,0) })
+            effect : new BPMSpiralOsciloscope({ audioStrength : 1.5, thickness : 0.15, color : new THREE.Color(2,0,0) })
         },
         {   // yell
             start : 535, end : 540, 
-            effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.3, color : new THREE.Color(0,0,1) })
+            effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color(0,0,2) })
         },
 /*            {
             start : 520,  end : 521 ,

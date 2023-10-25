@@ -19,6 +19,7 @@ export default class BPMSpiralOsciloscope extends BPMEffect {
         this.end   = end;
 
         this.spiralUniforms = this.experience.world.spirals.material.uniforms;
+        this.sunUniforms = this.experience.world.sun.material.uniforms;
 
         const bpmMS = this.experience.song.bpmMS;
         let startMS = (start * bpmMS) / 1000;
@@ -51,8 +52,8 @@ export default class BPMSpiralOsciloscope extends BPMEffect {
     onUpdate(This) {
         This.spiralUniforms.uAudioStrengthSin.value = this.targets()[0][0];
         This.spiralUniforms.uThicknessSin.value     = this.targets()[0][1];
-        This.spiralUniforms.uColorSin.value            = new THREE.Color(this.targets()[0][2], this.targets()[0][3], this.targets()[0][4]);
-
+        This.spiralUniforms.uColorSin.value         = new THREE.Color(this.targets()[0][2], this.targets()[0][3], this.targets()[0][4]);
+        This.sunUniforms.uColorSin.value = This.spiralUniforms.uColorSin.value;
         This.onUpdateProgress(this._tTime, this._tDur);        
     }
 

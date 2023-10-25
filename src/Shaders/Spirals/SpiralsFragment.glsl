@@ -46,7 +46,12 @@ vec4 drawAudio(vec2 pos) {
 
     // Paint the spiral osciloscope
     if (pSin < (uFrequencySin * uThicknessSin)) {        
-        return vec4(uColorSin, ((uAudioValue + uAudioValue2) * 0.5) * ((1.0 - pos.y) * .5));
+        
+//        if (uAudioValue2 > 0.02)
+            return vec4(uColorSin, (1.0 - pos.y) * uAudioValue * 0.75 );
+//            return vec4(mix(uColorSin, vec3(1.0), (pos.y)), 1.0 - pos.y);
+//            return vec4(uColorSin, uAudioValue2 * ((1.0 - pos.y)));
+//        return vec4(uColorSin, ((uAudioValue + uAudioValue2) * 0.5) * ((1.0 - pos.y) * .5));
     }
 
 
@@ -89,7 +94,7 @@ vec4 drawAudio(vec2 pos) {
 
     if (p < (uFrequency * uThickness)) {        
 //        return vec4(hsl2rgb(vec3(uTime * -0.05, 1, (1.0 - pos.y) * 0.5 )), (1.0 - pos.y) * 0.5);
-        return vec4(hsl2rgb(vec3(0.05 + (uTime * -0.05), 1.0 - p, (1.0 - pos.y) * 0.5 )), uAudioValue * ((1.0 - pos.y) * 0.5));
+        return vec4(hsl2rgb(vec3(0.05 + (uTime * -0.05), 1.0 - p, (1.0 - pos.y) * 0.5 )), uAudioValue * ((1.0 - pos.y)));
     }
     
     discard;

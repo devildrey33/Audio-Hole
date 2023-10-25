@@ -25,7 +25,8 @@ export default class Sun {
                 uAudioStrengthFreq : { value : this.experience.options.sunAudioStrengthFreq },
                 uAudioStrengthSin  : { value : this.experience.options.sunAudioStrengthSin },
                 uNoiseStrength     : { value : this.experience.options.sunNoiseStrength },
-                uNoiseSpeed        : { value : this.experience.options.sunNoiseSpeed }
+                uNoiseSpeed        : { value : this.experience.options.sunNoiseSpeed },
+                uColorSin          : { value : this.experience.options.sunColorSin }
             },
             vertexShader    : SunVertexShader,
             fragmentShader  : SunFragmentShader,

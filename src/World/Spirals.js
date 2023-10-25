@@ -61,7 +61,7 @@ export default class Spirals {
 
 
 //        this.group = new THREE.Group();
-        this.mesh.position.set(0, 0, -32);
+        this.mesh.position.set(0, 0, -27);
 //        this.group.add(this.mesh);
         this.world.group.add(this.mesh);
 

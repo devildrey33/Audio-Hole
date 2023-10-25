@@ -58,6 +58,7 @@ export default {
     sunAudioStrengthSin             : 2.1,
     sunNoiseStrength                : 15,
     sunNoiseSpeed                   : 1,
+    sunColorSin                     : new THREE.Color(1, 1, 1),
 
     // Rays (particles)
     raysCount                       : 50,
