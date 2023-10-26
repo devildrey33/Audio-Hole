@@ -53,13 +53,19 @@ export default class killCityKills {
             start : 49, end : 51, 
             effect : new BPMSpiralOsciloscope({ audioStrength : 1.5, thickness : 0.2, color : new THREE.Color(2,0,0) })
         },
-        {   // 
-            start : 73, end : 77, 
-            effect : new BPMBloom({ destIntensity : 0.8, destRadius : 1.65, yoyo : true })
-        },
+        {   // woooOOO
+            start : 73, end : 81, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+        },    
+        {   // woooOOO
+            start : 89, end : 98, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+        },   
+        
+        
         {   // 
             start : 89, end : 93, 
-            effect : new BPMBloom({ destIntensity : 1.48, destRadius : -1.15, yoyo : true })
+            effect : new BPMBloom({ destIntensity : 2.48, destRadius : 1.15, yoyo : true })
         },            
         {   // right
             start : 113.5,  end : 115,
@@ -107,6 +113,10 @@ export default class killCityKills {
             start : 161.5, end : 162,
             effect : new BPMSpiralsScale({ scaleX : 2.3, scaleY : 1.3, scaleZ : 0.75, ease : "bounce-inOut" })
         },            
+        {   // woooOOO
+            start : 175, end : 182, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+        },     
 
         //start : 312.5, end : 313.5, 
         {   // mayday
@@ -122,11 +132,18 @@ export default class killCityKills {
             effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
         },
 
+        {   // woooOOO
+            start : 202, end : 211, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+        },            
         {   // wuah
             start : 211, end : 211.5,
             effect : new BPMLateralBars({ position : 50, ease : "bounce" })
         },
-
+        {   // woooOOO
+            start : 218, end : 227.5, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+        },    
         {   // right
             start : 243.5,  end : 245,
             effect : new BPMColorCorrection({
@@ -162,7 +179,11 @@ export default class killCityKills {
             effect : new BPMLateralBars({ position : 25, ease : "bounce" }) //effect : new BPMSpiralsScale({ scaleX : 0.375, ease : "bounce" })
         },
 
-        
+        {   // woooOOO
+            start : 304, end : 311.5, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+        },    
+
         {   // mayday
             start : 312.5, end : 313.5, 
             effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
@@ -184,15 +205,16 @@ export default class killCityKills {
         
 
 
-        {   // Guitar solo (ends 423)
-            start : 390, end : 423, 
-            effect : new BPMMirror({ animationOut : 2.5 })
+        {   // Guitar solo mirror 1
+            start : 390, end : 407, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
         },            
+               
         {   // Guitar solo (ends 423)
             start : 390, end : 394, 
-            effect : new BPMSpiralBars({ destThickness : 0.50, originMirrors : 2, destMirrors : 24, destAudioStrength : 0.5, yoyo : false })
+            effect : new BPMSpiralBars({ destThickness : 0.25, originMirrors : 2, destMirrors : 24, destAudioStrength : 0.5, yoyo : false })
         },            
-        {   // Guitar solo (ends 423)
+        {   // Guitar solo bloom 1
             start : 390, end : 394, 
             effect : new BPMBloom({ destIntensity : -1.5, destRadius : 0.65, yoyo : false })
         },            
@@ -213,32 +235,37 @@ export default class killCityKills {
             })
         },
 
-/*        {   // Solo guitar acord
-            start : 399, end : 399.5, 
-            effect : new BPMSpiralsScale({ scaleX : 2.75, ease : "bounce" })
-        },            */
+        {   // Solo guitar acord
+            start : 398, end : 398.5, 
+            effect : new BPMSpiralsScale({ scaleY : 1.5, ease : "bounce" })
+        },            
 
         {   // remove thickness
             start : 399, end : 402, 
-            effect : new BPMSpiralBars({ originAudioStrength : 0.5, destAudioStrength : 0.5, originThickness : 0.5, originMirrors : 24, destMirrors : 24, destThickness : 0.25,  yoyo : false })
+            effect : new BPMSpiralBars({ originAudioStrength : 0.5, destAudioStrength : 0.5, originThickness : 0.25, originMirrors : 24, destMirrors : 24, destThickness : 0.15,  yoyo : false })
         },            
-        {   // Guitar solo (ends 423)
+        {   // Guitar solo bloom 2
             start : 404, end : 408, 
             effect : new BPMBloom({ originIntensity : -1.5, originRadius : 0.65, destIntensity : 2, destRadius : 1.12,  yoyo : false })
         },            
         {   // Guitar solo (ends 423)
             start : 406, end : 415, 
-            effect : new BPMSpiralBars({ originAudioStrength : 0.5, originThickness : 0.25,  originMirrors : 24, destMirrors : 3,  yoyo : false })
+            effect : new BPMSpiralBars({ originAudioStrength : 0.5, originThickness : 0.15,  originMirrors : 24, destMirrors : 3,  yoyo : false })
         },            
+        {   // Guitar solo mirror 2
+            start : 413, end : 423, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+        },    
 
-/*        {   // Solo guitar acord
-            start : 408, end : 408.5, 
-            effect : new BPMSpiralsScale({ scaleY : 2.75, ease : "bounce" })
+
+        {   // Solo guitar achord
+            start : 406, end : 406.5, 
+            effect : new BPMSpiralsScale({ scaleX : 1.75, ease : "bounce" })
         },            
-        {   // Solo guitar acord
-            start : 412, end : 412.5, 
-            effect : new BPMSpiralsScale({ scaleZ: 2.75, ease : "bounce" })
-        },            */
+        {   // Solo guitar achord
+            start : 410, end : 410.5, 
+            effect : new BPMSpiralsScale({ scaleZ: 2, ease : "bounce" })
+        },            
 
         { // revert color correction to normal blue
             start : 414,  end : 420,
@@ -248,10 +275,10 @@ export default class killCityKills {
             })
         },
 
-/*        {   // Solo guitar acord
-            start : 415, end : 415.5, 
-            effect : new BPMSpiralsScale({ scaleX: 2.75, ease : "bounce" })
-        },            */
+        {   // Solo guitar achord
+            start : 414, end : 414.5, 
+            effect : new BPMSpiralsScale({ scaleY: 2.25, ease : "bounce" })
+        },            
 
         {   // Guitar solo (ends 423)
             start : 419, end : 423, 

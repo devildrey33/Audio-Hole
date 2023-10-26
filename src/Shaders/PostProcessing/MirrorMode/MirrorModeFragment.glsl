@@ -49,7 +49,7 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
         // end animation uTimeAnimationOut from 0 to 1
         float curPosOut = elasticInOut(clamp(uTime - (uEndTime - uTimeAnimationOut), 0.0, uTimeAnimationOut) * (1.0 / uTimeAnimationOut));
         // Combine animations and multiply * 0.25 of displacement
-        float displacement = (curPosIn - curPosOut) * 0.25;
+        float displacement = (curPosIn - curPosOut) * 0.125;
         // Determinate the position of mirrors 
         vec2 pos = uv, pos2 = uv;
         float mixPos = uv.y; // mix set for width < height
