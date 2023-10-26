@@ -16,15 +16,11 @@ export default class BPMSpiralsPosition extends BPMEffect {
         this.yoyo = yoyo;
     }
 
-    setupAnimation(tl, start, end) {
-        this.start = start;
-        this.end   = end;
+    setupAnimation(tl, start, duration) {
+        this.start     = start;
+        this.duration  = duration;
 
-        this.spiralsMesh = this.experience.world.spirals.mesh;
-
-        const bpmMS = this.experience.song.bpmMS;
-        let startMS = (start * bpmMS) / 1000;
-        let endMS   = ((end * bpmMS) / 1000) - startMS;        
+        this.spiralsMesh = this.experience.world.spirals.mesh;      
         
         this.origin = [ this.spiralsMesh.position.x, this.spiralsMesh.position.y, this.spiralsMesh.position.x ];
 
@@ -35,7 +31,7 @@ export default class BPMSpiralsPosition extends BPMEffect {
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,
-                duration         : endMS,
+                duration         : this.duration,
                 endArray         : this.dest,
                 onUpdate         : this.onUpdate,
                 onUpdateParams   : [ this ],
@@ -44,7 +40,7 @@ export default class BPMSpiralsPosition extends BPMEffect {
                 onComplete       : this.onComplete,
                 onCompleteParams : [ this ],
             },
-            startMS
+            this.start
         )
     }
 

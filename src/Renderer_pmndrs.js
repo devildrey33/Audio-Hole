@@ -55,13 +55,11 @@ export default class Renderer {
 
 
         this.bloomEffect = new BloomEffect({ mipmapBlur : true, levels : 5 });
-        //this.bloomPass.strength = this.experience.options.bloomStrength;   
         this.bloomEffect.intensity = this.experience.options.bloomPmndrsIntensity;
         this.bloomEffect.luminanceMaterial.uniforms.threshold.value = this.experience.options.bloomPmndrsThreshold;
         this.bloomEffect.luminanceMaterial.uniforms.smoothing.value = this.experience.options.bloomPmndrsSmoothing;
         this.bloomEffect.mipmapBlurPass.radius = this.experience.options.bloomPmndrsRadius;
         this.bloomPass = new EffectPass(this.camera.instance, this.bloomEffect);
-//        this.bloomPass.dithering = false;
         this.effectComposer.addPass(this.bloomPass);
 
 
@@ -78,7 +76,7 @@ export default class Renderer {
 
 
         this.colorCorrectionEffect = new ColorCorrectionEffect();
-//        this.colorCorrectionEffect.blendMode.blendFunction = BlendFunction.REFLECT;
+
         this.colorCorrectionEffect.uniforms.get("powRGB").value = this.experience.options.colorCorrectionPowRGB;
         this.colorCorrectionEffect.uniforms.get("mulRGB").value = this.experience.options.colorCorrectionMulRGB;
         this.colorCorrectionEffect.uniforms.get("addRGB").value = this.experience.options.colorCorrectionAddRGB;

@@ -14,16 +14,12 @@ export default class BPMSpiralOsciloscope extends BPMEffect {
         this.yoyo = yoyo;
     }
 
-    setupAnimation(tl, start, end) {
-        this.start = start;
-        this.end   = end;
+    setupAnimation(tl, start, duration) {
+        this.start     = start;
+        this.duration  = duration;
 
         this.spiralUniforms = this.experience.world.spirals.material.uniforms;
         this.sunUniforms = this.experience.world.sun.material.uniforms;
-
-        const bpmMS = this.experience.song.bpmMS;
-        let startMS = (start * bpmMS) / 1000;
-        let endMS   = ((end * bpmMS) / 1000) - startMS;        
         
         this.origin = [ this.spiralUniforms.uAudioStrengthSin.value, this.spiralUniforms.uThicknessSin.value,
             this.spiralUniforms.uColorSin.value.r, this.spiralUniforms.uColorSin.value.g, this.spiralUniforms.uColorSin.value.b
@@ -36,7 +32,7 @@ export default class BPMSpiralOsciloscope extends BPMEffect {
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,
-                duration         : endMS,
+                duration         : this.duration,
                 endArray         : this.dest,
                 onUpdate         : this.onUpdate,
                 onUpdateParams   : [ this ],
@@ -45,7 +41,7 @@ export default class BPMSpiralOsciloscope extends BPMEffect {
                 onComplete       : this.onComplete,
                 onCompleteParams : [ this ],
             },
-            startMS
+            this.start
         )
     }
 

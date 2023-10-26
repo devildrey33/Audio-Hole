@@ -1,32 +1,31 @@
+import * as THREE from 'three'
 import BPMEffect from "./BPMEffect.js";
 
 export default class BPMMirror extends BPMEffect {
     constructor({ 
-        enabled       = 0,  /* 0 disabled, 1 mirror width, 2 mirror height, 3 mirror width and height */
+        animationIn   = 0.5, 
+        animationOut  = 0.5, 
         ease          = "none", 
         yoyo          = false 
     }) {
         super();
         this.dest = [ 1 ];
-        this.enabled = enabled;
+        this.animationIn = animationIn;
+        this.animationOut = animationOut;
         
-        this.name = "LateralBars";
-        this.params = `(${enabled})`;
+        this.name = "MirrorMode";
+        this.params = `(${animationIn, animationOut})`;
 
         this.ease = ease;
         this.yoyo = yoyo;
     }
 
 
-    setupAnimation(tl, start, end) {
-        this.start = start;
-        this.end   = end;
+    setupAnimation(tl, start, duration) {
+        this.start     = start;
+        this.duration  = duration;
 
         this.mirrorEffect = this.experience.renderer.mirrorModeEffect;
-
-        const bpmMS = this.experience.song.bpmMS;
-        let startMS = (start * bpmMS) / 1000;
-        let endMS   = ((end * bpmMS) / 1000) - startMS;        
         
         // Mesh2 is positive, mesh is negative
         this.origin = [ 0 ];
@@ -38,7 +37,7 @@ export default class BPMMirror extends BPMEffect {
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,
-                duration         : endMS,
+                duration         : this.duration,
                 endArray         : this.dest,
                 onUpdate         : this.onUpdate,
                 onUpdateParams   : [ this ],
@@ -47,36 +46,32 @@ export default class BPMMirror extends BPMEffect {
                 onComplete       : this.onComplete,
                 onCompleteParams : [ this ],
             },
-            startMS
+            this.start
         )
     }
 
     
     onUpdate(This) {
-        const value = Math.floor(this.targets()[0][0]);
-//        This.lateralBars.mesh.position.x = -value;
-//        This.lateralBars.mesh2.position.x = value;
+        const value = (this.targets()[0][0]);
         if (value > 0) {
-            if (This.enabled === 0) {
-                if (This.experience.sizes.width > This.experience.sizes.height) {
-                    This.mirrorEffect.uniforms.get("uEnabled").value = 0.1;
-                }
-                else {
-                    This.mirrorEffect.uniforms.get("uEnabled").value = 0.2;
-                }
-            }
-            else {
-                if (This.experience.sizes.width > This.experience.sizes.height) {
-                    This.mirrorEffect.uniforms.get("uEnabled").value = 1.0;    
-                }
-                else {
-                    This.mirrorEffect.uniforms.get("uEnabled").value = 2.0;    
-                }
-            }
-            This.mirrorEffect.uniforms.get("uStartTime").value = This.experience.audioAnalizer.channelSong.song.currentTime;
+            This.mirrorEffect.init(This.start, This.start + This.duration, This.experience.sizes.width, This.experience.sizes.height, This.animationIn, This.animationOut);
         }
+//       This.suicide(value, This);
 
         This.onUpdateProgress(this._tTime, this._tDur);        
     }
 
+
+    /* This is a suicide function of one use 
+        I need to do this to avoid initializating more than one time the mirrorEffect
+        .... nah
+     */
+    /*suicide(value, This) {
+        if (value > 0) {
+            This.mirrorEffect.init(This.start, This.start + This.duration, This.experience.sizes.width, This.experience.sizes.height, This.animationIn, This.animationOut);
+            console.log ( This.experience.audioAnalizer.channelSong.song.currentTime, This.start, This.start + This.duration)
+            This.suicide = () => {}
+        }
+
+    }*/
 }

@@ -31,18 +31,15 @@ export default class BPMColorCorrection extends BPMEffect {
     }
 
 
-    setupAnimation(tl, start, end) {
-        this.start = start;
-        this.end   = end;
+    setupAnimation(tl, start, duration) {
+        this.start     = start;
+        this.duration  = duration;
 
         this.colorCorrectionEffect = this.experience.renderer.colorCorrectionEffect;
         this.powOrigin  = this.colorCorrectionEffect.uniforms.get("powRGB").value;
         this.mulOrigin  = this.colorCorrectionEffect.uniforms.get("mulRGB").value;
         this.addOrigin  = this.colorCorrectionEffect.uniforms.get("addRGB").value;
 
-        const bpmMS = this.experience.song.bpmMS;
-        let startMS = (start * bpmMS) / 1000;
-        let endMS   = ((end * bpmMS) / 1000) - startMS;
 
         tl.to(
             this.origin, 
@@ -51,7 +48,7 @@ export default class BPMColorCorrection extends BPMEffect {
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,
-                duration         : endMS,
+                duration         : this.duration,
                 endArray         : this.dest,
                 onUpdate         : this.onUpdate,
                 onUpdateParams   : [ this ],
@@ -60,7 +57,7 @@ export default class BPMColorCorrection extends BPMEffect {
                 onComplete       : this.onComplete,
                 onCompleteParams : [ this ],
             },
-            startMS
+            this.start
         )
 //        console.log(tween);
     }

@@ -184,6 +184,7 @@ export default class HTMLElements {
 
         // Update current time
         this.elementAudioTime.addEventListener('change', (e) => { 
+            this.elementDebugEffects.innerHTML = "";
             this.experience.audioAnalizer.setTime(this.elementAudioTime.value);
             // Update current beat per minute acording to the new time
             if (this.experience.audioAnalizer.bpm !== 0) {

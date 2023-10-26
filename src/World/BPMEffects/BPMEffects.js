@@ -53,8 +53,12 @@ export default class BPMEffects {
     RecalculateAnimations(timeline) {
         console.log("recalculate animations")
         const currentSong = this.experience.currentSong;
+        const bpmMS = this.experience.song.bpmMS;
+
         this.songsEffects[currentSong].forEach(element => {
-            element.effect.setupAnimation(timeline, element.start, element.end);            
+            let start    = (element.start * bpmMS) / 1000;
+            let duration = ((element.end * bpmMS) / 1000) - start;        
+            element.effect.setupAnimation(timeline, start, duration);            
         });
     }
 

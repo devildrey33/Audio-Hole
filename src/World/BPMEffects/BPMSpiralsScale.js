@@ -14,16 +14,12 @@ export default class BPMSpiralsScale extends BPMEffect {
         this.yoyo = yoyo;
     }
 
-    setupAnimation(tl, start, end) {
-        this.start = start;
-        this.end   = end;
+    setupAnimation(tl, start, duration) {
+        this.start     = start;
+        this.duration  = duration;
 
         this.spiralsMesh = this.experience.world.spirals.mesh;
 
-        const bpmMS = this.experience.song.bpmMS;
-        let startMS = (start * bpmMS) / 1000;
-        let endMS   = ((end * bpmMS) / 1000) - startMS;        
-        
         this.origin = [ this.spiralsMesh.scale.x, this.spiralsMesh.scale.y, this.spiralsMesh.scale.x ];
 
         tl.to(
@@ -33,7 +29,7 @@ export default class BPMSpiralsScale extends BPMEffect {
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,
-                duration         : endMS,
+                duration         : this.duration,
                 endArray         : this.dest,
                 onUpdate         : this.onUpdate,
                 onUpdateParams   : [ this ],
@@ -42,7 +38,7 @@ export default class BPMSpiralsScale extends BPMEffect {
                 onComplete       : this.onComplete,
                 onCompleteParams : [ this ],
             },
-            startMS
+            this.start
         )
     }
 

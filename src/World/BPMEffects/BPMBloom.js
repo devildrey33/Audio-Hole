@@ -19,37 +19,11 @@ export default class BPMBloom extends BPMEffect {
         this.dest   = [ destIntensity, destRadius ];
     }
 
-    setupAnimation(tl, start, end) {
-        this.start = start;
-        this.end   = end;
+    setupAnimation(tl, start, duration) {
+        this.start     = start;
+        this.duration  = duration;
         this.bloomEffect = this.experience.renderer.bloomEffect;
-        const bpmMS = this.experience.song.bpmMS;
-        let startMS = (start * bpmMS) / 1000;
-        let endMS   = ((end * bpmMS) / 1000) - startMS;
-        
-        /*tl.fromTo(
-            this.origin, 
-            {
-                i : this.bloomEffect.intensity,
-                r : this.bloomEffect.mipmapBlurPass.radius 
-            },
-            {
-                id               : this.id,
-                ease             : this.ease,
-                repeat           : (this.yoyo === true) ? 1 : 0,
-                yoyo             : this.yoyo,
-                duration         : endMS,
-                endArray         : this.dest,
-                onUpdate         : this.onUpdate, 
-                onUpdateParams   : [ this ],
-                onStart          : this.onStartBloom,
-                onStartParams    : [ this ],
-                onComplete       : this.onComplete,
-                onCompleteParams : [ this ],
-            },
-            startMS
 
-        )*/
 
         tl.to(
             this.origin, 
@@ -58,7 +32,7 @@ export default class BPMBloom extends BPMEffect {
                 ease             : this.ease,
                 repeat           : (this.yoyo === true) ? 1 : 0,
                 yoyo             : this.yoyo,
-                duration         : endMS,
+                duration         : this.duration,
                 endArray         : this.dest,
                 onUpdate         : this.onUpdate, 
                 onUpdateParams   : [ this ],
@@ -67,7 +41,7 @@ export default class BPMBloom extends BPMEffect {
                 onComplete       : this.onComplete,
                 onCompleteParams : [ this ],
             },
-            startMS
+            this.start
         )
 
         this.tween = tl.getById(this.id);

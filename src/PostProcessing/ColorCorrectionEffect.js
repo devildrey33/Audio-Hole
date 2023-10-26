@@ -1,6 +1,6 @@
 import { Effect, BlendFunction, EffectAttribute } from "postprocessing";
 import * as THREE from 'three'
-import ColorCorrectionFragment from "./ColorCorrectionFragment.glsl"
+import ColorCorrectionFragment from "../Shaders/PostProcessing/ColorCorrection/ColorCorrectionFragment.glsl"
 
 /**
  * Color correction for pmndr postprocessing...

@@ -185,8 +185,8 @@ export default class killCityKills {
 
 
         {   // Guitar solo (ends 423)
-            start : 390, end : 390.25, 
-            effect : new BPMMirror({ enabled : 1, yoyo : false })
+            start : 390, end : 423, 
+            effect : new BPMMirror({ animationOut : 2.5 })
         },            
         {   // Guitar solo (ends 423)
             start : 390, end : 394, 
@@ -213,6 +213,11 @@ export default class killCityKills {
             })
         },
 
+/*        {   // Solo guitar acord
+            start : 399, end : 399.5, 
+            effect : new BPMSpiralsScale({ scaleX : 2.75, ease : "bounce" })
+        },            */
+
         {   // remove thickness
             start : 399, end : 402, 
             effect : new BPMSpiralBars({ originAudioStrength : 0.5, destAudioStrength : 0.5, originThickness : 0.5, originMirrors : 24, destMirrors : 24, destThickness : 0.25,  yoyo : false })
@@ -225,6 +230,16 @@ export default class killCityKills {
             start : 406, end : 415, 
             effect : new BPMSpiralBars({ originAudioStrength : 0.5, originThickness : 0.25,  originMirrors : 24, destMirrors : 3,  yoyo : false })
         },            
+
+/*        {   // Solo guitar acord
+            start : 408, end : 408.5, 
+            effect : new BPMSpiralsScale({ scaleY : 2.75, ease : "bounce" })
+        },            
+        {   // Solo guitar acord
+            start : 412, end : 412.5, 
+            effect : new BPMSpiralsScale({ scaleZ: 2.75, ease : "bounce" })
+        },            */
+
         { // revert color correction to normal blue
             start : 414,  end : 420,
             effect : new BPMColorCorrection({ 
@@ -232,16 +247,16 @@ export default class killCityKills {
                 destPow   : [3, 3, 8], destMul   : [2, 2, 15], destAdd   : [0.05, 0.05, 0.5], 
             })
         },
+
+/*        {   // Solo guitar acord
+            start : 415, end : 415.5, 
+            effect : new BPMSpiralsScale({ scaleX: 2.75, ease : "bounce" })
+        },            */
+
         {   // Guitar solo (ends 423)
             start : 419, end : 423, 
             effect : new BPMBloom({ originIntensity : 2, originRadius : 1.12, yoyo : false })
         },            
-
-        {   // Guitar solo END
-            start : 422.5, end : 423, 
-            effect : new BPMMirror({ enabled : 0.0, yoyo : false })
-        },            
-
         {   // batery
             start : 430, end : 430.5,
             effect : new BPMSpiralsScale({ scaleX : 2, scaleZ : 0.65, ease : "bounce" })
