@@ -142,7 +142,7 @@ export default class killCityKills {
         },
         {   // woooOOO
             start : 218, end : 227.5, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5, displacement : 0.35 })
         },    
         {   // right
             start : 243.5,  end : 245,
@@ -197,6 +197,15 @@ export default class killCityKills {
             effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
         },
 
+        {   // woooOOO
+            start : 326, end : 337, 
+            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.025 })
+        },    
+
+        {   // woooOOO
+            start : 341, end : 354, 
+            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.02 })
+        },    
 
         {   // yell
             start : 356, end : 361, 
@@ -205,10 +214,10 @@ export default class killCityKills {
         
 
 
-        {   // Guitar solo mirror 1
+/*        {   // Guitar solo mirror 1
             start : 390, end : 407, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
-        },            
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5, displacement : 0.05})
+        },            */
                
         {   // Guitar solo (ends 423)
             start : 390, end : 394, 
@@ -252,20 +261,19 @@ export default class killCityKills {
             start : 406, end : 415, 
             effect : new BPMSpiralBars({ originAudioStrength : 0.5, originThickness : 0.15,  originMirrors : 24, destMirrors : 3,  yoyo : false })
         },            
-        {   // Guitar solo mirror 2
-            start : 413, end : 423, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
-        },    
-
-
         {   // Solo guitar achord
             start : 406, end : 406.5, 
             effect : new BPMSpiralsScale({ scaleX : 1.75, ease : "bounce" })
         },            
         {   // Solo guitar achord
             start : 410, end : 410.5, 
-            effect : new BPMSpiralsScale({ scaleZ: 2, ease : "bounce" })
+            effect : new BPMSpiralsScale({ scaleX: 0.25, ease : "bounce" })
         },            
+        {   // Guitar solo mirror 2
+            start : 413, end : 423, 
+            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5, displacement : 0.2 })
+        },    
+    
 
         { // revert color correction to normal blue
             start : 414,  end : 420,
@@ -275,10 +283,6 @@ export default class killCityKills {
             })
         },
 
-        {   // Solo guitar achord
-            start : 414, end : 414.5, 
-            effect : new BPMSpiralsScale({ scaleY: 2.25, ease : "bounce" })
-        },            
 
         {   // Guitar solo (ends 423)
             start : 419, end : 423, 
@@ -318,6 +322,12 @@ export default class killCityKills {
             effect : new BPMSpiralOsciloscope({ audioStrength : .75, thickness : 0.15, color : new THREE.Color(2,0,0) })
         },
 
+        {   // woooOOO
+            start : 467, end : 473, 
+            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5 })
+        },    
+
+
         {   // mayday
             start : 475, end : 476, 
             effect : new BPMBloom({ destIntensity : -3, destRadius : 0.85, yoyo : true })
@@ -331,6 +341,15 @@ export default class killCityKills {
             effect : new BPMBloom({ destIntensity : 3, destRadius : 1.35, yoyo : true })
         },
 
+        {   // woooOOO
+            start : 488, end : 500, 
+            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.065 })
+        },    
+        
+        {   // woooOOO
+            start : 503, end : 514, 
+            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.065 })
+        },    
         
 
 
@@ -342,14 +361,17 @@ export default class killCityKills {
             start : 535, end : 540, 
             effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color(0,0,2) })
         },
-/*            {
-            start : 520,  end : 521 ,
-            effect : new BPMGodRays({ density : 2.6, weigth : 0.9 })
+
+        {   // end
+            start : 553.5,  end : 554,
+            effect : new BPMLateralBars({ position : 50, ease : "bounce" })
         },
-        {
-            start : 553,  end : 554 ,
-            effect : new BPMGodRays({ density : 2.6, weigth : 0.9 })
-        },*/
+        {   // end
+            start : 553,  end : 553.5,
+            effect : new BPMSpiralsScale({ scaleX : 2.3, scaleZ : 0.75, ease : "bounce-inOut" })
+        },
+
+
         { // invert first blue color correction to black
             start : 560,  end : 561,
             effect : new BPMColorCorrection({ 

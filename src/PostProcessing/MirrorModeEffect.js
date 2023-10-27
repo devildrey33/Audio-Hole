@@ -19,6 +19,7 @@ export default class ColorCorrectionEffect extends Effect {
 					[ "uTime"      		  , new THREE.Uniform(0.0) ],
 					[ "uTimeAnimationIn"  , new THREE.Uniform(0.0) ],
 					[ "uTimeAnimationOut" , new THREE.Uniform(0.0) ],					
+					[ "uDisplacement"     , new THREE.Uniform(0.0) ],					
 					[ "uSize"      		  , new THREE.Uniform(new THREE.Vector2(0, 0)) ]
 				]),
 			}
@@ -26,11 +27,12 @@ export default class ColorCorrectionEffect extends Effect {
 
 	}
 
-	init(startTime, endTime, width, height, animationIn = 0.5, animationOut = 0.5) {
+	init(startTime, endTime, width, height, animationIn, animationOut, displacement) {
 		this.uniforms.get("uStartTime").value = startTime;
 		this.uniforms.get("uEndTime").value = endTime;
 		this.uniforms.get("uTimeAnimationIn").value = animationIn;
 		this.uniforms.get("uTimeAnimationOut").value = animationOut;
+		this.uniforms.get("uDisplacement").value = displacement;
 		this.uniforms.get("uSize").value = new THREE.Vector2(width, height);
 	}
 

@@ -4,33 +4,9 @@ uniform float uEndTime;             // end time in seconds (duration is uEndTime
 
 uniform float uTimeAnimationIn;     // Time in seconds of the starting animation (split)
 uniform float uTimeAnimationOut;    // Time in seconds of the finish animation   (join)
+uniform float uDisplacement;        // displacement from center (0.5, 0.5), by default 0.125
 uniform vec2  uSize;                // width and height of the viewport
 
-// https://github.com/glslify/glsl-easings/blob/master/bounce-out.glsl
-/*float bounceOut(float t) {
-  const float a = 4.0 / 11.0;
-  const float b = 8.0 / 11.0;
-  const float c = 9.0 / 10.0;
-
-  const float ca = 4356.0 / 361.0;
-  const float cb = 35442.0 / 1805.0;
-  const float cc = 16061.0 / 1805.0;
-
-  float t2 = t * t;
-
-  return t < a
-    ? 7.5625 * t2
-    : t < b
-      ? 9.075 * t2 - 9.9 * t + 3.4
-      : t < c
-        ? ca * t2 - cb * t + cc
-        : 10.8 * t * t - 20.52 * t + 10.72;
-}
-
-// https://github.com/glslify/glsl-easings/blob/master/bounce-in.glsl
-float bounceIn(float t) {
-  return 1.0 - bounceOut(1.0 - t);
-}*/
 
 // https://github.com/glslify/glsl-easings/blob/master/elastic-in-out.glsl
 #define HALF_PI 1.5707963267948966
@@ -49,7 +25,7 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
         // end animation uTimeAnimationOut from 0 to 1
         float curPosOut = elasticInOut(clamp(uTime - (uEndTime - uTimeAnimationOut), 0.0, uTimeAnimationOut) * (1.0 / uTimeAnimationOut));
         // Combine animations and multiply * 0.25 of displacement
-        float displacement = (curPosIn - curPosOut) * 0.125;
+        float displacement = (curPosIn - curPosOut) * uDisplacement;
         // Determinate the position of mirrors 
         vec2 pos = uv, pos2 = uv;
         float mixPos = uv.y; // mix set for width < height

@@ -5,6 +5,7 @@ export default class BPMMirror extends BPMEffect {
     constructor({ 
         animationIn   = 0.5, 
         animationOut  = 0.5, 
+        displacement  = 0.125,
         ease          = "none", 
         yoyo          = false 
     }) {
@@ -12,6 +13,7 @@ export default class BPMMirror extends BPMEffect {
         this.dest = [ 1 ];
         this.animationIn = animationIn;
         this.animationOut = animationOut;
+        this.displacement = displacement;
         
         this.name = "MirrorMode";
         this.params = `(${animationIn, animationOut})`;
@@ -54,7 +56,7 @@ export default class BPMMirror extends BPMEffect {
     onUpdate(This) {
         const value = (this.targets()[0][0]);
         if (value > 0) {
-            This.mirrorEffect.init(This.start, This.start + This.duration, This.experience.sizes.width, This.experience.sizes.height, This.animationIn, This.animationOut);
+            This.mirrorEffect.init(This.start, This.start + This.duration, This.experience.sizes.width, This.experience.sizes.height, This.animationIn, This.animationOut, This.displacement);
         }
 //       This.suicide(value, This);
 
