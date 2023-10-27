@@ -342,7 +342,7 @@ export default class killCityKills {
         },
 
         {   // woooOOO
-            start : 488, end : 500, 
+            start : 488, end : 499, 
             effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.065 })
         },    
         
@@ -360,6 +360,12 @@ export default class killCityKills {
         {   // yell
             start : 535, end : 540, 
             effect : new BPMSpiralOsciloscope({ audioStrength : 1.75, thickness : 0.2, color : new THREE.Color(0,0,2) })
+        },
+
+
+        {   // end yell
+            start : 553, end : 556, 
+            effect : new BPMSpiralOsciloscope({ audioStrength : 1.5, thickness : 0.15, color : new THREE.Color(2,0,0) })
         },
 
         {   // end
