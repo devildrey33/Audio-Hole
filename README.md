@@ -13,7 +13,7 @@ live  : https://devildrey33.es/Ejemplos/AudioHole/index.html
 
 debug : https://devildrey33.es/Ejemplos/AudioHole/index.html#debug
 
-![AudioHole](https://github.com/devildrey33/Audio-Hole/assets/15678544/1ef67f8c-5a7e-420a-9af7-91e4e1215dba)
+https://github.com/devildrey33/Audio-Hole/assets/15678544/dac253a0-37a2-46bf-9214-f91cce8db6a0
 
 This project its the evolution of my [Audio Playground](https://github.com/devildrey33/Audio-PlayGround), i had in mind animate a song all the time, but first i need to practice a bit and see some of the limits whe have today.
 
