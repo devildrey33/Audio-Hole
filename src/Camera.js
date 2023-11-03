@@ -62,8 +62,8 @@ export default class Camera {
 
     update() {
         // update camera rotation using mouse coordinates
-        this.instance.rotation.y = THREE.MathUtils.lerp(this.instance.rotation.y, (this.mouseX * Math.PI) / 10000, 0.15) 
-        this.instance.rotation.x = THREE.MathUtils.lerp(this.instance.rotation.x, (this.mouseY * Math.PI) / 10000, 0.15)
+        this.instance.rotation.y = THREE.MathUtils.lerp(this.instance.rotation.y, (this.mouseX * Math.PI) / 15000, 0.15) 
+        this.instance.rotation.x = THREE.MathUtils.lerp(this.instance.rotation.x, (this.mouseY * Math.PI) / 15000, 0.15)
 //        this.instance.rotation.z += this.time.delta / 7500;
     }
 }
