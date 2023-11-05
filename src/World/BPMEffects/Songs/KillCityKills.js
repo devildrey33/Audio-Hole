@@ -229,7 +229,7 @@ export default class killCityKills {
                
         {   // Guitar solo (ends 423)
             start : 390, end : 394, 
-            effect : new BPMSpiralBars({ destThickness : 0.25, originMirrors : 2, destMirrors : 24, destAudioStrength : 0.5, yoyo : false })
+            effect : new BPMSpiralBars({ destThickness : 0.25, originMirrors : 2, destMirrors : 64, destAudioStrength : 0.5, yoyo : false })
         },            
 /*        {   // Guitar solo bloom 1
             start : 390, end : 394, 
@@ -264,7 +264,7 @@ export default class killCityKills {
 
         {   // remove thickness
             start : 399, end : 402, 
-            effect : new BPMSpiralBars({ originAudioStrength : 0.5, destAudioStrength : 0.5, originThickness : 0.25, originMirrors : 24, destMirrors : 24, destThickness : 0.15,  yoyo : false })
+            effect : new BPMSpiralBars({ originAudioStrength : 0.5, destAudioStrength : 0.5, originThickness : 0.25, originMirrors : 64, destMirrors : 64, destThickness : 0.15,  yoyo : false })
         },            
         {   // Guitar solo bloom 2
             start : 404, end : 408, 
@@ -272,7 +272,7 @@ export default class killCityKills {
         },            
         {   // Guitar solo (ends 423)
             start : 406, end : 415, 
-            effect : new BPMSpiralBars({ originAudioStrength : 0.5, originThickness : 0.15,  originMirrors : 24, destMirrors : 3,  yoyo : false })
+            effect : new BPMSpiralBars({ originAudioStrength : 0.5, originThickness : 0.15,  originMirrors : 64, destMirrors : 3,  yoyo : false })
         },            
         {   // Solo guitar achord
             start : 406, end : 406.5, 
