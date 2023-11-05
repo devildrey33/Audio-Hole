@@ -54,12 +54,14 @@ export default class killCityKills {
             effect : new BPMSpiralOsciloscope({ audioStrength : 1.5, thickness : 0.2, color : new THREE.Color(2,0,0) })
         },
         {   // woooOOO
-            start : 73, end : 81, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+            start : 73, end : 77, 
+            effect : new BPMSpiralBars({ destThickness : 0.35 })
+//            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
         },    
         {   // woooOOO
-            start : 89, end : 98, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+            start : 89, end : 93, 
+            effect : new BPMSpiralBars({ destThickness : 0.5 })
+            //effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
         },   
         
         
@@ -114,8 +116,9 @@ export default class killCityKills {
             effect : new BPMSpiralsScale({ scaleX : 2.3, scaleY : 1.3, scaleZ : 0.75, ease : "bounce-inOut" })
         },            
         {   // woooOOO
-            start : 175, end : 182, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+            start : 175, end : 178.5, 
+            effect : new BPMSpiralBars({ destThickness : 0.35, originMirrors : 2, destMirrors : 2 })
+//            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
         },     
 
         //start : 312.5, end : 313.5, 
@@ -133,16 +136,18 @@ export default class killCityKills {
         },
 
         {   // woooOOO
-            start : 202, end : 211, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+            start : 202, end : 206.5, 
+            effect : new BPMSpiralBars({ destThickness : 0.35, originMirrors : 2, destMirrors : 2 })
+            //effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
         },            
         {   // wuah
             start : 211, end : 211.5,
             effect : new BPMLateralBars({ position : 50, ease : "bounce" })
         },
         {   // woooOOO
-            start : 218, end : 227.5, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5, displacement : 0.35 })
+            start : 218, end : 223.25, 
+            effect : new BPMSpiralBars({ destThickness : 0.5, originMirrors : 2, destMirrors : 2 })
+//            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5, displacement : 0.35 })
         },    
         {   // right
             start : 243.5,  end : 245,
@@ -180,8 +185,9 @@ export default class killCityKills {
         },
 
         {   // woooOOO
-            start : 304, end : 311.5, 
-            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+            start : 304, end : 308, 
+//            effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5 })
+            effect : new BPMSpiralBars({ destThickness : 0.35, originMirrors : 2, destMirrors : 2 })
         },    
 
         {   // mayday
@@ -198,13 +204,15 @@ export default class killCityKills {
         },
 
         {   // woooOOO
-            start : 326, end : 337, 
-            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.025 })
+            start : 326, end : 332.5, 
+            effect : new BPMSpiralBars({ destThickness : 0.35, originMirrors : 2, destMirrors : 2 })
+            //            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.025 })
         },    
 
         {   // woooOOO
-            start : 341, end : 354, 
-            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.02 })
+            start : 341, end : 347.5, 
+            effect : new BPMSpiralBars({ destThickness : 0.5, originMirrors : 2, destMirrors : 2 })
+            //effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.02 })
         },    
 
         {   // yell
@@ -223,31 +231,36 @@ export default class killCityKills {
             start : 390, end : 394, 
             effect : new BPMSpiralBars({ destThickness : 0.25, originMirrors : 2, destMirrors : 24, destAudioStrength : 0.5, yoyo : false })
         },            
-        {   // Guitar solo bloom 1
+/*        {   // Guitar solo bloom 1
             start : 390, end : 394, 
             effect : new BPMBloom({ destIntensity : -1.5, destRadius : 0.65, yoyo : false })
-        },            
+        },            */
 
         {   // Guitar solo first end
             start : 394, end : 395,
             effect : new BPMLateralBars({ position : 50, ease : "elastic" })
         },
-        {   // end of mirror grow
+        {   // Guitar solo first end
+            start : 393.5, end : 399.5,
+            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.2 })
+        },
+
+/*        {   // end of mirror grow
             start : 394.5, end : 395, 
             effect : new BPMSpiralsScale({ scaleZ : 2.75, ease : "bounce" })
-        },            
-        { // set to pink
+        },            */
+/*        { // set to pink
             start : 394,  end : 395,
             effect : new BPMColorCorrection({ 
                 originPow : [3, 3, 8], originMul : [2, 2, 15], originAdd : [0.05, 0.05, 0.5], 
                 destPow   : [3, 3, 3], destMul   : [2, 2, 2] , destAdd   : [0.35, 0.27, 0.5] 
             })
-        },
+        },*/
 
-        {   // Solo guitar acord
+/*        {   // Solo guitar acord
             start : 398, end : 398.5, 
             effect : new BPMSpiralsScale({ scaleY : 1.5, ease : "bounce" })
-        },            
+        },            */
 
         {   // remove thickness
             start : 399, end : 402, 
@@ -255,7 +268,7 @@ export default class killCityKills {
         },            
         {   // Guitar solo bloom 2
             start : 404, end : 408, 
-            effect : new BPMBloom({ originIntensity : -1.5, originRadius : 0.65, destIntensity : 2, destRadius : 1.12,  yoyo : false })
+            effect : new BPMBloom({ destIntensity : 2, destRadius : 1.12,  yoyo : false })
         },            
         {   // Guitar solo (ends 423)
             start : 406, end : 415, 
@@ -270,18 +283,18 @@ export default class killCityKills {
             effect : new BPMSpiralsScale({ scaleX: 0.25, ease : "bounce" })
         },            
         {   // Guitar solo mirror 2
-            start : 413, end : 423, 
+            start : 413, end : 427, 
             effect : new BPMMirror({ animationIn : 1.0, animationOut : 2.5, displacement : 0.2 })
         },    
     
 
-        { // revert color correction to normal blue
+/*        { // revert color correction to normal blue
             start : 414,  end : 420,
             effect : new BPMColorCorrection({ 
                 originPow : [3, 3, 3], originMul : [2, 2, 2] , originAdd : [0.35, 0.27, 0.5], 
                 destPow   : [3, 3, 8], destMul   : [2, 2, 15], destAdd   : [0.05, 0.05, 0.5], 
             })
-        },
+        },*/
 
 
         {   // Guitar solo (ends 423)
@@ -323,8 +336,9 @@ export default class killCityKills {
         },
 
         {   // woooOOO
-            start : 467, end : 473, 
-            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5 })
+            start : 467, end : 470, 
+            effect : new BPMSpiralBars({ destThickness : 0.35, originMirrors : 3, destMirrors : 3 })
+            //            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5 })
         },    
 
 
@@ -342,13 +356,15 @@ export default class killCityKills {
         },
 
         {   // woooOOO
-            start : 488, end : 499, 
-            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.065 })
+            start : 488, end : 493.5, 
+            effect : new BPMSpiralBars({ destThickness : 0.35, originMirrors : 3, destMirrors : 3  })
+//            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.065 })
         },    
         
         {   // woooOOO
-            start : 503, end : 514, 
-            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.065 })
+            start : 503, end : 508.5, 
+            effect : new BPMSpiralBars({ destThickness : 0.5, originMirrors : 3, destMirrors : 3  })
+//            effect : new BPMMirror({ animationIn : 0.5, animationOut : 1.5, displacement : 0.065 })
         },    
         
 
