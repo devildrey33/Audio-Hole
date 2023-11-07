@@ -6,7 +6,7 @@ import MirrorModeFragment from "../Shaders/PostProcessing/MirrorMode/MirrorModeF
  * Mirror effect for the solo
  */
 
-export default class ColorCorrectionEffect extends Effect {
+export default class MirrorModeEffect extends Effect {
 
 	constructor() {
 		super("MirrorModeEffect", MirrorModeFragment,

@@ -1,19 +1,19 @@
 import * as THREE from 'three'
+import options from "./Config/options.js";
 import songs from "./Config/songs.js";
+import sources from "./Config/resourcesToLoad.js"
 import Sizes from "./Utils/Sizes.js";
 import Time from "./Utils/Time.js";
 import HTMLElements from "./Utils/HTMLElements.js";
-import options from "./Config/options.js";
 import AudioAnalizerSC from "./Utils/AudioAnalizerSC.js";
 import AudioAnalizerMC from "./Utils/AudioAnalizerMC.js";
 import Camera from './Camera.js';
 //import Renderer from './Renderer.js';
 import Renderer from './Renderer_pmndrs.js';
+import Resources from './Utils/Resources.js';
 
 import World from './World/World.js';
 import Debug from './Utils/Debug.js';
-import Resources from './Utils/Resources.js';
-import sources from "./Config/resourcesToLoad.js"
 import DebugAverages from './Utils/DebugAverages.js';
 
 
@@ -170,6 +170,7 @@ export default class Experience {
     resize() {
         this.camera.resize();
         this.renderer.resize();
+        this.world.background.resize();
     }
 
     /**

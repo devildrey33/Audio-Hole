@@ -1,11 +1,11 @@
 import Experience from "../Experience.js";
 import AudioChannel from "./AudioChannel.js";
+
+
 /* 
- Audio Analizer for a single channel with 6 duplicated channels to simulate the multichannel schema
+ *  Audio Analizer for a single channel with 6 duplicated channels to simulate the multichannel schema
  */
-
-
-export default class AudioAnalizerMC {
+export default class AudioAnalizerSC {
     constructor(audioOptions) {
         const audioDefaultOptions = {
             // Default callbacks

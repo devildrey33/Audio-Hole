@@ -1,7 +1,7 @@
 import BPMEffect from "./BPMEffect.js";
 
 /*
- * TODO rebuild as spiralsShake
+ * TODO rebuild as spiralsShake (NOT USED)
  */ 
 
 export default class BPMSpiralsPosition extends BPMEffect {

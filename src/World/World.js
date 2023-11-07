@@ -5,11 +5,11 @@ import Sun from './Sun.js';
 import RaysToHole from "./RaysToHole.js";
 import HMLBars from './HMLBars.js';
 import HMLOsciloscope from './HMLOsciloscope.js';
+import Background from './Background.js'
 import BPMEffects from './BPMEffects/BPMEffects.js';
 import gsap from 'gsap';
 import { RoughEase } from "gsap/EasePack";
 //import DebugEffects from '../Utils/DebugEffect.js';
-import Background from './Background.js';
 
 //import VoronoiBackground from './VoronoiBackground.js';
 

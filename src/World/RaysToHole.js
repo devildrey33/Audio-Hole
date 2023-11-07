@@ -8,9 +8,6 @@ export default class RaysToHole {
     constructor() {
         this.experience = new Experience();
         this.numRays = this.experience.options.raysCount;
-
-//        this.time  = this.experience.time;
-//        this.world = world;
         this.setup();
     }
 

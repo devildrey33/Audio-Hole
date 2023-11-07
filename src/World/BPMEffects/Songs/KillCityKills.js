@@ -385,11 +385,11 @@ export default class killCityKills {
         },
 
         {   // end
-            start : 553.5,  end : 554,
+            start : 553,  end : 553.5,
             effect : new BPMLateralBars({ position : 50, ease : "bounce" })
         },
         {   // end
-            start : 553,  end : 553.5,
+            start : 552.5,  end : 553,
             effect : new BPMSpiralsScale({ scaleX : 2.3, scaleZ : 0.75, ease : "bounce-inOut" })
         },
 
