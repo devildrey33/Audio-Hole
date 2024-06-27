@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "gsap": "^3.12.2",
-    "json-streamify": "^0.1.4",
     "json-stringify-stream": "^0.0.1",
     "lil-gui": "^0.17.0",
     "postprocessing": "^6.33.0"
